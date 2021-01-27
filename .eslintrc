@@ -1,0 +1,44 @@
+{
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
+  "env": {
+    "browser": false,
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "airbnb-typescript",
+        "prettier",
+        "prettier/react"
+      ],
+      "env": {
+        "browser": true,
+        "node": false
+      },
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+        "quotes": [
+          2,
+          "single",
+          {
+            "avoidEscape": true
+          }
+        ],
+        "jsx-quotes": [
+          2,
+          "prefer-double"
+        ],
+        "react/prop-types": 0,
+        "react/jsx-props-no-spreading": 0,
+        "@typescript-eslint/no-use-before-define": 0,
+        "@typescript-eslint/explicit-function-return-type": "error",
+        "@typescript-eslint/indent": "off"
+      }
+  }]
+}
