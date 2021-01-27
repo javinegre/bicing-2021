@@ -4,6 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import viewportHelpers from './helpers/viewport';
+
+viewportHelpers.calculateViewportHeightUnit();
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
