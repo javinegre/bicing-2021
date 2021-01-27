@@ -1,0 +1,30 @@
+.InfoMenu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 280px;
+  transform: translateX(-100%);
+  transition: transform 200ms ease;
+  background-color: palevioletred;
+}
+
+.InfoMenu.shown {
+  transform: translateX(0);
+}
+
+@media all and (min-width: 400px) {
+  .InfoMenu {
+    width: 360px;
+  }
+}
+
+@media all and (min-width: 1000px) {
+  .InfoMenu {
+    position: static;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    transform: none;
+  }
+}

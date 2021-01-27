@@ -1,0 +1,30 @@
+.AboutMenu {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 280px;
+  transform: translateX(100%);
+  transition: transform 200ms ease;
+  background-color: paleturquoise;
+}
+
+.AboutMenu.shown {
+  transform: translateX(0);
+}
+
+@media all and (min-width: 400px) {
+  .AboutMenu {
+    width: 360px;
+  }
+}
+
+@media all and (min-width: 1360px) {
+  .AboutMenu {
+    position: static;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    transform: none;
+  }
+}

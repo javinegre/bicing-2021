@@ -1,26 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import InfoMenu from './components/infoMenu/InfoMenu';
+import Map from './components/map/Map';
+import AboutMenu from './components/aboutMenu/AboutMenu';
 
 const App: React.FunctionComponent = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/App.tsx</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-        <br />
-        --{window.env?.GOOGLE_MAPS_API_KEY}--
-      </a>
-    </header>
-  </div>
+  <main className="App bg-gray-900">
+    <div className="App-wrapper bg-gray-800">
+      <InfoMenu />
+      <Map />
+      <AboutMenu />
+    </div>
+  </main>
 );
 
 export default App;
