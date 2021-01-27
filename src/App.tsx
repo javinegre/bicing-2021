@@ -16,6 +16,8 @@ const App: React.FunctionComponent = () => (
         rel="noopener noreferrer"
       >
         Learn React
+        <br />
+        --{window.env?.GOOGLE_MAPS_API_KEY}--
       </a>
     </header>
   </div>

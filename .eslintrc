@@ -9,7 +9,7 @@
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": ["*.ts", "*.d.ts", "*.tsx"],
       "extends": [
         "airbnb-typescript",
         "prettier",
