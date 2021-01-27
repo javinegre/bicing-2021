@@ -3,6 +3,8 @@ import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
 
 import mapConfig from './config';
 
+import markerBikesBigGreen from '../../assets/icons/markers/bikes-big-green.svg';
+
 import './Map.css';
 
 const Map: React.FunctionComponent = () => {
@@ -10,9 +12,14 @@ const Map: React.FunctionComponent = () => {
     googleMapsApiKey: window.env?.GOOGLE_MAPS_API_KEY ?? '',
   });
 
-  const { center: mapCenter, zoom: mapZoom, options: mapOptions } = mapConfig;
+  const {
+    center: defaultMapCenter,
+    zoom: mapZoom,
+    options: mapOptions,
+  } = mapConfig;
 
   const [, setMap] = useState(null);
+  const [mapCenter] = useState(defaultMapCenter);
   const [isDragging, setIsDragging] = useState(false);
 
   const onDragStart: () => void = () => {
@@ -22,6 +29,10 @@ const Map: React.FunctionComponent = () => {
   const onDragEnd: () => void = () => {
     setIsDragging(false);
   };
+
+  const onLoad = React.useCallback((mapObject) => {
+    setMap(mapObject);
+  }, []);
 
   const onUnmount = React.useCallback(() => {
     setMap(null);
@@ -40,12 +51,17 @@ const Map: React.FunctionComponent = () => {
           options={mapOptions}
           onDragStart={onDragStart}
           onDragEnd={onDragEnd}
+          onLoad={onLoad}
           onUnmount={onUnmount}
         >
-          <Marker key="1" position={mapCenter} opacity={isDragging ? 0.2 : 1} />
+          <Marker
+            key="1"
+            position={defaultMapCenter}
+            opacity={isDragging ? 0.2 : 1}
+            icon={markerBikesBigGreen}
+          />
         </GoogleMap>
       )}
-      {!isLoaded && <>Map</>}
     </div>
   );
 };
