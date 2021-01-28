@@ -1,67 +1,36 @@
-import React, { useState } from 'react';
-import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api';
-
-import mapConfig from './config';
-
-import markerBikesBigGreen from '../../assets/icons/markers/bikes-big-green.svg';
+import React, { useEffect, useRef, useState } from 'react';
 
 import './Map.css';
+import useGoogleMaps from '../../hooks/useGoogleMaps';
+import mapConfig from './config';
 
 const Map: React.FunctionComponent = () => {
-  const { isLoaded } = useJsApiLoader({
+  const $mapWrapper = useRef<HTMLDivElement>(null);
+  const [markerList, setMarkerList] = useState<google.maps.Marker[]>([]);
+
+  const { mapHandler } = useGoogleMaps({
     googleMapsApiKey: window.env?.GOOGLE_MAPS_API_KEY ?? '',
+    mapDiv: $mapWrapper.current,
+    mapOptions: mapConfig,
   });
 
-  const {
-    center: defaultMapCenter,
-    zoom: mapZoom,
-    options: mapOptions,
-  } = mapConfig;
+  useEffect(() => {
+    if (mapHandler) {
+      const marker = new google.maps.Marker({
+        position: mapConfig.center,
+        map: mapHandler,
+        title: 'Hello World!',
+      });
 
-  const [, setMap] = useState(null);
-  const [mapCenter] = useState(defaultMapCenter);
-  const [isDragging, setIsDragging] = useState(false);
-
-  const onDragStart: () => void = () => {
-    setIsDragging(true);
-  };
-
-  const onDragEnd: () => void = () => {
-    setIsDragging(false);
-  };
-
-  const onLoad = React.useCallback((mapObject) => {
-    setMap(mapObject);
-  }, []);
-
-  const onUnmount = React.useCallback(() => {
-    setMap(null);
-  }, []);
+      setMarkerList([...markerList, marker]);
+    }
+  }, [mapHandler]);
 
   return (
     <div className="Map">
-      {isLoaded && (
-        <GoogleMap
-          mapContainerStyle={{
-            width: '100%',
-            height: '100%',
-          }}
-          center={mapCenter}
-          zoom={mapZoom}
-          options={mapOptions}
-          onDragStart={onDragStart}
-          onDragEnd={onDragEnd}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-        >
-          <Marker
-            key="1"
-            position={defaultMapCenter}
-            opacity={isDragging ? 0.2 : 1}
-            icon={markerBikesBigGreen}
-          />
-        </GoogleMap>
-      )}
+      <div ref={$mapWrapper} className="Map-wrapper">
+        Map
+      </div>
     </div>
   );
 };
