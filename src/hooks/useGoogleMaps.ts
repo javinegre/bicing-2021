@@ -32,7 +32,28 @@ const useGoogleMaps: (params: IGoogleMapsHookParams) => IGoogleMapsHook = (
     }
   }, [isInitialized, mapDiv]);
 
-  return { mapHandler };
+  const addMarker: (
+    opts: google.maps.ReadonlyMarkerOptions,
+    clickEvent?: () => void,
+  ) => google.maps.Marker = (opts, clickEvent) => {
+    const newMarker = new google.maps.Marker({
+      map: mapHandler as google.maps.Map,
+      ...opts,
+    });
+
+    if (clickEvent) {
+      newMarker.addListener('click', clickEvent);
+    }
+
+    return newMarker;
+  };
+
+  const removeMarker: (marker: google.maps.Marker) => void = (marker) => {
+    google.maps.event.clearInstanceListeners(marker);
+    marker.setMap(null);
+  };
+
+  return { mapHandler, addMarker, removeMarker };
 };
 
 export default useGoogleMaps;

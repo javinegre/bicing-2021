@@ -6,4 +6,9 @@ export interface IGoogleMapsHookParams {
 
 export interface IGoogleMapsHook {
   mapHandler: google.maps.Map | null;
+  addMarker: (
+    opts: google.maps.ReadonlyMarkerOptions,
+    clickEvent?: () => void,
+  ) => google.maps.Marker;
+  removeMarker: (marker: google.maps.Marker) => void;
 }
