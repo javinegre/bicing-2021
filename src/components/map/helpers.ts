@@ -1,6 +1,6 @@
-import { IStationData, IStationList } from '../../interfaces';
 import enums from '../../enums';
 import icons from './markerIcons';
+import { IStationData, IStationList } from '../../interfaces';
 
 const getVisibleStations: (
   stationList: IStationList | null,

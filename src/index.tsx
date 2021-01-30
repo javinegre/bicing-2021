@@ -1,17 +1,21 @@
 import React from 'react';
+import { StoreProvider } from 'easy-peasy';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import viewportHelpers from './helpers/viewport';
+import storeModel from './store/storeModel';
 
 viewportHelpers.calculateViewportHeightUnit();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <StoreProvider store={storeModel}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </StoreProvider>,
   document.getElementById('root'),
 );
 

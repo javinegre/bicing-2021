@@ -4,18 +4,25 @@ import { debounce } from 'lodash';
 import useGoogleMaps from '../../hooks/useGoogleMaps';
 import mapConfig from './config';
 import mapHelpers from './helpers';
-import { IMapProps } from './interfaces';
+import storeHooks from '../../store/hooks';
 import { IStationData } from '../../interfaces';
 
 import './Map.css';
 
-const Map: React.FunctionComponent<IMapProps> = (props) => {
+const Map: React.FunctionComponent = () => {
   const $mapWrapper = useRef<HTMLDivElement>(null);
   const [markerList, setMarkerList] = useState<google.maps.Marker[]>([]);
 
   const [visibleStations, setVisibleStations] = useState<IStationData[]>([]);
 
-  const { stationList, updateStationList } = props;
+  const stationList = storeHooks.useStoreState((state) => state.stationList);
+  const fetchStationList = storeHooks.useStoreActions(
+    (actions) => actions.stationList.fetch,
+  );
+
+  const updateStationList: () => void = () => {
+    fetchStationList();
+  };
 
   const { mapHandler, addMarker, removeMarker } = useGoogleMaps({
     googleMapsApiKey: window.env?.GOOGLE_MAPS_API_KEY ?? '',

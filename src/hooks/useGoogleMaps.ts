@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import useScript from './useScript';
 import { IGoogleMapsHook, IGoogleMapsHookParams } from './interfaces';
 

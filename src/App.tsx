@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
+import React, { useEffect } from 'react';
+
 import InfoMenu from './components/infoMenu/InfoMenu';
 import Map from './components/map/Map';
 import AboutMenu from './components/aboutMenu/AboutMenu';
-import StationService from './services/stationService';
-import { IStationList } from './interfaces';
+import storeHooks from './store/hooks';
+
+import './App.css';
 
 const App: React.FunctionComponent = () => {
-  const [stationList, setStationList] = useState<IStationList | null>(null);
+  const fetchStationList = storeHooks.useStoreActions(
+    (actions) => actions.stationList.fetch,
+  );
 
-  const getStationList: () => void = () => {
-    StationService().getList().then(setStationList);
-  };
-
-  useEffect(getStationList, []);
+  useEffect(() => {
+    fetchStationList();
+  }, []);
 
   return (
     <main className="App bg-gray-900">
       <div className="App-wrapper bg-gray-800">
         <InfoMenu />
-        <Map stationList={stationList} updateStationList={getStationList} />
+        <Map />
         <AboutMenu />
       </div>
     </main>

@@ -1,12 +1,12 @@
 import axios from 'axios';
 
+import appConfig from '../config';
 import {
   IStationService,
   IXHRStationInfoList,
   IXHRStationStatusList,
 } from './interfaces';
 import { IStationData, IStationList } from '../interfaces';
-import appConfig from '../config';
 
 const StationService: () => IStationService = () => {
   const getEndpointUrl: (endpoint: string) => string = (endpoint) =>
