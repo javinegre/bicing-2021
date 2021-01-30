@@ -19,8 +19,8 @@ const App: React.FunctionComponent = () => {
   return (
     <main className="App bg-gray-900">
       <div className="App-wrapper bg-gray-800">
-        <InfoMenu />
         <Map />
+        <InfoMenu />
         <AboutMenu />
       </div>
     </main>

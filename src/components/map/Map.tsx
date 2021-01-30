@@ -16,9 +16,15 @@ const Map: React.FunctionComponent = () => {
   const [visibleStations, setVisibleStations] = useState<IStationData[]>([]);
 
   const stationList = storeHooks.useStoreState((state) => state.stationList);
-  const fetchStationList = storeHooks.useStoreActions(
-    (actions) => actions.stationList.fetch,
-  );
+  const {
+    fetchStationList,
+    toggleAboutMenu,
+    selectStation,
+  } = storeHooks.useStoreActions((actions) => ({
+    fetchStationList: actions.stationList.fetch,
+    toggleAboutMenu: actions.ui.toggleAboutMenu,
+    selectStation: actions.ui.selectStation,
+  }));
 
   const updateStationList: () => void = () => {
     fetchStationList();
@@ -81,6 +87,9 @@ const Map: React.FunctionComponent = () => {
       },
       () => {
         const newMarkerPosition = newMarker.getPosition();
+
+        selectStation(station.id);
+
         if (newMarkerPosition) {
           mapHandler?.panTo(newMarkerPosition);
         }
@@ -90,9 +99,23 @@ const Map: React.FunctionComponent = () => {
     return newMarker;
   };
 
+  const showAboutMenu: () => void = () => toggleAboutMenu(true);
+
   return (
     <div className="Map">
       <div ref={$mapWrapper} className="Map-wrapper" />
+
+      <button
+        className="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-full focus:shadow-outline hover:bg-indigo-800"
+        type="button"
+        onClick={showAboutMenu}
+        style={{ position: 'absolute', top: 8, right: 8 }}
+      >
+        <span role="img" aria-label="About">
+          ℹ️
+        </span>
+      </button>
+
       <button
         className="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-full focus:shadow-outline hover:bg-indigo-800"
         type="button"

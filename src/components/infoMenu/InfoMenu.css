@@ -13,6 +13,26 @@
   transform: translateX(0);
 }
 
+.InfoMenu-wrapper {
+  order: 1;
+}
+
+.InfoMenu-backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.InfoMenu-backdrop.shown {
+  opacity: 0.9;
+  pointer-events: auto;
+}
+
 @media all and (min-width: 400px) {
   .InfoMenu {
     width: 360px;
@@ -26,5 +46,10 @@
     bottom: auto;
     left: auto;
     transform: none;
+  }
+
+  .InfoMenu-backdrop.shown {
+    opacity: 0;
+    pointer-events: none;
   }
 }

@@ -1,5 +1,7 @@
 .Map {
+  position: relative;
   flex-grow: 1;
+  order: 2;
 }
 
 .Map-wrapper {
