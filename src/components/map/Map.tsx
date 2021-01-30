@@ -5,25 +5,42 @@ import useGoogleMaps from '../../hooks/useGoogleMaps';
 import mapConfig from './config';
 import mapHelpers from './helpers';
 import storeHooks from '../../store/hooks';
+import { IMarkerWithData } from './interfaces';
 import { IStationData } from '../../interfaces';
 
 import './Map.css';
 
 const Map: React.FunctionComponent = () => {
   const $mapWrapper = useRef<HTMLDivElement>(null);
-  const [markerList, setMarkerList] = useState<google.maps.Marker[]>([]);
+  const [markerList, setMarkerList] = useState<IMarkerWithData[]>([]);
 
   const [visibleStations, setVisibleStations] = useState<IStationData[]>([]);
 
-  const stationList = storeHooks.useStoreState((state) => state.stationList);
+  const {
+    stationList,
+    resourceShown,
+    mapCenter,
+    mapZoom,
+  } = storeHooks.useStoreState((state) => ({
+    stationList: state.stationList,
+    resourceShown: state.ui.resourceShown,
+    mapCenter: state.ui.mapCenter,
+    mapZoom: state.ui.mapZoom,
+  }));
   const {
     fetchStationList,
     toggleAboutMenu,
     selectStation,
+    toggleResourceShown,
+    setMapCenter,
+    setMapZoom,
   } = storeHooks.useStoreActions((actions) => ({
     fetchStationList: actions.stationList.fetch,
     toggleAboutMenu: actions.ui.toggleAboutMenu,
     selectStation: actions.ui.selectStation,
+    toggleResourceShown: actions.ui.toggleResourceShown,
+    setMapCenter: actions.ui.setMapCenter,
+    setMapZoom: actions.ui.setMapZoom,
   }));
 
   const updateStationList: () => void = () => {
@@ -33,7 +50,11 @@ const Map: React.FunctionComponent = () => {
   const { mapHandler, addMarker, removeMarker } = useGoogleMaps({
     googleMapsApiKey: window.env?.GOOGLE_MAPS_API_KEY ?? '',
     mapDiv: $mapWrapper.current,
-    mapOptions: mapConfig,
+    mapOptions: {
+      ...mapConfig,
+      center: mapCenter,
+      zoom: mapZoom,
+    },
   });
 
   useEffect(() => {
@@ -67,8 +88,24 @@ const Map: React.FunctionComponent = () => {
     }
   }, [mapHandler, visibleStations]);
 
+  useEffect(() => {
+    // Re-render icons
+    markerList.forEach((marker) => {
+      marker.setIcon(
+        mapHelpers.getStationMarker(marker.stationData, resourceShown, mapZoom),
+      );
+    });
+  }, [resourceShown, mapZoom]);
+
   const onBoundsChanged = useCallback(
     debounce(() => {
+      if (mapHandler) {
+        setMapCenter({
+          lat: mapHandler.getCenter().lat(),
+          lng: mapHandler.getCenter().lng(),
+        });
+        setMapZoom(mapHandler.getZoom());
+      }
       setVisibleStations(
         mapHelpers.getVisibleStations(stationList, mapHandler),
       );
@@ -76,14 +113,14 @@ const Map: React.FunctionComponent = () => {
     [stationList],
   );
 
-  const addMarkerToMap: (station: IStationData) => google.maps.Marker = (
+  const addMarkerToMap: (station: IStationData) => IMarkerWithData = (
     station,
   ) => {
     const newMarker = addMarker(
+      station,
       {
-        title: String(station.id),
         position: { lat: station.lat, lng: station.lng },
-        icon: mapHelpers.getStationMarker(station),
+        icon: mapHelpers.getStationMarker(station, resourceShown, mapZoom),
       },
       () => {
         const newMarkerPosition = newMarker.getPosition();
@@ -98,6 +135,8 @@ const Map: React.FunctionComponent = () => {
 
     return newMarker;
   };
+
+  const toggleResourceType: () => void = () => toggleResourceShown();
 
   const showAboutMenu: () => void = () => toggleAboutMenu(true);
 
@@ -124,6 +163,17 @@ const Map: React.FunctionComponent = () => {
       >
         <span role="img" aria-label="refresh">
           🔄
+        </span>
+      </button>
+
+      <button
+        className="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-full focus:shadow-outline hover:bg-indigo-800"
+        type="button"
+        onClick={toggleResourceType}
+        style={{ position: 'absolute', bottom: 8, right: 64 }}
+      >
+        <span role="img" aria-label="toggle">
+          🔀
         </span>
       </button>
     </div>

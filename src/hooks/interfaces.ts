@@ -1,3 +1,6 @@
+import { IStationData } from '../interfaces';
+import { IMarkerWithData } from '../components/map/interfaces';
+
 export interface IGoogleMapsHookParams {
   googleMapsApiKey: string;
   mapDiv: HTMLElement | null;
@@ -7,8 +10,9 @@ export interface IGoogleMapsHookParams {
 export interface IGoogleMapsHook {
   mapHandler: google.maps.Map | null;
   addMarker: (
+    stationData: IStationData,
     opts: google.maps.ReadonlyMarkerOptions,
     clickEvent?: () => void,
-  ) => google.maps.Marker;
-  removeMarker: (marker: google.maps.Marker) => void;
+  ) => IMarkerWithData;
+  removeMarker: (marker: IMarkerWithData) => void;
 }

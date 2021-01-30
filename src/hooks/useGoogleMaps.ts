@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 import useScript from './useScript';
 import { IGoogleMapsHook, IGoogleMapsHookParams } from './interfaces';
+import { IStationData } from '../interfaces';
+import { IMarkerWithData } from '../components/map/interfaces';
 
 const useGoogleMaps: (params: IGoogleMapsHookParams) => IGoogleMapsHook = (
   params,
@@ -34,22 +36,27 @@ const useGoogleMaps: (params: IGoogleMapsHookParams) => IGoogleMapsHook = (
   }, [isInitialized, mapDiv]);
 
   const addMarker: (
+    stationData: IStationData,
     opts: google.maps.ReadonlyMarkerOptions,
     clickEvent?: () => void,
-  ) => google.maps.Marker = (opts, clickEvent) => {
+  ) => IMarkerWithData = (stationData, opts, clickEvent) => {
     const newMarker = new google.maps.Marker({
       map: mapHandler as google.maps.Map,
       ...opts,
+    });
+
+    newMarker.setValues({
+      stationData,
     });
 
     if (clickEvent) {
       newMarker.addListener('click', clickEvent);
     }
 
-    return newMarker;
+    return newMarker as IMarkerWithData;
   };
 
-  const removeMarker: (marker: google.maps.Marker) => void = (marker) => {
+  const removeMarker: (marker: IMarkerWithData) => void = (marker) => {
     google.maps.event.clearInstanceListeners(marker);
     marker.setMap(null);
   };

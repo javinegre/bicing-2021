@@ -2,9 +2,12 @@
 
 import { action, computed } from 'easy-peasy';
 
+import mapConfig from '../components/map/config';
+
 import { IStoreUiModel } from './interfaces';
 import { IStationData } from '../interfaces';
 import { StationSelectedType } from './types';
+import enums from '../enums';
 
 const storeUiModel: IStoreUiModel = {
   stationSelectedID: null,
@@ -16,6 +19,9 @@ const storeUiModel: IStoreUiModel = {
     (stationSelectedID, stations) =>
       stations.find((station) => station.id === stationSelectedID) ?? null,
   ),
+  resourceShown: enums.StationResourceTypeEnum.bikes,
+  mapCenter: mapConfig.center,
+  mapZoom: mapConfig.zoom,
   infoMenuShown: computed((state) => state.stationSelectedID !== null),
   aboutMenuShown: false,
   selectStation: action((state, payload) => {
@@ -26,6 +32,18 @@ const storeUiModel: IStoreUiModel = {
   }),
   toggleAboutMenu: action((state, payload) => {
     state.aboutMenuShown = payload ?? false;
+  }),
+  toggleResourceShown: action((state) => {
+    state.resourceShown =
+      state.resourceShown === enums.StationResourceTypeEnum.bikes
+        ? enums.StationResourceTypeEnum.docks
+        : enums.StationResourceTypeEnum.bikes;
+  }),
+  setMapCenter: action((state, payload) => {
+    state.mapCenter = payload;
+  }),
+  setMapZoom: action((state, payload) => {
+    state.mapZoom = payload;
   }),
 };
 

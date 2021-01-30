@@ -5,9 +5,16 @@ import storeHooks from '../../store/hooks';
 import './InfoMenu.css';
 
 const InfoMenu: React.FunctionComponent = () => {
-  const { menuShown, stationData } = storeHooks.useStoreState((state) => ({
+  const {
+    menuShown,
+    stationData,
+    mapCenter,
+    mapZoom,
+  } = storeHooks.useStoreState((state) => ({
     menuShown: state.ui.infoMenuShown,
     stationData: state.ui.stationSelectedData,
+    mapCenter: state.ui.mapCenter,
+    mapZoom: state.ui.mapZoom,
   }));
   const hideInfoMenu = storeHooks.useStoreActions(
     (actions) => actions.ui.hideInfoMenu,
@@ -36,6 +43,10 @@ const InfoMenu: React.FunctionComponent = () => {
           </div>
         )}
         {!stationData && <div>No station selected</div>}
+        <hr />
+        {mapCenter.lat} - {mapCenter.lng}
+        <hr />
+        {mapZoom}
       </aside>
     </div>
   );

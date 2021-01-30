@@ -1,6 +1,7 @@
 import enums from '../../enums';
 import icons from './markerIcons';
 import { IStationData, IStationList } from '../../interfaces';
+import { IMarkerWithData } from './interfaces';
 
 const getVisibleStations: (
   stationList: IStationList | null,
@@ -11,10 +12,10 @@ const getVisibleStations: (
   ) ?? [];
 
 const splitMarkerListByVisibility: (
-  markerList: google.maps.Marker[],
+  markerList: IMarkerWithData[],
   mapHandler: google.maps.Map,
-) => [google.maps.Marker[], google.maps.Marker[]] = (markerList, mapHandler) =>
-  markerList.reduce<[google.maps.Marker[], google.maps.Marker[]]>(
+) => [IMarkerWithData[], IMarkerWithData[]] = (markerList, mapHandler) =>
+  markerList.reduce<[IMarkerWithData[], IMarkerWithData[]]>(
     ([shown, hidden], cur) => {
       const markerPosition = cur.getPosition();
       const isVisible: boolean = markerPosition
@@ -27,15 +28,24 @@ const splitMarkerListByVisibility: (
   );
 
 const isNotInList: (
-  list: google.maps.Marker[],
+  list: IMarkerWithData[],
 ) => (station: IStationData) => boolean = (list) => (station): boolean =>
-  list.find((marker) => station.id === +(marker.getTitle() ?? 0)) === undefined;
+  list.find((marker) => station.id === marker.stationData.id) === undefined;
 
-const getStationMarker: (station: IStationData) => string = (station) => {
-  let color: 'black' | 'red' | 'orange' | 'green' | 'gray' = 'gray';
-  const size: 'big' | 'small' = 'big';
-  const resourceNumber = station.bikes;
-  const activeResource = enums.StationResourceTypeEnum.bikes;
+const getStationMarker: (
+  station: IStationData,
+  resourceShown:
+    | typeof enums.StationResourceTypeEnum.bikes
+    | typeof enums.StationResourceTypeEnum.docks,
+  mapZoom: number,
+) => string = (station, resourceShown, mapZoom) => {
+  let color: 'black' | 'red' | 'orange' | 'green' | 'gray';
+  const size: 'big' | 'small' = mapZoom >= 14 ? 'big' : 'small';
+  const resourceNumber =
+    resourceShown === enums.StationResourceTypeEnum.bikes
+      ? station.bikes
+      : station.docks;
+  const activeResource = resourceShown;
 
   if (station.status === 1) {
     if (resourceNumber === 0) {
