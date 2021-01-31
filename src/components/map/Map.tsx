@@ -9,6 +9,7 @@ import { IMarkerWithData } from './interfaces';
 import { IStationData } from '../../interfaces';
 
 import './Map.css';
+import Button from '../button/Button';
 
 const Map: React.FunctionComponent = () => {
   const $mapWrapper = useRef<HTMLDivElement>(null);
@@ -151,38 +152,45 @@ const Map: React.FunctionComponent = () => {
     <div className="Map">
       <div ref={$mapWrapper} className="Map-wrapper" />
 
-      <button
-        className="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-full focus:shadow-outline hover:bg-indigo-800"
-        type="button"
-        onClick={showAboutMenu}
-        style={{ position: 'absolute', top: 8, right: 8 }}
+      <div
+        style={{
+          position: 'absolute',
+          top: 8,
+          right: 8,
+          height: 40,
+          width: 40,
+        }}
       >
-        <span role="img" aria-label="About">
-          ℹ️
-        </span>
-      </button>
+        <Button onClick={showAboutMenu}>
+          <span role="img" aria-label="About">
+            ℹ️
+          </span>
+        </Button>
+      </div>
 
-      <button
-        className="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-full focus:shadow-outline hover:bg-indigo-800"
-        type="button"
-        onClick={updateStationList}
-        style={{ position: 'absolute', bottom: 8, right: 8 }}
+      <div
+        style={{
+          position: 'absolute',
+          display: 'flex',
+          flexDirection: 'row-reverse',
+          bottom: 8,
+          right: 8,
+          height: 40,
+          width: 95,
+        }}
       >
-        <span role="img" aria-label="refresh">
-          🔄
-        </span>
-      </button>
+        <Button onClick={updateStationList}>
+          <span role="img" aria-label="Refresh">
+            🔄
+          </span>
+        </Button>
 
-      <button
-        className="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-full focus:shadow-outline hover:bg-indigo-800"
-        type="button"
-        onClick={toggleResourceType}
-        style={{ position: 'absolute', bottom: 8, right: 64 }}
-      >
-        <span role="img" aria-label="toggle">
-          🔀
-        </span>
-      </button>
+        <Button onClick={toggleResourceType}>
+          <span role="img" aria-label="Toggle">
+            🔀
+          </span>
+        </Button>
+      </div>
     </div>
   );
 };
