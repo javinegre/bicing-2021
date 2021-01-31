@@ -14,33 +14,36 @@ const Map: React.FunctionComponent = () => {
   const $mapWrapper = useRef<HTMLDivElement>(null);
   const [markerList, setMarkerList] = useState<IMarkerWithData[]>([]);
 
-  const [visibleStations, setVisibleStations] = useState<IStationData[]>([]);
-
   const {
     stationList,
-    resourceShown,
     mapCenter,
     mapZoom,
+    visibleStations,
+    resourceShown,
   } = storeHooks.useStoreState((state) => ({
     stationList: state.stationList,
+    mapCenter: state.map.mapCenter,
+    mapZoom: state.map.mapZoom,
+    visibleStations: state.map.visibleStations,
     resourceShown: state.ui.resourceShown,
-    mapCenter: state.ui.mapCenter,
-    mapZoom: state.ui.mapZoom,
   }));
+
   const {
     fetchStationList,
+    setMapCenter,
+    setMapZoom,
+    setVisibleStations,
     toggleAboutMenu,
     selectStation,
     toggleResourceShown,
-    setMapCenter,
-    setMapZoom,
   } = storeHooks.useStoreActions((actions) => ({
     fetchStationList: actions.stationList.fetch,
+    setMapCenter: actions.map.setMapCenter,
+    setMapZoom: actions.map.setMapZoom,
+    setVisibleStations: actions.map.setVisibleStations,
     toggleAboutMenu: actions.ui.toggleAboutMenu,
-    selectStation: actions.ui.selectStation,
+    selectStation: actions.map.selectStation,
     toggleResourceShown: actions.ui.toggleResourceShown,
-    setMapCenter: actions.ui.setMapCenter,
-    setMapZoom: actions.ui.setMapZoom,
   }));
 
   const updateStationList: () => void = () => {
@@ -87,6 +90,10 @@ const Map: React.FunctionComponent = () => {
       setMarkerList([...shownMarkers, ...newMarkers]);
     }
   }, [mapHandler, visibleStations]);
+
+  useEffect(() => {
+    mapHandler?.panTo(mapCenter);
+  }, [mapCenter]);
 
   useEffect(() => {
     // Re-render icons

@@ -1,34 +1,25 @@
 /* eslint-disable no-param-reassign */
 
-import { action, computed } from 'easy-peasy';
+import { action, Actions, computed, thunk } from 'easy-peasy';
 
-import mapConfig from '../components/map/config';
-
-import { IStoreUiModel } from './interfaces';
-import { IStationData } from '../interfaces';
-import { StationSelectedType } from './types';
+import { IStoreModel, IStoreUiModel } from './interfaces';
 import enums from '../enums';
+import { StationSelectedType } from './types';
 
 const storeUiModel: IStoreUiModel = {
-  stationSelectedID: null,
-  stationSelectedData: computed(
-    [
-      (state): StationSelectedType => state.stationSelectedID,
-      (state, storeState): IStationData[] => storeState.stationList.stations,
-    ],
-    (stationSelectedID, stations) =>
-      stations.find((station) => station.id === stationSelectedID) ?? null,
-  ),
   resourceShown: enums.StationResourceTypeEnum.bikes,
-  mapCenter: mapConfig.center,
-  mapZoom: mapConfig.zoom,
-  infoMenuShown: computed((state) => state.stationSelectedID !== null),
+  infoMenuShown: computed(
+    [
+      (state, storeState): StationSelectedType =>
+        storeState.map.stationSelectedID,
+    ],
+    (stationSelectedID) => stationSelectedID !== null,
+  ),
   aboutMenuShown: false,
-  selectStation: action((state, payload) => {
-    state.stationSelectedID = payload;
-  }),
-  hideInfoMenu: action((state) => {
-    state.stationSelectedID = null;
+  hideInfoMenu: thunk((actions, payload, helpers) => {
+    const mapStoreActions = (helpers.getStoreActions() as Actions<IStoreModel>)
+      .map;
+    mapStoreActions.selectStation(null);
   }),
   toggleAboutMenu: action((state, payload) => {
     state.aboutMenuShown = payload ?? false;
@@ -38,12 +29,6 @@ const storeUiModel: IStoreUiModel = {
       state.resourceShown === enums.StationResourceTypeEnum.bikes
         ? enums.StationResourceTypeEnum.docks
         : enums.StationResourceTypeEnum.bikes;
-  }),
-  setMapCenter: action((state, payload) => {
-    state.mapCenter = payload;
-  }),
-  setMapZoom: action((state, payload) => {
-    state.mapZoom = payload;
   }),
 };
 

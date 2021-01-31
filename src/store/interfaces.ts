@@ -1,4 +1,4 @@
-import { Action, Computed, Thunk } from 'easy-peasy';
+import { Action, ActionMapper, Computed, Thunk } from 'easy-peasy';
 
 import { IStationData, IStationList } from '../interfaces';
 import { StationSelectedType } from './types';
@@ -10,29 +10,37 @@ export interface IStoreStationListModel extends IStationList {
   fetch: Thunk<IStoreStationListModel, undefined>;
 }
 
-export interface IStoreUiModel {
+export interface IStoreMapModel {
+  mapCenter: IMapsCoordinates;
+  mapZoom: number;
   stationSelectedID: StationSelectedType;
-  stationSelectedData: Computed<
-    IStoreUiModel,
-    IStationData | null,
-    IStoreModel
-  >;
+  stationSelectedData: IStationData | null;
+  visibleStations: IStationData[];
+  setMapCenter: Action<IStoreMapModel, IMapsCoordinates>;
+  setMapZoom: Action<IStoreMapModel, number>;
+  selectStation: Thunk<IStoreMapModel, StationSelectedType, IStoreModel>;
+  setStationSelectedID: Action<IStoreMapModel, StationSelectedType>;
+  setStationSelectedData: Action<IStoreMapModel, IStationData | null>;
+  setVisibleStations: Action<IStoreMapModel, IStationData[]>;
+}
+
+export interface IStoreUiModel {
   resourceShown:
     | typeof enums.StationResourceTypeEnum.bikes
     | typeof enums.StationResourceTypeEnum.docks;
-  mapCenter: IMapsCoordinates;
-  mapZoom: number;
-  infoMenuShown: Computed<IStoreUiModel, boolean>;
+  infoMenuShown: Computed<IStoreUiModel, boolean, IStoreModel>;
   aboutMenuShown: boolean;
-  selectStation: Action<IStoreUiModel, StationSelectedType>;
-  hideInfoMenu: Action<IStoreUiModel>;
+  hideInfoMenu: Thunk<
+    IStoreUiModel,
+    undefined,
+    ActionMapper<IStoreModel, never>
+  >;
   toggleAboutMenu: Action<IStoreUiModel, boolean | undefined>;
   toggleResourceShown: Action<IStoreUiModel>;
-  setMapCenter: Action<IStoreUiModel, IMapsCoordinates>;
-  setMapZoom: Action<IStoreUiModel, number>;
 }
 
 export interface IStoreModel {
   stationList: IStoreStationListModel;
+  map: IStoreMapModel;
   ui: IStoreUiModel;
 }
