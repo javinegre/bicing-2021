@@ -6,8 +6,8 @@ import mapConfig from '../components/map/config';
 import { IStoreMapModel, IStoreModel } from './interfaces';
 
 const storeMapModel: IStoreMapModel = {
-  mapCenter: mapConfig.center,
-  mapZoom: mapConfig.zoom,
+  mapCenter: mapConfig.mapOptions.center,
+  mapZoom: mapConfig.mapOptions.zoom,
   stationSelectedID: null,
   stationSelectedData: null,
   visibleStations: [],

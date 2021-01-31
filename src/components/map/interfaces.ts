@@ -8,3 +8,7 @@ export interface IMapsCoordinates {
 export interface IMarkerWithData extends google.maps.Marker {
   stationData: IStationData;
 }
+
+export interface INearbyAreaConfig {
+  [zoom: number]: number;
+}

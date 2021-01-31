@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { debounce } from 'lodash';
 
+import MapHints from './mapHints';
 import useGoogleMaps from '../../hooks/useGoogleMaps';
 import mapConfig from './config';
 import mapHelpers from './helpers';
@@ -60,7 +61,7 @@ const Map: React.FunctionComponent = () => {
     googleMapsApiKey: window.env?.GOOGLE_MAPS_API_KEY ?? '',
     mapDiv: $mapWrapper.current,
     mapOptions: {
-      ...mapConfig,
+      ...mapConfig.mapOptions,
       center: mapCenter,
       zoom: mapZoom,
     },
@@ -172,6 +173,8 @@ const Map: React.FunctionComponent = () => {
   return (
     <div className="Map">
       <div ref={$mapWrapper} className="Map-wrapper" />
+
+      <MapHints />
 
       <div
         style={{

@@ -1,4 +1,6 @@
-const mapConfig = {
+import { INearbyAreaConfig } from './interfaces';
+
+const mapOptions = {
   center: { lat: 41.38694482, lng: 2.17017464 },
   zoom: 15,
   options: {
@@ -245,4 +247,10 @@ const mapConfig = {
   },
 };
 
-export default mapConfig;
+const nearbyArea: INearbyAreaConfig = {
+  14: 120,
+  15: 240,
+  16: 480,
+};
+
+export default { mapOptions, nearbyArea };
