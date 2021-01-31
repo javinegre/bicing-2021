@@ -1,8 +1,8 @@
 import { Action, ActionMapper, Computed, Thunk } from 'easy-peasy';
 
 import { IStationData, IStationList } from '../interfaces';
-import { StationSelectedType } from './types';
-import enums from '../enums';
+import { BikeTypeFilterType, StationSelectedType } from './types';
+import { BikeTypeEnum, StationResourceTypeEnum } from '../enums';
 import { IMapsCoordinates } from '../components/map/interfaces';
 
 export interface IStoreStationListModel extends IStationList {
@@ -25,18 +25,18 @@ export interface IStoreMapModel {
 }
 
 export interface IStoreUiModel {
-  resourceShown:
-    | typeof enums.StationResourceTypeEnum.bikes
-    | typeof enums.StationResourceTypeEnum.docks;
+  resourceShown: StationResourceTypeEnum;
+  bikeTypeFilter: BikeTypeFilterType;
   infoMenuShown: Computed<IStoreUiModel, boolean, IStoreModel>;
   aboutMenuShown: boolean;
+  toggleResourceShown: Action<IStoreUiModel>;
+  toggleBikeType: Action<IStoreUiModel, BikeTypeEnum>;
   hideInfoMenu: Thunk<
     IStoreUiModel,
     undefined,
     ActionMapper<IStoreModel, never>
   >;
   toggleAboutMenu: Action<IStoreUiModel, boolean | undefined>;
-  toggleResourceShown: Action<IStoreUiModel>;
 }
 
 export interface IStoreModel {

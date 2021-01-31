@@ -1,6 +1,14 @@
-enum StationResourceTypeEnum {
+export enum StationStatusEnum {
+  inactive,
+  active,
+}
+
+export enum StationResourceTypeEnum {
   bikes,
   docks,
 }
 
-export default { StationResourceTypeEnum };
+export enum BikeTypeEnum {
+  mechanical,
+  electrical,
+}

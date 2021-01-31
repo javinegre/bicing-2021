@@ -1,4 +1,4 @@
-import enums from '../../enums';
+import { StationResourceTypeEnum } from '../../enums';
 
 import BbbIcon from '../../assets/icons/markers/bikes-big-black.svg';
 import BbgIcon from '../../assets/icons/markers/bikes-big-gray.svg';
@@ -25,7 +25,7 @@ import DsoIcon from '../../assets/icons/markers/docks-small-orange.svg';
 import DsrIcon from '../../assets/icons/markers/docks-small-red.svg';
 
 const icons = {
-  [enums.StationResourceTypeEnum.bikes]: {
+  [StationResourceTypeEnum.bikes]: {
     big: {
       black: BbbIcon,
       gray: BbgIcon,
@@ -41,7 +41,7 @@ const icons = {
       red: BsrIcon,
     },
   },
-  [enums.StationResourceTypeEnum.docks]: {
+  [StationResourceTypeEnum.docks]: {
     big: {
       black: DbbIcon,
       gray: DbgIcon,

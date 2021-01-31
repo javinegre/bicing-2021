@@ -1,7 +1,14 @@
-import enums from '../../enums';
+import appConfig from '../../config';
 import icons from './markerIcons';
 import { IStationData, IStationList } from '../../interfaces';
 import { IMarkerWithData } from './interfaces';
+import { BikeTypeFilterType } from '../../store/types';
+import { MarkerColorType, MarkerSizeType } from '../../types';
+import {
+  BikeTypeEnum,
+  StationResourceTypeEnum,
+  StationStatusEnum,
+} from '../../enums';
 
 const getVisibleStations: (
   stationList: IStationList | null,
@@ -32,36 +39,79 @@ const isNotInList: (
 ) => (station: IStationData) => boolean = (list) => (station): boolean =>
   list.find((marker) => station.id === marker.stationData.id) === undefined;
 
-const getStationMarker: (
+const getStationResourceNumber: (
   station: IStationData,
-  resourceShown:
-    | typeof enums.StationResourceTypeEnum.bikes
-    | typeof enums.StationResourceTypeEnum.docks,
-  mapZoom: number,
-) => string = (station, resourceShown, mapZoom) => {
-  let color: 'black' | 'red' | 'orange' | 'green' | 'gray';
-  const size: 'big' | 'small' = mapZoom >= 14 ? 'big' : 'small';
-  const resourceNumber =
-    resourceShown === enums.StationResourceTypeEnum.bikes
-      ? station.bikes
-      : station.docks;
-  const activeResource = resourceShown;
+  resourceShown: StationResourceTypeEnum,
+  bikeTypeFilter: BikeTypeFilterType,
+) => number = (station, resourceShown, bikeTypeFilter) => {
+  let resourceNumber;
 
-  if (station.status === 1) {
-    if (resourceNumber === 0) {
-      color = 'black';
-    } else if (resourceNumber <= 2) {
-      color = 'red';
-    } else if (resourceNumber <= 5) {
-      color = 'orange';
+  if (resourceShown === StationResourceTypeEnum.bikes) {
+    if (
+      bikeTypeFilter[BikeTypeEnum.mechanical] &&
+      !bikeTypeFilter[BikeTypeEnum.electrical]
+    ) {
+      resourceNumber = station.mechanical;
+    } else if (
+      !bikeTypeFilter[BikeTypeEnum.mechanical] &&
+      bikeTypeFilter[BikeTypeEnum.electrical]
+    ) {
+      resourceNumber = station.electrical;
     } else {
-      color = 'green';
+      resourceNumber = station.bikes;
     }
   } else {
-    color = 'gray';
+    resourceNumber = station.docks;
   }
 
-  return icons[activeResource][size][color];
+  return resourceNumber;
+};
+
+const getStationMarkerSize: (
+  station: IStationData,
+  mapZoom: number,
+) => MarkerSizeType = (station, mapZoom) =>
+  mapZoom >= appConfig.mapMarkerSizeZoomThreshold ? 'big' : 'small';
+
+const getStationMarkerColor: (
+  station: IStationData,
+  resourceNumber: number,
+) => MarkerColorType = (station, resourceNumber) => {
+  let color: MarkerColorType;
+  const colorConfig = appConfig.markerColor;
+
+  if (station.status === StationStatusEnum.active) {
+    if (resourceNumber === colorConfig.none.threshold) {
+      color = colorConfig.none.color;
+    } else if (resourceNumber <= colorConfig.danger.threshold) {
+      color = colorConfig.danger.color;
+    } else if (resourceNumber <= colorConfig.warning.threshold) {
+      color = colorConfig.warning.color;
+    } else {
+      color = colorConfig.success.color;
+    }
+  } else {
+    color = colorConfig.inactive.color;
+  }
+
+  return color;
+};
+
+const getStationMarker: (
+  station: IStationData,
+  resourceShown: StationResourceTypeEnum,
+  bikeTypeFilter: BikeTypeFilterType,
+  mapZoom: number,
+) => string = (station, resourceShown, bikeTypeFilter, mapZoom) => {
+  const resourceNumber = getStationResourceNumber(
+    station,
+    resourceShown,
+    bikeTypeFilter,
+  );
+  const size = getStationMarkerSize(station, mapZoom);
+  const color = getStationMarkerColor(station, resourceNumber);
+
+  return icons[resourceShown][size][color];
 };
 
 export default {

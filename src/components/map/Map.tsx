@@ -7,6 +7,7 @@ import mapHelpers from './helpers';
 import storeHooks from '../../store/hooks';
 import { IMarkerWithData } from './interfaces';
 import { IStationData } from '../../interfaces';
+import { BikeTypeEnum } from '../../enums';
 
 import './Map.css';
 import Button from '../button/Button';
@@ -21,12 +22,14 @@ const Map: React.FunctionComponent = () => {
     mapZoom,
     visibleStations,
     resourceShown,
+    bikeTypeFilter,
   } = storeHooks.useStoreState((state) => ({
     stationList: state.stationList,
     mapCenter: state.map.mapCenter,
     mapZoom: state.map.mapZoom,
     visibleStations: state.map.visibleStations,
     resourceShown: state.ui.resourceShown,
+    bikeTypeFilter: state.ui.bikeTypeFilter,
   }));
 
   const {
@@ -37,6 +40,7 @@ const Map: React.FunctionComponent = () => {
     toggleAboutMenu,
     selectStation,
     toggleResourceShown,
+    toggleBikeType,
   } = storeHooks.useStoreActions((actions) => ({
     fetchStationList: actions.stationList.fetch,
     setMapCenter: actions.map.setMapCenter,
@@ -45,6 +49,7 @@ const Map: React.FunctionComponent = () => {
     toggleAboutMenu: actions.ui.toggleAboutMenu,
     selectStation: actions.map.selectStation,
     toggleResourceShown: actions.ui.toggleResourceShown,
+    toggleBikeType: actions.ui.toggleBikeType,
   }));
 
   const updateStationList: () => void = () => {
@@ -100,10 +105,15 @@ const Map: React.FunctionComponent = () => {
     // Re-render icons
     markerList.forEach((marker) => {
       marker.setIcon(
-        mapHelpers.getStationMarker(marker.stationData, resourceShown, mapZoom),
+        mapHelpers.getStationMarker(
+          marker.stationData,
+          resourceShown,
+          bikeTypeFilter,
+          mapZoom,
+        ),
       );
     });
-  }, [resourceShown, mapZoom]);
+  }, [resourceShown, bikeTypeFilter, mapZoom]);
 
   const onBoundsChanged = useCallback(
     debounce(() => {
@@ -128,7 +138,12 @@ const Map: React.FunctionComponent = () => {
       station,
       {
         position: { lat: station.lat, lng: station.lng },
-        icon: mapHelpers.getStationMarker(station, resourceShown, mapZoom),
+        icon: mapHelpers.getStationMarker(
+          station,
+          resourceShown,
+          bikeTypeFilter,
+          mapZoom,
+        ),
       },
       () => {
         const newMarkerPosition = newMarker.getPosition();
@@ -145,6 +160,12 @@ const Map: React.FunctionComponent = () => {
   };
 
   const toggleResourceType: () => void = () => toggleResourceShown();
+
+  const toggleBikeTypeTo: (bikeType: BikeTypeEnum) => () => void = (
+    bikeType,
+  ) => (): void => {
+    toggleBikeType(bikeType);
+  };
 
   const showAboutMenu: () => void = () => toggleAboutMenu(true);
 
@@ -176,7 +197,7 @@ const Map: React.FunctionComponent = () => {
           bottom: 8,
           right: 8,
           height: 40,
-          width: 95,
+          width: 192,
         }}
       >
         <Button onClick={updateStationList}>
@@ -188,6 +209,24 @@ const Map: React.FunctionComponent = () => {
         <Button onClick={toggleResourceType}>
           <span role="img" aria-label="Toggle">
             🔀
+          </span>
+        </Button>
+
+        <Button
+          onClick={toggleBikeTypeTo(BikeTypeEnum.electrical)}
+          disabled={!bikeTypeFilter[BikeTypeEnum.electrical]}
+        >
+          <span role="img" aria-label="Toggle">
+            ⚡️
+          </span>
+        </Button>
+
+        <Button
+          onClick={toggleBikeTypeTo(BikeTypeEnum.mechanical)}
+          disabled={!bikeTypeFilter[BikeTypeEnum.mechanical]}
+        >
+          <span role="img" aria-label="Toggle">
+            ⚙️
           </span>
         </Button>
       </div>
