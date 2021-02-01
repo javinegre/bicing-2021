@@ -1,6 +1,6 @@
 import appConfig from '../../config';
 import icons from './markerIcons';
-import { IStationData, IStationList } from '../../interfaces';
+import { IStationData } from '../../interfaces';
 import { IMarkerWithData } from './interfaces';
 import { BikeTypeFilterType } from '../../store/types';
 import { MarkerColorType, MarkerSizeType } from '../../types';
@@ -11,10 +11,10 @@ import {
 } from '../../enums';
 
 const getVisibleStations: (
-  stationList: IStationList | null,
+  stations: IStationData[],
   mapHandler: google.maps.Map | null,
-) => IStationData[] = (stationList, mapHandler) =>
-  stationList?.stations.filter((station) =>
+) => IStationData[] = (stations, mapHandler) =>
+  stations.filter((station) =>
     mapHandler?.getBounds()?.contains({ lat: station.lat, lng: station.lng }),
   ) ?? [];
 
