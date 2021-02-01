@@ -11,22 +11,23 @@ const InfoMenu: React.FunctionComponent = () => {
     menuShown,
     stationData,
     mapCenter,
-    mapZoom,
     visibleStations,
   } = storeHooks.useStoreState((state) => ({
     menuShown: state.ui.infoMenuShown,
     stationData: state.map.stationSelectedData,
     mapCenter: state.map.mapCenter,
-    mapZoom: state.map.mapZoom,
     visibleStations: state.map.visibleStations,
   }));
 
-  const { hideInfoMenu, selectStation } = storeHooks.useStoreActions(
-    (actions) => ({
-      hideInfoMenu: actions.ui.hideInfoMenu,
-      selectStation: actions.map.selectStation,
-    }),
-  );
+  const {
+    hideInfoMenu,
+    toggleAboutMenu,
+    selectStation,
+  } = storeHooks.useStoreActions((actions) => ({
+    hideInfoMenu: actions.ui.hideInfoMenu,
+    toggleAboutMenu: actions.ui.toggleAboutMenu,
+    selectStation: actions.map.selectStation,
+  }));
 
   const hideMenu: () => void = () => hideInfoMenu();
 
@@ -48,6 +49,8 @@ const InfoMenu: React.FunctionComponent = () => {
     getStationDistance(stationA, mapCenter) -
     getStationDistance(stationB, mapCenter);
 
+  const showAboutMenu: () => void = () => toggleAboutMenu(true);
+
   return (
     <div className="InfoMenu-wrapper">
       <div
@@ -55,34 +58,40 @@ const InfoMenu: React.FunctionComponent = () => {
         onClick={hideMenu}
       />
       <aside className={`InfoMenu ${getMenuVisibilityClassName()}`}>
-        {stationData && (
-          <div>
-            {stationData.name}
-            <br />
-            {stationData.bikes}: ({stationData.mechanical} +{' '}
-            {stationData.electrical})
-            <br />
-            {stationData.docks}
-          </div>
-        )}
-        {!stationData && <div>No station selected</div>}
+        <div className="InfoMenu-section--sticky">
+          {stationData && (
+            <div>
+              {stationData.name}
+              <br />
+              {stationData.bikes}: ({stationData.mechanical} +{' '}
+              {stationData.electrical})
+              <br />
+              {stationData.docks}
+            </div>
+          )}
+          {!stationData && <div>No station selected</div>}
+        </div>
         <hr />
-        {mapCenter.lat} - {mapCenter.lng}
-        <hr />
-        {mapZoom}
-        <hr />
-        {visibleStations.sort(sortByDistance).map((station) => (
-          <span key={station.id}>
-            <span
-              onClick={(): void => {
-                selectStation(station.id);
-              }}
-            >
-              {station.id}
+        <div className="InfoMenu-section--scrollable">
+          {visibleStations.sort(sortByDistance).map((station) => (
+            <span key={station.id}>
+              <span
+                onClick={(): void => {
+                  selectStation(station.id);
+                }}
+              >
+                {station.name}
+              </span>
+              <br />
             </span>
-            <br />
+          ))}
+        </div>
+        <div className="InfoMenu-section--sticky" onClick={showAboutMenu}>
+          <span role="img" aria-label="Info">
+            ℹ️
           </span>
-        ))}
+          Info about this app
+        </div>
       </aside>
     </div>
   );

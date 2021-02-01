@@ -46,7 +46,6 @@ const Map: React.FunctionComponent = () => {
     setMapCenter,
     setMapZoom,
     setVisibleStations,
-    toggleAboutMenu,
     selectStation,
     toggleResourceShown,
     toggleBikeType,
@@ -55,7 +54,6 @@ const Map: React.FunctionComponent = () => {
     setMapCenter: actions.map.setMapCenter,
     setMapZoom: actions.map.setMapZoom,
     setVisibleStations: actions.map.setVisibleStations,
-    toggleAboutMenu: actions.ui.toggleAboutMenu,
     selectStation: actions.map.selectStation,
     toggleResourceShown: actions.ui.toggleResourceShown,
     toggleBikeType: actions.ui.toggleBikeType,
@@ -203,29 +201,11 @@ const Map: React.FunctionComponent = () => {
     toggleBikeType(bikeType);
   };
 
-  const showAboutMenu: () => void = () => toggleAboutMenu(true);
-
   return (
-    <div className="Map">
+    <div className={`Map ${infoMenuShown ? 'Map--blurred' : ''}`}>
       <div ref={$mapWrapper} className="Map-wrapper" />
 
       <MapHints />
-
-      <div
-        style={{
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          height: 40,
-          width: 40,
-        }}
-      >
-        <Button onClick={showAboutMenu}>
-          <span role="img" aria-label="About">
-            ℹ️
-          </span>
-        </Button>
-      </div>
 
       <div
         style={{
