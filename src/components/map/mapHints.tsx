@@ -7,7 +7,8 @@ import { ReactComponent as CrossHairIcon } from '../../assets/icons/hints/crossh
 const MapHints: React.FunctionComponent = () => {
   const mapZoom = storeHooks.useStoreState((state) => state.map.mapZoom);
 
-  const nearbyAreaDiameter: number | undefined = mapConfig.nearbyArea[mapZoom];
+  const nearbyAreaDiameter: number | undefined =
+    mapConfig.nearbyAreaHintConfig[mapZoom];
 
   return (
     <div className="Map-hints">

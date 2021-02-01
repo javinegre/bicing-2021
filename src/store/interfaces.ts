@@ -1,6 +1,10 @@
 import { Action, ActionMapper, Computed, Thunk } from 'easy-peasy';
 
-import { IStationData, IStationList } from '../interfaces';
+import {
+  IStationData,
+  IStationDataExtended,
+  IStationList,
+} from '../interfaces';
 import { BikeTypeFilterType, StationSelectedType } from './types';
 import { BikeTypeEnum, StationResourceTypeEnum } from '../enums';
 import { IMapsCoordinates } from '../components/map/interfaces';
@@ -15,13 +19,13 @@ export interface IStoreMapModel {
   mapZoom: number;
   stationSelectedID: StationSelectedType;
   stationSelectedData: IStationData | null;
-  visibleStations: IStationData[];
+  visibleStations: IStationDataExtended[];
   setMapCenter: Action<IStoreMapModel, IMapsCoordinates>;
   setMapZoom: Action<IStoreMapModel, number>;
   selectStation: Thunk<IStoreMapModel, StationSelectedType, IStoreModel>;
   setStationSelectedID: Action<IStoreMapModel, StationSelectedType>;
   setStationSelectedData: Action<IStoreMapModel, IStationData | null>;
-  setVisibleStations: Action<IStoreMapModel, IStationData[]>;
+  setVisibleStations: Action<IStoreMapModel, IStationDataExtended[]>;
 }
 
 export interface IStoreUiModel {

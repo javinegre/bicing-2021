@@ -1,7 +1,7 @@
 import appConfig from '../../config';
 import icons from './markerIcons';
-import { IStationData } from '../../interfaces';
-import { IMarkerWithData } from './interfaces';
+import { IStationData, IStationDataExtended } from '../../interfaces';
+import { IMapsCoordinates, IMarkerWithData } from './interfaces';
 import { BikeTypeFilterType } from '../../store/types';
 import { MarkerColorType, MarkerSizeType } from '../../types';
 import {
@@ -10,13 +10,54 @@ import {
   StationStatusEnum,
 } from '../../enums';
 
+const getMapHandlerCenterCoordinates: (
+  mapHandler: google.maps.Map | null,
+) => IMapsCoordinates = (mapHandler) => ({
+  lat: mapHandler?.getCenter().lat() ?? 0,
+  lng: mapHandler?.getCenter().lng() ?? 0,
+});
+
+const getStationDistance: (
+  stationData: IStationData,
+  center: IMapsCoordinates,
+) => number = (station, center) =>
+  Math.sqrt((center.lat - station.lat) ** 2 + (center.lng - station.lng) ** 2);
+
+const isInNearbyArea: (
+  point: IStationData,
+  center: IMapsCoordinates,
+) => boolean = (point, center) => {
+  // From: https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
+  //   (pointLat - centerLat)²    (pointLng - centerLng)²
+  //  ------------------------ + ------------------------ ≤ 1
+  //         radiusLat²                 radiusLng²
+  const radiusLat: number = 0.0030375;
+  const radiusLng: number = 0.00405;
+
+  return (
+    (point.lat - center.lat) ** 2 / radiusLat ** 2 +
+      (point.lng - center.lng) ** 2 / radiusLng ** 2 <=
+    1
+  );
+};
+
 const getVisibleStations: (
   stations: IStationData[],
   mapHandler: google.maps.Map | null,
-) => IStationData[] = (stations, mapHandler) =>
-  stations.filter((station) =>
-    mapHandler?.getBounds()?.contains({ lat: station.lat, lng: station.lng }),
-  ) ?? [];
+) => IStationDataExtended[] = (stations, mapHandler) => {
+  const mapCenter = getMapHandlerCenterCoordinates(mapHandler);
+
+  const filteredStations =
+    stations.filter((station) =>
+      mapHandler?.getBounds()?.contains({ lat: station.lat, lng: station.lng }),
+    ) ?? [];
+
+  return filteredStations.map((station) => ({
+    ...station,
+    distance: getStationDistance(station, mapCenter),
+    inNearbyArea: isInNearbyArea(station, mapCenter),
+  }));
+};
 
 const splitMarkerListByVisibility: (
   markerList: IMarkerWithData[],

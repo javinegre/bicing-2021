@@ -9,6 +9,11 @@ export interface IMarkerWithData extends google.maps.Marker {
   stationData: IStationData;
 }
 
-export interface INearbyAreaConfig {
+export interface INearbyAreaHintConfig {
   [zoom: number]: number;
+}
+
+export interface INearbyAreaRadius {
+  lat: number;
+  lng: number;
 }

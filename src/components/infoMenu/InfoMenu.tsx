@@ -1,23 +1,18 @@
 import React from 'react';
 
 import storeHooks from '../../store/hooks';
+import { sortByDistance, splitStationListByDistance } from './helpers';
 
 import './InfoMenu.css';
-import { IStationData } from '../../interfaces';
-import { IMapsCoordinates } from '../map/interfaces';
 
 const InfoMenu: React.FunctionComponent = () => {
-  const {
-    menuShown,
-    stationData,
-    mapCenter,
-    visibleStations,
-  } = storeHooks.useStoreState((state) => ({
-    menuShown: state.ui.infoMenuShown,
-    stationData: state.map.stationSelectedData,
-    mapCenter: state.map.mapCenter,
-    visibleStations: state.map.visibleStations,
-  }));
+  const { menuShown, stationData, visibleStations } = storeHooks.useStoreState(
+    (state) => ({
+      menuShown: state.ui.infoMenuShown,
+      stationData: state.map.stationSelectedData,
+      visibleStations: state.map.visibleStations,
+    }),
+  );
 
   const {
     hideInfoMenu,
@@ -29,25 +24,15 @@ const InfoMenu: React.FunctionComponent = () => {
     selectStation: actions.map.selectStation,
   }));
 
+  const [closestStations, farthestStations] = splitStationListByDistance(
+    visibleStations,
+    stationData,
+  );
+
   const hideMenu: () => void = () => hideInfoMenu();
 
   const getMenuVisibilityClassName: () => 'shown' | '' = () =>
     menuShown ? 'shown' : '';
-
-  const getStationDistance: (
-    stationData: IStationData,
-    center: IMapsCoordinates,
-  ) => number = (station, center) =>
-    Math.sqrt(
-      (center.lat - station.lat) ** 2 + (center.lng - station.lng) ** 2,
-    );
-
-  const sortByDistance: (
-    stationA: IStationData,
-    stationB: IStationData,
-  ) => number = (stationA, stationB) =>
-    getStationDistance(stationA, mapCenter) -
-    getStationDistance(stationB, mapCenter);
 
   const showAboutMenu: () => void = () => toggleAboutMenu(true);
 
@@ -69,11 +54,24 @@ const InfoMenu: React.FunctionComponent = () => {
               {stationData.docks}
             </div>
           )}
-          {!stationData && <div>No station selected</div>}
         </div>
         <hr />
         <div className="InfoMenu-section--scrollable">
-          {visibleStations.sort(sortByDistance).map((station) => (
+          <div>Closest Station</div>
+          {closestStations.sort(sortByDistance).map((station) => (
+            <span key={station.id}>
+              <span
+                onClick={(): void => {
+                  selectStation(station.id);
+                }}
+              >
+                {station.name}
+              </span>
+              <br />
+            </span>
+          ))}
+          <div>Other Stations</div>
+          {farthestStations.sort(sortByDistance).map((station) => (
             <span key={station.id}>
               <span
                 onClick={(): void => {

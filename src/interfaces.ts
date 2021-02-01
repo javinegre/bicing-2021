@@ -12,6 +12,11 @@ export interface IStationData {
   status: 0 | 1;
 }
 
+export interface IStationDataExtended extends IStationData {
+  distance: number;
+  inNearbyArea: boolean;
+}
+
 export interface IStationList {
   updateTime: number;
   stations: IStationData[];
