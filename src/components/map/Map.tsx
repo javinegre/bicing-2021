@@ -78,6 +78,7 @@ const Map: React.FunctionComponent = () => {
       google.maps.event.clearInstanceListeners(mapHandler);
 
       mapHandler.addListener('dragend', onDragEnd);
+      mapHandler.addListener('zoom_changed', onZoomChanged);
 
       // Important! Waiting for 'tilesloaded' event is the only way to make sure that
       // mapHandler.getBounds()?.contains() is ready and the markers can be render properly
@@ -150,6 +151,7 @@ const Map: React.FunctionComponent = () => {
   useEffect(bindInitialEventsToMap, [mapHandler]);
   useEffect(updateStationVisibility, [stations, areBoundsReady]);
   useEffect(updateStationsWithinMap, [mapCenter, mapZoom]);
+  useEffect(refreshIcons, [mapZoom]);
   useEffect(updateMarkersList, [visibleStations]);
   useEffect(refreshIcons, [resourceShown, bikeTypeFilter]);
 
@@ -164,8 +166,16 @@ const Map: React.FunctionComponent = () => {
       });
       setMapZoom(mapHandler.getZoom());
       setVisibleStations(mapHelpers.getVisibleStations(stations, mapHandler));
+      selectStation(null);
     }
   }, [stations, mapHandler]);
+
+  const onZoomChanged = useCallback(() => {
+    // Google maps event. Update zoom values in the store when zoom is changed.
+    if (mapHandler) {
+      setMapZoom(mapHandler.getZoom());
+    }
+  }, [mapHandler]);
 
   const addMarkerToMap: (station: IStationData) => IMarkerWithData = (
     station,
