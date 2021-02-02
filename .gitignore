@@ -10,7 +10,6 @@
 
 # production
 /build
-/public/env.js
 
 # environment
 .env
