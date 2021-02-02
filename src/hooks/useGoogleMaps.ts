@@ -22,7 +22,7 @@ const useGoogleMaps: (params: IGoogleMapsHookParams) => IGoogleMapsHook = (
   };
 
   useEffect(() => {
-    (window as any).initGoogleMapCallback = initMap;
+    window.initGoogleMapCallback = initMap;
   }, []);
 
   useEffect(() => {
