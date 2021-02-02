@@ -62,7 +62,7 @@ const Map: React.FunctionComponent = () => {
   // ///////////////////////////////////////////////////////////////  Google Maps hook  /
 
   const { mapHandler, addMarker, removeMarker } = useGoogleMaps({
-    googleMapsApiKey: window.env?.GOOGLE_MAPS_API_KEY ?? '',
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY ?? '',
     mapDiv: $mapWrapper.current,
     mapOptions: {
       ...mapConfig.mapOptions,
