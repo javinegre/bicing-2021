@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import Button from '../button/Button';
+import Icon from '../ui/icon/icon';
 import MapHints from './mapHints';
 import useGoogleMaps from '../../hooks/useGoogleMaps';
 import mapConfig from './config';
@@ -7,10 +9,9 @@ import mapHelpers from './helpers';
 import storeHooks from '../../store/hooks';
 import { IMarkerWithData } from './interfaces';
 import { IStationData } from '../../interfaces';
-import { BikeTypeEnum } from '../../enums';
+import { BikeTypeEnum, StationResourceTypeEnum } from '../../enums';
 
 import './Map.css';
-import Button from '../button/Button';
 
 const Map: React.FunctionComponent = () => {
   // /////////////////////////////////////////////////////////////////  Component State  /
@@ -229,33 +230,29 @@ const Map: React.FunctionComponent = () => {
         }}
       >
         <Button onClick={updateStationList}>
-          <span role="img" aria-label="Refresh">
-            🔄
-          </span>
+          <Icon name="refresh" color="white" />
         </Button>
 
         <Button onClick={toggleResourceType}>
-          <span role="img" aria-label="Toggle">
-            🔀
-          </span>
+          {resourceShown === StationResourceTypeEnum.bikes ? (
+            <Icon name="parking" color="white" />
+          ) : (
+            <Icon name="bike" color="white" size={24} />
+          )}
         </Button>
 
         <Button
           onClick={toggleBikeTypeTo(BikeTypeEnum.electrical)}
           disabled={!bikeTypeFilter[BikeTypeEnum.electrical]}
         >
-          <span role="img" aria-label="Toggle">
-            ⚡️
-          </span>
+          <Icon name="bolt" color="white" />
         </Button>
 
         <Button
           onClick={toggleBikeTypeTo(BikeTypeEnum.mechanical)}
           disabled={!bikeTypeFilter[BikeTypeEnum.mechanical]}
         >
-          <span role="img" aria-label="Toggle">
-            ⚙️
-          </span>
+          <Icon name="gears" color="white" />
         </Button>
       </div>
     </div>
