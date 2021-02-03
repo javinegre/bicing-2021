@@ -166,7 +166,6 @@ const Map: React.FunctionComponent = () => {
         lng: mapHandler.getCenter().lng(),
       });
       setMapZoom(mapHandler.getZoom());
-      setVisibleStations(mapHelpers.getVisibleStations(stations, mapHandler));
       selectStation(null);
     }
   }, [stations, mapHandler]);
