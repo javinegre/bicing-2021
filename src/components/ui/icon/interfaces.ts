@@ -1,0 +1,8 @@
+import { IconNameType } from './types';
+import { Property } from 'csstype';
+
+export interface IIconProps {
+  name: IconNameType;
+  size?: number;
+  color?: Property.Color;
+}
