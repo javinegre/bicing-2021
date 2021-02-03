@@ -15,11 +15,11 @@ const InfoMenu: React.FunctionComponent = () => {
   );
 
   const {
-    hideInfoMenu,
+    toggleInfoMenu,
     toggleAboutMenu,
     selectStation,
   } = storeHooks.useStoreActions((actions) => ({
-    hideInfoMenu: actions.ui.hideInfoMenu,
+    toggleInfoMenu: actions.ui.toggleInfoMenu,
     toggleAboutMenu: actions.ui.toggleAboutMenu,
     selectStation: actions.map.selectStation,
   }));
@@ -29,7 +29,7 @@ const InfoMenu: React.FunctionComponent = () => {
     stationData,
   );
 
-  const hideMenu: () => void = () => hideInfoMenu();
+  const hideMenu: () => void = () => toggleInfoMenu(false);
 
   const getMenuVisibilityClassName: () => 'shown' | '' = () =>
     menuShown ? 'shown' : '';

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import { action, State, thunk } from 'easy-peasy';
+import { action, Actions, State, thunk } from 'easy-peasy';
 
 import mapConfig from '../components/map/config';
 import { IStoreMapModel, IStoreModel } from './interfaces';
@@ -20,6 +20,9 @@ const storeMapModel: IStoreMapModel = {
   selectStation: thunk((actions, payload, helpers) => {
     const stationListStoreState = (helpers.getStoreState() as State<IStoreModel>)
       .stationList;
+    const uiStoreActions = (helpers.getStoreActions() as Actions<IStoreModel>)
+      .ui;
+
     const stationData = stationListStoreState.stations.find(
       (station) => station.id === payload,
     );
@@ -30,6 +33,8 @@ const storeMapModel: IStoreMapModel = {
     if (stationData) {
       actions.setMapCenter({ lat: stationData.lat, lng: stationData.lng });
     }
+
+    uiStoreActions.toggleInfoMenu(stationData !== undefined);
   }),
   setStationSelectedID: action((state, payload) => {
     state.stationSelectedID = payload;

@@ -1,6 +1,6 @@
 import { BikeTypeEnum } from '../enums';
 
-export type StationSelectedType = 'all' | number | null;
+export type StationSelectedType = number | null;
 
 export type BikeTypeFilterType = {
   [BikeTypeEnum.mechanical]: boolean;

@@ -1,10 +1,9 @@
 /* eslint-disable no-param-reassign */
 
-import { action, Actions, computed, thunk } from 'easy-peasy';
+import { action } from 'easy-peasy';
 
-import { IStoreModel, IStoreUiModel } from './interfaces';
+import { IStoreUiModel } from './interfaces';
 import { BikeTypeEnum, StationResourceTypeEnum } from '../enums';
-import { StationSelectedType } from './types';
 
 const storeUiModel: IStoreUiModel = {
   resourceShown: StationResourceTypeEnum.bikes,
@@ -12,21 +11,13 @@ const storeUiModel: IStoreUiModel = {
     [BikeTypeEnum.mechanical]: true,
     [BikeTypeEnum.electrical]: true,
   },
-  infoMenuShown: computed(
-    [
-      (state, storeState): StationSelectedType =>
-        storeState.map.stationSelectedID,
-    ],
-    (stationSelectedID) => stationSelectedID !== null,
-  ),
+  infoMenuShown: false,
   aboutMenuShown: false,
-  hideInfoMenu: thunk((actions, payload, helpers) => {
-    const mapStoreActions = (helpers.getStoreActions() as Actions<IStoreModel>)
-      .map;
-    mapStoreActions.selectStation(null);
+  toggleInfoMenu: action((state, payload) => {
+    state.infoMenuShown = payload ?? !state.infoMenuShown;
   }),
   toggleAboutMenu: action((state, payload) => {
-    state.aboutMenuShown = payload ?? false;
+    state.aboutMenuShown = payload ?? !state.aboutMenuShown;
   }),
   toggleResourceShown: action((state) => {
     state.resourceShown =

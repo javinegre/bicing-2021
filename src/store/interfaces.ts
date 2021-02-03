@@ -1,4 +1,4 @@
-import { Action, ActionMapper, Computed, Thunk } from 'easy-peasy';
+import { Action, ActionMapper, Thunk } from 'easy-peasy';
 
 import {
   IStationData,
@@ -31,15 +31,11 @@ export interface IStoreMapModel {
 export interface IStoreUiModel {
   resourceShown: StationResourceTypeEnum;
   bikeTypeFilter: BikeTypeFilterType;
-  infoMenuShown: Computed<IStoreUiModel, boolean, IStoreModel>;
+  infoMenuShown: boolean;
   aboutMenuShown: boolean;
   toggleResourceShown: Action<IStoreUiModel>;
   toggleBikeType: Action<IStoreUiModel, BikeTypeEnum>;
-  hideInfoMenu: Thunk<
-    IStoreUiModel,
-    undefined,
-    ActionMapper<IStoreModel, never>
-  >;
+  toggleInfoMenu: Action<IStoreUiModel, boolean | undefined>;
   toggleAboutMenu: Action<IStoreUiModel, boolean | undefined>;
 }
 
