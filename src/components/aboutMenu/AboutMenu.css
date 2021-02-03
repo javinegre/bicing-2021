@@ -13,10 +13,6 @@
   transform: translateX(0);
 }
 
-.AboutMenu-wrapper {
-  order: 3;
-}
-
 .AboutMenu-backdrop {
   position: absolute;
   top: 0;

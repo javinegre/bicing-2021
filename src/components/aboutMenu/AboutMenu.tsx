@@ -18,7 +18,7 @@ const AboutMenu: React.FunctionComponent = () => {
     menuShown ? 'shown' : '';
 
   return (
-    <div className="AboutMenu-wrapper">
+    <div className="AboutMenu-wrapper order-3">
       <div
         className={`AboutMenu-backdrop ${getMenuVisibilityClassName()}`}
         onClick={hideMenu}

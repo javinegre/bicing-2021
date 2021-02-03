@@ -22,10 +22,6 @@
   transition: transform 200ms ease 260ms, opacity 320ms ease-in-out 260ms;
 }
 
-.InfoMenu-wrapper {
-  order: 1;
-}
-
 .InfoMenu-section--sticky {
   flex-grow: 0;
 }

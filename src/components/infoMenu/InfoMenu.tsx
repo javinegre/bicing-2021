@@ -37,7 +37,7 @@ const InfoMenu: React.FunctionComponent = () => {
   const showAboutMenu: () => void = () => toggleAboutMenu(true);
 
   return (
-    <div className="InfoMenu-wrapper">
+    <div className="InfoMenu-wrapper order-1">
       <div
         className={`InfoMenu-backdrop ${getMenuVisibilityClassName()}`}
         onClick={hideMenu}

@@ -1,7 +1,7 @@
 .Map {
   position: relative;
+  height: 100%;
   flex-grow: 1;
-  order: 2;
 }
 
 .Map--blurred {
