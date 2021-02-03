@@ -1,10 +1,11 @@
 import React from 'react';
 
 import storeHooks from '../../store/hooks';
+import Spacer from '../ui/spacer/spacer';
 import Icon from '../ui/icon/icon';
 import infoBoxHelpers from './helpers';
 
-const InfoBox: React.FunctionComponent = () => {
+const InfoBoxTotals: React.FunctionComponent = () => {
   const {
     visibleStations,
     resourceShown,
@@ -45,28 +46,36 @@ const InfoBox: React.FunctionComponent = () => {
   });
 
   return (
-    <div className="flex flex-row items-center px-4 py-2 bg-red-700 text-red-100">
+    <div className="flex flex-row items-center">
       <div {...getNumberBlockStyle(isBikesNumberHighlighted)}>
-        <span className="text-xl font-bold">{totals.bikes}</span>
         <Icon name="bike" color={iconColor} />
+        <Spacer x={4} />
+        <span className="text-xl font-bold">{totals.bikes}</span>
       </div>
+
+      <Spacer x={8} />
 
       <div {...getNumberBlockStyle(isMechanicalBikesNumberHighlighted)}>
-        {totals.mechanical}
         <Icon name="gears" color={iconColor} size={12} />
+        <Spacer x={4} />
+        {totals.mechanical}
       </div>
+
+      <Spacer x={4} />
 
       <div {...getNumberBlockStyle(isElectricalBikesNumberHighlighted)}>
-        {totals.electrical}
         <Icon name="bolt" color={iconColor} size={12} />
+        {totals.electrical}
       </div>
 
+      <Spacer x={12} />
+
       <div {...getNumberBlockStyle(isDocksNumberHighlighted)}>
+        <Icon name="parking" color={iconColor} size={18} />
         <span className="text-xl font-bold">{totals.docks}</span>
-        <Icon name="parking" color={iconColor} />
       </div>
     </div>
   );
 };
 
-export default InfoBox;
+export default InfoBoxTotals;

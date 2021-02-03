@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import InfoMenu from './components/infoMenu/InfoMenu';
-import InfoBox from './components/infoBox/InfoBox';
+import InfoBox from './components/infoBox/infoBox';
 import Map from './components/map/Map';
 import AboutMenu from './components/aboutMenu/AboutMenu';
 import storeHooks from './store/hooks';
@@ -24,7 +24,9 @@ const App: React.FunctionComponent = () => {
           <InfoBox />
           <Map />
         </section>
+
         <InfoMenu />
+
         <AboutMenu />
       </div>
     </main>
