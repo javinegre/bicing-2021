@@ -16,6 +16,10 @@ const InfoBoxTotals: React.FunctionComponent = () => {
     bikeTypeFilter: state.ui.bikeTypeFilter,
   }));
 
+  const toggleInfoMenu = storeHooks.useStoreActions(
+    (actions) => actions.ui.toggleInfoMenu,
+  );
+
   const {
     isInNearbyArea,
     calculateTotals,
@@ -45,8 +49,12 @@ const InfoBoxTotals: React.FunctionComponent = () => {
     },
   });
 
+  const showInfoMenu: () => void = () => {
+    toggleInfoMenu(true);
+  };
+
   return (
-    <div className="flex flex-row items-center">
+    <div className="flex flex-row items-center" onClick={showInfoMenu}>
       <div {...getNumberBlockStyle(isBikesNumberHighlighted)}>
         <Icon name="bike" color={iconColor} />
         <Spacer x={4} />
