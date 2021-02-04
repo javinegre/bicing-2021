@@ -13,7 +13,8 @@ export type IconNameType =
   | 'info'
   | 'parking'
   | 'refresh'
-  | 'star';
+  | 'star'
+  | 'time-refresh';
 
 export type IconConfigType = {
   [name in IconNameType]: ReactComponentIconType;
