@@ -1,10 +1,5 @@
 import { IStationData, IStationDataExtended } from '../../interfaces';
 
-const sortByDistance: (
-  stationA: IStationDataExtended,
-  stationB: IStationDataExtended,
-) => number = (stationA, stationB) => stationA.distance - stationB.distance;
-
 const splitStationListByDistance: (
   stationList: IStationDataExtended[],
   selectedStationData: IStationData | null,
@@ -26,4 +21,4 @@ const splitStationListByDistance: (
     [[], []],
   );
 
-export { sortByDistance, splitStationListByDistance };
+export { splitStationListByDistance };
