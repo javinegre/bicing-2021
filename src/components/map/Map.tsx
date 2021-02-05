@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import Button from '../button/Button';
+import Button from '../ui/button/Button';
 import Icon from '../ui/icon/icon';
 import MapHints from './mapHints';
 import useGoogleMaps from '../../hooks/useGoogleMaps';
