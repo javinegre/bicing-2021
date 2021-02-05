@@ -29,9 +29,3 @@
     width: 960px;
   }
 }
-
-@media all and (min-width: 1360px) {
-  .App-wrapper {
-    width: 1320px;
-  }
-}

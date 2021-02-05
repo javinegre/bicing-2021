@@ -35,12 +35,3 @@
   }
 }
 
-@media all and (min-width: 1360px) {
-  .AboutMenu {
-    position: static;
-    top: auto;
-    bottom: auto;
-    right: auto;
-    transform: none;
-  }
-}
