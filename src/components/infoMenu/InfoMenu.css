@@ -22,12 +22,7 @@
   transition: transform 200ms ease 260ms, opacity 320ms ease-in-out 260ms;
 }
 
-.InfoMenu-section--sticky {
-  flex-grow: 0;
-}
-
 .InfoMenu-section--scrollable {
-  flex-grow: 1;
   overflow: scroll;
 }
 
