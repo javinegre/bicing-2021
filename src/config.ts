@@ -3,6 +3,13 @@ import { IMarkerColorConfig } from './interfaces';
 const bicingApiUrl: string = 'https://negre.co/bicing/api/v1.0/';
 
 // Ui
+const infoMenuIconColor = '#404040';
+const stationStatusBarColor = {
+  mechanical: 'red',
+  electrical: 'gold',
+  docks: '#404040',
+};
+
 const mapMarkerSizeZoomThreshold = 14;
 const markerColor: IMarkerColorConfig = {
   inactive: {
@@ -29,6 +36,8 @@ const markerColor: IMarkerColorConfig = {
 
 export default {
   bicingApiUrl,
+  infoMenuIconColor,
+  stationStatusBarColor,
   mapMarkerSizeZoomThreshold,
   markerColor,
 };
