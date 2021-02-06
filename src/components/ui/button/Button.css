@@ -1,0 +1,23 @@
+.Button {
+  background-color: theme('colors.gray.700');
+}
+
+.Button:hover {
+  background-color: theme('colors.gray.900');
+}
+
+.Button.red {
+  background-color: theme('colors.red.700');
+}
+
+.Button.red:hover {
+  background-color: theme('colors.red.800');
+}
+
+.Button.lightgray {
+  background-color: theme('colors.gray.300');
+}
+
+.Button.lightgray:hover {
+  background-color: theme('colors.gray.400');
+}

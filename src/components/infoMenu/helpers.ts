@@ -21,4 +21,4 @@ const splitStationListByDistance: (
     [[], []],
   );
 
-export { splitStationListByDistance };
+export default { splitStationListByDistance };

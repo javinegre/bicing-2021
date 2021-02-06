@@ -5,7 +5,7 @@ import InfoMenuList from '../infoMenuList/infoMenuList';
 import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
 import storeHooks from '../../store/hooks';
-import { splitStationListByDistance } from './helpers';
+import infoMenuHelpers from './helpers';
 import appConfig from '../../config';
 
 import './InfoMenu.css';
@@ -26,10 +26,10 @@ const InfoMenu: React.FunctionComponent = () => {
     }),
   );
 
-  const [closestStations, farthestStations] = splitStationListByDistance(
-    visibleStations,
-    stationData,
-  );
+  const [
+    closestStations,
+    farthestStations,
+  ] = infoMenuHelpers.splitStationListByDistance(visibleStations, stationData);
 
   const hideMenu: () => void = () => toggleInfoMenu(false);
 

@@ -1,16 +1,38 @@
 import React from 'react';
 
 import { IButton } from './interfaces';
+import { ButtonSizeType } from './types';
+
+import './Button.css';
 
 const Button: React.FunctionComponent<IButton> = (props) => {
-  const { children, className, disabled, onClick } = props;
+  const { onClick, children, className, color, size, disabled } = props;
 
-  const sizeClassName: string = 'w-10 h-10';
+  const baseClassName: string =
+    'inline-flex items-center justify-center transition-colors duration-150 rounded-full focus:outline-none';
   const disabledClassName: string = disabled ? 'opacity-30' : '';
+
+  const getSizeClassName: (btnSize: ButtonSizeType | undefined) => string = (
+    btnSize,
+  ) => {
+    let sizeClassName;
+
+    if (btnSize === 'sm') {
+      sizeClassName = 'w-8 h-8';
+    } else if (btnSize === 'lg') {
+      sizeClassName = 'w-12 h-12';
+    } else {
+      sizeClassName = 'w-10 h-10';
+    }
+
+    return sizeClassName;
+  };
 
   return (
     <button
-      className={`inline-flex items-center justify-center ${sizeClassName} mr-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-full focus:outline-none hover:bg-indigo-800 ${disabledClassName} ${className}`}
+      className={`Button ${baseClassName} ${color ?? ''} ${getSizeClassName(
+        size,
+      )} ${disabledClassName} ${className}`}
       type="button"
       onClick={onClick}
     >

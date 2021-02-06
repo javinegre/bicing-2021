@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import Button from '../ui/button/Button';
-import Icon from '../ui/icon/icon';
+import MapControls from '../mapControls/MapControls';
 import MapHints from './mapHints';
 import useGoogleMaps from '../../hooks/useGoogleMaps';
 import mapConfig from './config';
@@ -9,7 +8,6 @@ import mapHelpers from './helpers';
 import storeHooks from '../../store/hooks';
 import { IMarkerWithData } from './interfaces';
 import { IStationData } from '../../interfaces';
-import { BikeTypeEnum, StationResourceTypeEnum } from '../../enums';
 
 import './Map.css';
 
@@ -43,21 +41,15 @@ const Map: React.FunctionComponent = () => {
   // //////////////////////////////////////////////////////////////////  Store Actions  /
 
   const {
-    fetchStationList,
     setMapCenter,
     setMapZoom,
     setVisibleStations,
     selectStation,
-    toggleResourceShown,
-    toggleBikeType,
   } = storeHooks.useStoreActions((actions) => ({
-    fetchStationList: actions.stationList.fetch,
     setMapCenter: actions.map.setMapCenter,
     setMapZoom: actions.map.setMapZoom,
     setVisibleStations: actions.map.setVisibleStations,
     selectStation: actions.map.selectStation,
-    toggleResourceShown: actions.ui.toggleResourceShown,
-    toggleBikeType: actions.ui.toggleBikeType,
   }));
 
   // ///////////////////////////////////////////////////////////////  Google Maps hook  /
@@ -197,63 +189,13 @@ const Map: React.FunctionComponent = () => {
       },
     );
 
-  // /////////////////////////////////////////////////////////////////////  UI Actions  /
-
-  const updateStationList: () => void = () => {
-    fetchStationList();
-  };
-
-  const toggleResourceType: () => void = () => toggleResourceShown();
-
-  const toggleBikeTypeTo: (bikeType: BikeTypeEnum) => () => void = (
-    bikeType,
-  ) => (): void => {
-    toggleBikeType(bikeType);
-  };
-
   return (
     <div className={`Map ${infoMenuShown ? 'Map--blurred' : ''}`}>
       <div ref={$mapWrapper} className="Map-wrapper" />
 
       <MapHints />
 
-      <div
-        style={{
-          position: 'absolute',
-          display: 'flex',
-          flexDirection: 'row-reverse',
-          bottom: 8,
-          right: 8,
-          height: 40,
-          width: 192,
-        }}
-      >
-        <Button onClick={updateStationList}>
-          <Icon name="refresh" color="white" />
-        </Button>
-
-        <Button onClick={toggleResourceType}>
-          {resourceShown === StationResourceTypeEnum.bikes ? (
-            <Icon name="parking" color="white" />
-          ) : (
-            <Icon name="bike" color="white" size={24} />
-          )}
-        </Button>
-
-        <Button
-          onClick={toggleBikeTypeTo(BikeTypeEnum.electrical)}
-          disabled={!bikeTypeFilter[BikeTypeEnum.electrical]}
-        >
-          <Icon name="bolt" color="white" />
-        </Button>
-
-        <Button
-          onClick={toggleBikeTypeTo(BikeTypeEnum.mechanical)}
-          disabled={!bikeTypeFilter[BikeTypeEnum.mechanical]}
-        >
-          <Icon name="gears" color="white" />
-        </Button>
-      </div>
+      <MapControls />
     </div>
   );
 };

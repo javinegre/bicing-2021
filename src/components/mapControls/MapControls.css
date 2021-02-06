@@ -1,0 +1,39 @@
+.MapControls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 8px;
+  display: grid;
+  grid-template-areas:
+    "stations refresh"
+    "empty    locations";
+  grid-template-columns: auto 48px;
+  grid-template-rows: 48px auto;
+  column-gap: 8px;
+  row-gap: 8px;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.MapControls-refresh {
+  grid-area: refresh;
+  pointer-events: auto;
+}
+
+.MapControls-stations {
+  grid-area: stations;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.MapControls-locations {
+  grid-area: locations;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
