@@ -6,8 +6,8 @@ import Spacer from '../ui/spacer/spacer';
 
 const MapControlsLocations: React.FunctionComponent = () => (
   <>
-    <Button onClick={(): void => {}} color="lightgray" size="md">
-      <Icon name="home" color="black" />
+    <Button onClick={(): void => {}} color="lightgray" size="lg">
+      <Icon name="user-location" color="black" size={24} />
     </Button>
 
     <Spacer y={6} />

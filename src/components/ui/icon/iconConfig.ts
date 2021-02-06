@@ -8,6 +8,7 @@ import { ReactComponent as ParkingIcon } from '../../../assets/icons/ui/parking.
 import { ReactComponent as RefreshIcon } from '../../../assets/icons/ui/refresh.svg';
 import { ReactComponent as StarIcon } from '../../../assets/icons/ui/star.svg';
 import { ReactComponent as TimeRefreshIcon } from '../../../assets/icons/ui/time-refresh.svg';
+import { ReactComponent as UserLocationIcon } from '../../../assets/icons/ui/user-location.svg';
 
 import { IconConfigType } from './types';
 
@@ -22,6 +23,7 @@ const iconConfig: IconConfigType = {
   refresh: RefreshIcon,
   star: StarIcon,
   'time-refresh': TimeRefreshIcon,
+  'user-location': UserLocationIcon,
 };
 
 export default iconConfig;
