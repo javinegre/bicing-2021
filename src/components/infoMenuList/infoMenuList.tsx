@@ -2,7 +2,7 @@ import React from 'react';
 
 import { IStationDataExtended } from '../../interfaces';
 import storeHooks from '../../store/hooks';
-import { sortByDistance } from './helpers';
+import infoMenuListHelpers from './helpers';
 import StationStatusBar from '../../stationStatusBar/stationStatusBar';
 
 export interface IInfoMenuListProps {
@@ -21,16 +21,17 @@ const InfoMenuList: React.FunctionComponent<IInfoMenuListProps> = (props) => {
     <>
       <div className="pb-4 font-light">{title}</div>
       <ul>
-        {stationList.sort(sortByDistance).map((station) => (
-          <li
-            key={station.id}
-            className="pb-6"
-            onClick={(): void => {
-              selectStation(station.id);
-            }}
-          >
-            <StationStatusBar stationData={station} height={1} />
-            <div className="text-xs font-extralight">{station.name}</div>
+        {stationList.sort(infoMenuListHelpers.sortByDistance).map((station) => (
+          <li key={station.id} className="pb-6">
+            <button
+              type="button"
+              onClick={(): void => {
+                selectStation(station.id);
+              }}
+            >
+              <StationStatusBar stationData={station} height={1} />
+              <div className="text-xs font-extralight">{station.name}</div>
+            </button>
           </li>
         ))}
       </ul>

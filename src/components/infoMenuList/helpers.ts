@@ -5,4 +5,4 @@ const sortByDistance: (
   stationB: IStationDataExtended,
 ) => number = (stationA, stationB) => stationA.distance - stationB.distance;
 
-export { sortByDistance };
+export default { sortByDistance };
