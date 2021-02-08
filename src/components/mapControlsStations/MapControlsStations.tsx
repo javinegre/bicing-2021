@@ -5,6 +5,8 @@ import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
 import storeHooks from '../../store/hooks';
 import { BikeTypeEnum, StationResourceTypeEnum } from '../../enums';
+import Toggle from '../ui/toggle/Toggle';
+import { IToggleOptions } from '../ui/toggle/interfaces';
 
 const MapControlsStations: React.FunctionComponent = () => {
   const { resourceShown, bikeTypeFilter } = storeHooks.useStoreState(
@@ -29,21 +31,23 @@ const MapControlsStations: React.FunctionComponent = () => {
     toggleBikeType(bikeType);
   };
 
+  const toggleElementOptions: IToggleOptions<StationResourceTypeEnum> = [
+    {
+      value: StationResourceTypeEnum.bikes,
+      icon: <Icon name="bike" color="white" size={24} />,
+    },
+    {
+      value: StationResourceTypeEnum.docks,
+      icon: <Icon name="parking" color="white" size={22} />,
+    },
+  ];
+
   return (
     <>
-      <Button onClick={toggleResourceType}>
-        {resourceShown === StationResourceTypeEnum.bikes ? (
-          <Icon name="parking" color="white" />
-        ) : (
-          <Icon name="bike" color="white" size={24} />
-        )}
-      </Button>
-
-      <Spacer x={6} />
-
       <Button
         onClick={toggleBikeTypeTo(BikeTypeEnum.electrical)}
-        disabled={!bikeTypeFilter[BikeTypeEnum.electrical]}
+        status={bikeTypeFilter[BikeTypeEnum.electrical] ? 'on' : 'off'}
+        disabled={resourceShown === StationResourceTypeEnum.docks}
       >
         <Icon name="bolt" color="white" />
       </Button>
@@ -52,10 +56,20 @@ const MapControlsStations: React.FunctionComponent = () => {
 
       <Button
         onClick={toggleBikeTypeTo(BikeTypeEnum.mechanical)}
-        disabled={!bikeTypeFilter[BikeTypeEnum.mechanical]}
+        status={bikeTypeFilter[BikeTypeEnum.mechanical] ? 'on' : 'off'}
+        disabled={resourceShown === StationResourceTypeEnum.docks}
       >
         <Icon name="gears" color="white" />
       </Button>
+
+      <Spacer x={6} />
+
+      <Toggle
+        selectedValue={resourceShown}
+        options={toggleElementOptions}
+        onToggle={toggleResourceType}
+        size="lg"
+      />
     </>
   );
 };
