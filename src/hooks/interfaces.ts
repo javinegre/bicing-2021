@@ -9,7 +9,8 @@ export interface IGoogleMapsHookParams {
 
 export interface IGoogleMapsHook {
   mapHandler: google.maps.Map | null;
-  addMarker: (
+  addMarker: (opts: google.maps.ReadonlyMarkerOptions) => google.maps.Marker;
+  addStationMarker: (
     stationData: IStationData,
     opts: google.maps.ReadonlyMarkerOptions,
     clickEvent?: () => void,

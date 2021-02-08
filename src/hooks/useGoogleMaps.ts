@@ -36,6 +36,14 @@ const useGoogleMaps: (params: IGoogleMapsHookParams) => IGoogleMapsHook = (
   }, [isInitialized, mapDiv]);
 
   const addMarker: (
+    opts: google.maps.ReadonlyMarkerOptions,
+  ) => google.maps.Marker = (opts) =>
+    new google.maps.Marker({
+      map: mapHandler as google.maps.Map,
+      ...opts,
+    });
+
+  const addStationMarker: (
     stationData: IStationData,
     opts: google.maps.ReadonlyMarkerOptions,
     clickEvent?: () => void,
@@ -61,7 +69,7 @@ const useGoogleMaps: (params: IGoogleMapsHookParams) => IGoogleMapsHook = (
     marker.setMap(null);
   };
 
-  return { mapHandler, addMarker, removeMarker };
+  return { mapHandler, addMarker, addStationMarker, removeMarker };
 };
 
 export default useGoogleMaps;
