@@ -11,10 +11,12 @@ const calculateTotals: (
 ) => IStationTotals = (nearbyStations) =>
   nearbyStations.reduce<IStationTotals>(
     (totalsSum, station) => ({
-      bikes: totalsSum.bikes + station.bikes,
-      electrical: totalsSum.electrical + station.electrical,
-      mechanical: totalsSum.mechanical + station.mechanical,
-      docks: totalsSum.docks + station.docks,
+      bikes: totalsSum.bikes + (station.status === 1 ? station.bikes : 0),
+      electrical:
+        totalsSum.electrical + (station.status === 1 ? station.electrical : 0),
+      mechanical:
+        totalsSum.mechanical + (station.status === 1 ? station.mechanical : 0),
+      docks: totalsSum.docks + (station.status === 1 ? station.docks : 0),
     }),
     { bikes: 0, electrical: 0, mechanical: 0, docks: 0 },
   );
