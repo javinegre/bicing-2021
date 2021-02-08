@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Button from '../ui/button/Button';
 import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
 import storeHooks from '../../store/hooks';
+import useGeoLocation from '../../hooks/useGeoLocation';
 
 const MapControlsLocations: React.FunctionComponent = () => {
   const { setMapCenter, setUserLocation } = storeHooks.useStoreActions(
@@ -13,29 +14,20 @@ const MapControlsLocations: React.FunctionComponent = () => {
     }),
   );
 
-  const updateUserLocation: (position: GeolocationPosition) => void = (
-    position,
-  ) => {
-    const userLocation = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-    };
-    setMapCenter(userLocation);
-    setUserLocation(userLocation);
+  const { geoLocation, geoLocate } = useGeoLocation();
+
+  const updateUserLocation: () => void = () => {
+    if (geoLocation) {
+      const userLocation = {
+        lat: geoLocation.coords.latitude,
+        lng: geoLocation.coords.longitude,
+      };
+      setMapCenter(userLocation);
+      setUserLocation(userLocation);
+    }
   };
 
-  const geoLocate: () => void = () => {
-    const geolocationOptions: PositionOptions = {
-      timeout: 10000,
-      maximumAge: 30000,
-    };
-
-    navigator.geolocation.getCurrentPosition(
-      updateUserLocation,
-      undefined,
-      geolocationOptions,
-    );
-  };
+  useEffect(updateUserLocation, [geoLocation]);
 
   return (
     <>

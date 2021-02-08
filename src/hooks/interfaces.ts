@@ -17,3 +17,9 @@ export interface IGoogleMapsHook {
   ) => IMarkerWithData;
   removeMarker: (marker: IMarkerWithData) => void;
 }
+
+export interface IGeoLocationHook {
+  geoLocation: GeolocationPosition | undefined;
+  geoLocationError: GeolocationPositionError | undefined;
+  geoLocate: () => void;
+}
