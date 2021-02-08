@@ -16,6 +16,7 @@ const Map: React.FunctionComponent = () => {
 
   const $mapWrapper = useRef<HTMLDivElement>(null);
   const [markerList, setMarkerList] = useState<IMarkerWithData[]>([]);
+  const [userMarker, setUserMarker] = useState<google.maps.Marker | null>(null);
   const [areBoundsReady, setAreBoundsReady] = useState<boolean>(false);
 
   // ////////////////////////////////////////////////////////////////////  Store State  /
@@ -24,6 +25,7 @@ const Map: React.FunctionComponent = () => {
     stations,
     mapCenter,
     mapZoom,
+    userLocation,
     visibleStations,
     resourceShown,
     bikeTypeFilter,
@@ -32,6 +34,7 @@ const Map: React.FunctionComponent = () => {
     stations: state.stationList.stations,
     mapCenter: state.map.mapCenter,
     mapZoom: state.map.mapZoom,
+    userLocation: state.map.userLocation,
     visibleStations: state.map.visibleStations,
     resourceShown: state.ui.resourceShown,
     bikeTypeFilter: state.ui.bikeTypeFilter,
@@ -54,7 +57,12 @@ const Map: React.FunctionComponent = () => {
 
   // ///////////////////////////////////////////////////////////////  Google Maps hook  /
 
-  const { mapHandler, addMarker, removeMarker } = useGoogleMaps({
+  const {
+    mapHandler,
+    addMarker,
+    addStationMarker,
+    removeMarker,
+  } = useGoogleMaps({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY ?? '',
     mapDiv: $mapWrapper.current,
     mapOptions: {
@@ -139,6 +147,26 @@ const Map: React.FunctionComponent = () => {
     });
   };
 
+  const showUserLocation: () => void = () => {
+    if (userLocation !== null) {
+      if (userMarker === null) {
+        // Create new marker
+        const newUserMarker = addMarker({
+          position: userLocation,
+          icon: mapHelpers.getUserLocationMarker(),
+        });
+        setUserMarker(newUserMarker);
+      } else {
+        // Update user location marker if already in map
+        userMarker.setPosition(userLocation);
+      }
+    } else if (userMarker !== null) {
+      // Remove any marker if user location not known
+      userMarker.setMap(null);
+      setUserMarker(null);
+    }
+  };
+
   // ////////////////////////////////////////////////////////////////////////  Effects  /
 
   useEffect(bindInitialEventsToMap, [mapHandler]);
@@ -147,6 +175,7 @@ const Map: React.FunctionComponent = () => {
   useEffect(refreshIcons, [mapZoom]);
   useEffect(updateMarkersList, [visibleStations]);
   useEffect(refreshIcons, [resourceShown, bikeTypeFilter]);
+  useEffect(showUserLocation, [userLocation]);
 
   // ////////////////////////////////////////////////////////////////////////////////////
 
@@ -173,7 +202,7 @@ const Map: React.FunctionComponent = () => {
     station,
   ) =>
     // Render marker on map and bind click event
-    addMarker(
+    addStationMarker(
       station,
       {
         position: { lat: station.lat, lng: station.lng },

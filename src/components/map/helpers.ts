@@ -1,5 +1,6 @@
 import appConfig from '../../config';
 import icons from './markerIcons';
+import userLocationIcon from '../../assets/icons/ui/user-location.svg';
 import { IStationData, IStationDataExtended } from '../../interfaces';
 import { IMapsCoordinates, IMarkerWithData } from './interfaces';
 import { BikeTypeFilterType } from '../../store/types';
@@ -155,9 +156,12 @@ const getStationMarker: (
   return icons[resourceShown][size][color];
 };
 
+const getUserLocationMarker: () => string = () => userLocationIcon;
+
 export default {
   getVisibleStations,
   splitMarkerListByVisibility,
   isNotInList,
   getStationMarker,
+  getUserLocationMarker,
 };
