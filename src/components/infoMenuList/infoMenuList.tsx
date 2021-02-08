@@ -22,14 +22,19 @@ const InfoMenuList: React.FunctionComponent<IInfoMenuListProps> = (props) => {
       <div className="pb-4 font-light">{title}</div>
       <ul>
         {stationList.sort(infoMenuListHelpers.sortByDistance).map((station) => (
-          <li key={station.id} className="pb-6">
+          <li key={station.id} className="flex">
             <button
               type="button"
+              className="w-full pt-1 pb-5 text-left"
               onClick={(): void => {
                 selectStation(station.id);
               }}
             >
-              <StationStatusBar stationData={station} height={1} />
+              <StationStatusBar
+                stationData={station}
+                height={1}
+                className="mb-0.5"
+              />
               <div className="text-xs font-extralight">{station.name}</div>
             </button>
           </li>
