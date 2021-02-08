@@ -8,6 +8,7 @@ import { IStoreMapModel, IStoreModel } from './interfaces';
 const storeMapModel: IStoreMapModel = {
   mapCenter: mapConfig.mapOptions.center,
   mapZoom: mapConfig.mapOptions.zoom,
+  userLocation: null,
   stationSelectedID: null,
   stationSelectedData: null,
   visibleStations: [],
@@ -16,6 +17,9 @@ const storeMapModel: IStoreMapModel = {
   }),
   setMapZoom: action((state, payload) => {
     state.mapZoom = payload;
+  }),
+  setUserLocation: action((state, payload) => {
+    state.userLocation = payload;
   }),
   selectStation: thunk((actions, payload, helpers) => {
     const stationListStoreState = (helpers.getStoreState() as State<IStoreModel>)

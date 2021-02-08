@@ -17,11 +17,13 @@ export interface IStoreStationListModel extends IStationList {
 export interface IStoreMapModel {
   mapCenter: IMapsCoordinates;
   mapZoom: number;
+  userLocation: IMapsCoordinates | null;
   stationSelectedID: StationSelectedType;
   stationSelectedData: IStationData | null;
   visibleStations: IStationDataExtended[];
   setMapCenter: Action<IStoreMapModel, IMapsCoordinates>;
   setMapZoom: Action<IStoreMapModel, number>;
+  setUserLocation: Action<IStoreMapModel, IMapsCoordinates>;
   selectStation: Thunk<IStoreMapModel, StationSelectedType, IStoreModel>;
   setStationSelectedID: Action<IStoreMapModel, StationSelectedType>;
   setStationSelectedData: Action<IStoreMapModel, IStationData | null>;
