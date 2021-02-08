@@ -6,11 +6,14 @@ import { ButtonSizeType } from './types';
 import './Button.css';
 
 const Button: React.FunctionComponent<IButton> = (props) => {
-  const { onClick, children, className, color, size, disabled } = props;
+  const { onClick, children, className, color, size, status, disabled } = props;
 
   const baseClassName: string =
     'inline-flex items-center justify-center transition-colors duration-150 rounded-full focus:outline-none';
-  const disabledClassName: string = disabled ? 'opacity-30' : '';
+  const disabledClassName: string = disabled
+    ? 'opacity-20 pointer-events-none'
+    : '';
+  const statusClassName = status === 'off' ? 'opacity-10' : '';
 
   const getSizeClassName: (btnSize: ButtonSizeType | undefined) => string = (
     btnSize,
@@ -36,7 +39,7 @@ const Button: React.FunctionComponent<IButton> = (props) => {
       type="button"
       onClick={onClick}
     >
-      {children}
+      <div className={statusClassName}>{children}</div>
     </button>
   );
 };

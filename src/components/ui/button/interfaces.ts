@@ -7,5 +7,6 @@ export interface IButton {
   className?: string;
   color?: ButtonColorType;
   size?: ButtonSizeType;
+  status?: 'on' | 'off';
   disabled?: boolean;
 }
