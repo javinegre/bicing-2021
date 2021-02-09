@@ -1,4 +1,4 @@
-import { Action, ActionMapper, Thunk } from 'easy-peasy';
+import { Action, Thunk } from 'easy-peasy';
 
 import {
   IStationData,
@@ -41,8 +41,18 @@ export interface IStoreUiModel {
   toggleAboutMenu: Action<IStoreUiModel, boolean | undefined>;
 }
 
+export interface IStoreBookmarkModel {
+  home: IMapsCoordinates | null;
+  work: IMapsCoordinates | null;
+  favorite: IMapsCoordinates | null;
+  setHome: Action<IStoreBookmarkModel, IMapsCoordinates | null>;
+  setWork: Action<IStoreBookmarkModel, IMapsCoordinates | null>;
+  setFavorite: Action<IStoreBookmarkModel, IMapsCoordinates | null>;
+}
+
 export interface IStoreModel {
   stationList: IStoreStationListModel;
   map: IStoreMapModel;
   ui: IStoreUiModel;
+  bookmark: IStoreBookmarkModel;
 }
