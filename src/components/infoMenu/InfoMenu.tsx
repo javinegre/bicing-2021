@@ -59,12 +59,12 @@ const InfoMenu: React.FunctionComponent = () => {
         </div>
 
         <div
-          className="flex-grow-0 flex items-center px-4 py-3"
+          className="flex-grow-0 flex items-center h-36 px-4"
           onClick={showAboutMenu}
         >
-          <Icon name="info" color={iconColor} />
-          <Spacer x={4} />
-          Info about this app
+          <Icon name="info" color={iconColor} size={28} />
+          <Spacer x={8} />
+          <p className="text-gray-500">Info about this App</p>
         </div>
       </aside>
     </div>

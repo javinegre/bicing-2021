@@ -1,8 +1,13 @@
 import React from 'react';
 
 import storeHooks from '../../store/hooks';
-
 import './AboutMenu.css';
+import Spacer from '../ui/spacer/spacer';
+
+import { ReactComponent as JaviNegreCodesLogo } from '../../assets/images/javi-negre-codes.svg';
+import { ReactComponent as GithubLogo } from '../../assets/icons/misc/github.svg';
+
+const { default: bicingAppLogo } = require('../../assets/images/logo192.png');
 
 const AboutMenu: React.FunctionComponent = () => {
   const menuShown = storeHooks.useStoreState(
@@ -20,12 +25,46 @@ const AboutMenu: React.FunctionComponent = () => {
   return (
     <div className="AboutMenu-wrapper order-3">
       <div
-        className={`AboutMenu-backdrop ${getMenuVisibilityClassName()}`}
+        className={`AboutMenu-backdrop absolute top-0 bottom-0 left-0 right-0 bg-gray-900 ${getMenuVisibilityClassName()}`}
         onClick={hideMenu}
       />
-      <aside className={`AboutMenu ${getMenuVisibilityClassName()}`}>
-        About Menu
+      <aside
+        className={`AboutMenu absolute top-0 bottom-0 right-0 px-4 py-4 bg-gray-100 text-gray-700 ${getMenuVisibilityClassName()}`}
+      >
+        <div className="flex items-center">
+          <img
+            src={bicingAppLogo}
+            alt="Bicing App Logo"
+            className="w-16 h-16"
+          />
+          <Spacer x={8} />
+          <h1 className="text-3xl font-bold">Bicing App</h1>
+        </div>
+
+        <hr className="my-4" />
+
+        <div>
+          <p className="text-sm">This project was made with ❤ by:</p>
+
+          <a href="https://negre.co" target="_blank" rel="noreferrer">
+            <JaviNegreCodesLogo className="w-56" />
+          </a>
+
+          <div className="flex items-center">
+            <GithubLogo className="w-4 h-4" />
+            <Spacer x={4} />
+
+            <a
+              href="https://github.com/javinegre/bicing-2021"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Source code
+            </a>
+          </div>
+        </div>
       </aside>
+      <div className="bg-gray-100" />
     </div>
   );
 };

@@ -1,25 +1,14 @@
 .AboutMenu {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
   width: 280px;
   transform: translateX(100%);
-  transition: transform 200ms ease;
-  background-color: paleturquoise;
 }
 
 .AboutMenu.shown {
   transform: translateX(0);
+  transition: transform 320ms ease 200ms;
 }
 
 .AboutMenu-backdrop {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: white;
   opacity: 0;
   pointer-events: none;
 }
@@ -27,6 +16,7 @@
 .AboutMenu-backdrop.shown {
   opacity: 0.9;
   pointer-events: auto;
+  transition: opacity 200ms ease;
 }
 
 @media all and (min-width: 400px) {
