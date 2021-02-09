@@ -30,7 +30,6 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject",
     "lint": "npx eslint index.js api/**.js src/*.{ts,tsx}"
   },
   "eslintConfig": {
