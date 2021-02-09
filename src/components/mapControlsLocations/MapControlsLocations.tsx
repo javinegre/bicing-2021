@@ -7,12 +7,37 @@ import storeHooks from '../../store/hooks';
 import useGeoLocation from '../../hooks/useGeoLocation';
 
 const MapControlsLocations: React.FunctionComponent = () => {
-  const { setMapCenter, setUserLocation } = storeHooks.useStoreActions(
-    (actions) => ({
-      setMapCenter: actions.map.setMapCenter,
-      setUserLocation: actions.map.setUserLocation,
-    }),
-  );
+  const {
+    mapCenter,
+    homeBookmark,
+    workBookmark,
+    favoriteBookmark,
+  } = storeHooks.useStoreState((state) => ({
+    mapCenter: state.map.mapCenter,
+    homeBookmark: state.bookmark.home,
+    workBookmark: state.bookmark.work,
+    favoriteBookmark: state.bookmark.favorite,
+  }));
+
+  const {
+    setMapCenter,
+    setUserLocation,
+    setHomeBookmark,
+    setWorkBookmark,
+    setFavoriteBookmark,
+  } = storeHooks.useStoreActions((actions) => ({
+    setMapCenter: actions.map.setMapCenter,
+    setUserLocation: actions.map.setUserLocation,
+    setHomeBookmark: actions.bookmark.setHome,
+    setWorkBookmark: actions.bookmark.setWork,
+    setFavoriteBookmark: actions.bookmark.setFavorite,
+  }));
+
+  const bookmarks = {
+    home: { getter: homeBookmark, setter: setHomeBookmark },
+    work: { getter: workBookmark, setter: setWorkBookmark },
+    favorite: { getter: favoriteBookmark, setter: setFavoriteBookmark },
+  };
 
   const { geoLocation, geoLocate } = useGeoLocation();
 
@@ -29,6 +54,18 @@ const MapControlsLocations: React.FunctionComponent = () => {
 
   useEffect(updateUserLocation, [geoLocation]);
 
+  const onBookmarkClick: (bookmark: 'home' | 'work' | 'favorite') => void = (
+    bookmark,
+  ) => {
+    const bookmarkPosition = bookmarks[bookmark].getter;
+
+    if (bookmarkPosition) {
+      setMapCenter(bookmarkPosition);
+    } else {
+      bookmarks[bookmark].setter(mapCenter);
+    }
+  };
+
   return (
     <>
       <Button onClick={geoLocate} color="lightgray" size="lg">
@@ -37,19 +74,40 @@ const MapControlsLocations: React.FunctionComponent = () => {
 
       <Spacer y={6} />
 
-      <Button color="lightgray" size="sm" onClick={(): void => {}}>
+      <Button
+        color="lightgray"
+        size="sm"
+        status={homeBookmark ? 'on' : 'off'}
+        onClick={(): void => {
+          onBookmarkClick('home');
+        }}
+      >
         <Icon name="home" color="black" size={16} />
       </Button>
 
       <Spacer y={6} />
 
-      <Button color="lightgray" size="sm" onClick={(): void => {}}>
+      <Button
+        color="lightgray"
+        size="sm"
+        status={workBookmark ? 'on' : 'off'}
+        onClick={(): void => {
+          onBookmarkClick('work');
+        }}
+      >
         <Icon name="briefcase" color="black" size={16} />
       </Button>
 
       <Spacer y={6} />
 
-      <Button color="lightgray" size="sm" onClick={(): void => {}}>
+      <Button
+        color="lightgray"
+        size="sm"
+        status={favoriteBookmark ? 'on' : 'off'}
+        onClick={(): void => {
+          onBookmarkClick('favorite');
+        }}
+      >
         <Icon name="star" color="black" size={16} />
       </Button>
     </>
