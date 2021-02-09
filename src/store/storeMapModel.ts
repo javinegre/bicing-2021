@@ -2,24 +2,30 @@
 
 import { action, Actions, State, thunk } from 'easy-peasy';
 
+import LocalStorageService from '../services/localStorageService';
 import mapConfig from '../components/map/config';
 import { IStoreMapModel, IStoreModel } from './interfaces';
 
 const storeMapModel: IStoreMapModel = {
-  mapCenter: mapConfig.mapOptions.center,
-  mapZoom: mapConfig.mapOptions.zoom,
-  userLocation: null,
+  mapCenter:
+    LocalStorageService().getPosition('mapCenter') ??
+    mapConfig.mapOptions.center,
+  mapZoom: LocalStorageService().getMapZoom() ?? mapConfig.mapOptions.zoom,
+  userLocation: LocalStorageService().getUserLocation(),
   stationSelectedID: null,
   stationSelectedData: null,
   visibleStations: [],
   setMapCenter: action((state, payload) => {
     state.mapCenter = payload;
+    LocalStorageService().setPosition('mapCenter', payload);
   }),
   setMapZoom: action((state, payload) => {
     state.mapZoom = payload;
+    LocalStorageService().setMapZoom(payload);
   }),
   setUserLocation: action((state, payload) => {
     state.userLocation = payload;
+    LocalStorageService().setUserLocation(payload);
   }),
   selectStation: thunk((actions, payload, helpers) => {
     const stationListStoreState = (helpers.getStoreState() as State<IStoreModel>)
