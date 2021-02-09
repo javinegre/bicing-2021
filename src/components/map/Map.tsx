@@ -148,22 +148,24 @@ const Map: React.FunctionComponent = () => {
   };
 
   const showUserLocation: () => void = () => {
-    if (userLocation !== null) {
-      if (userMarker === null) {
-        // Create new marker
-        const newUserMarker = addMarker({
-          position: userLocation,
-          icon: mapHelpers.getUserLocationMarker(),
-        });
-        setUserMarker(newUserMarker);
-      } else {
-        // Update user location marker if already in map
-        userMarker.setPosition(userLocation);
+    if (mapHandler) {
+      if (userLocation !== null) {
+        if (userMarker === null) {
+          // Create new marker
+          const newUserMarker = addMarker({
+            position: userLocation,
+            icon: mapHelpers.getUserLocationMarker(),
+          });
+          setUserMarker(newUserMarker);
+        } else {
+          // Update user location marker if already in map
+          userMarker.setPosition(userLocation);
+        }
+      } else if (userMarker !== null) {
+        // Remove any marker if user location not known
+        userMarker.setMap(null);
+        setUserMarker(null);
       }
-    } else if (userMarker !== null) {
-      // Remove any marker if user location not known
-      userMarker.setMap(null);
-      setUserMarker(null);
     }
   };
 
@@ -175,7 +177,7 @@ const Map: React.FunctionComponent = () => {
   useEffect(refreshIcons, [mapZoom]);
   useEffect(updateMarkersList, [visibleStations]);
   useEffect(refreshIcons, [resourceShown, bikeTypeFilter]);
-  useEffect(showUserLocation, [userLocation]);
+  useEffect(showUserLocation, [mapHandler, userLocation]);
 
   // ////////////////////////////////////////////////////////////////////////////////////
 
