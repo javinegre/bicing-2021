@@ -1,4 +1,6 @@
 import { IStationList } from '../interfaces';
+import { IMapsCoordinates } from '../components/map/interfaces';
+import { LocalStoragePositionKeyType } from './types';
 
 export interface IXHRStationInfo {
   id: number;
@@ -27,4 +29,16 @@ export interface IXHRStationStatusList {
 
 export interface IStationService {
   getList: () => Promise<IStationList | null>;
+}
+
+export interface ILocalStorageService {
+  getPosition: (key: LocalStoragePositionKeyType) => IMapsCoordinates | null;
+  setPosition: (
+    key: LocalStoragePositionKeyType,
+    payload: IMapsCoordinates | null,
+  ) => void;
+  getUserLocation: () => IMapsCoordinates | null;
+  setUserLocation: (payload: IMapsCoordinates | null) => void;
+  getMapZoom: () => number | null;
+  setMapZoom: (payload: number | null) => void;
 }
