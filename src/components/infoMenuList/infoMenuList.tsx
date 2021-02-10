@@ -3,7 +3,7 @@ import React from 'react';
 import { IStationDataExtended } from '../../interfaces';
 import storeHooks from '../../store/hooks';
 import infoMenuListHelpers from './helpers';
-import StationStatusBar from '../../stationStatusBar/stationStatusBar';
+import StationStatusBar from '../stationStatusBar/stationStatusBar';
 
 export interface IInfoMenuListProps {
   title: string;

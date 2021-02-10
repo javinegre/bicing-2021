@@ -2,7 +2,7 @@ import React from 'react';
 
 import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
-import StationStatusBar from '../../stationStatusBar/stationStatusBar';
+import StationStatusBar from '../stationStatusBar/stationStatusBar';
 import storeHooks from '../../store/hooks';
 import appConfig from '../../config';
 

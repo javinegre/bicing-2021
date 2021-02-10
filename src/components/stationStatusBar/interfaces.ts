@@ -1,4 +1,4 @@
-import { IStationData } from '../interfaces';
+import { IStationData } from '../../interfaces';
 
 export interface IStationStatusBarProps {
   stationData: IStationData;

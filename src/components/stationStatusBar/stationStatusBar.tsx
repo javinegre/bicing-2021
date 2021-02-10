@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IStationStatusBarProps } from './interfaces';
-import appConfig from '../config';
+import appConfig from '../../config';
 
 const StationStatusBar: React.FunctionComponent<IStationStatusBarProps> = (
   props,
