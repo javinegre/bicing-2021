@@ -40,9 +40,7 @@ const AboutMenu: React.FunctionComponent = () => {
           <Spacer x={8} />
           <h1 className="text-3xl font-bold">Bicing App</h1>
         </div>
-
         <hr className="my-4" />
-
         <div>
           <p className="text-sm">This project was made with ❤ by:</p>
 
@@ -62,6 +60,13 @@ const AboutMenu: React.FunctionComponent = () => {
               Source code
             </a>
           </div>
+        </div>
+        <hr className="my-4" />
+        <div className="text-gray-500 text-xs">
+          v
+          <span className="font-mono font-bold ">
+            {process.env.REACT_APP_VERSION ?? 'dev'}
+          </span>
         </div>
       </aside>
       <div className="bg-gray-100" />
