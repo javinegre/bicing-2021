@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import viewportHelpers from './helpers/viewport';
 import storeModel from './store/storeModel';
 
-viewportHelpers.calculateViewportHeightUnit();
+viewportHelpers.initViewportHeightUnit();
 
 ReactDOM.render(
   <StoreProvider store={storeModel}>
