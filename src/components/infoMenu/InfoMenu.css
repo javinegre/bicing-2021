@@ -1,38 +1,19 @@
 .InfoMenu {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
   max-width: 75vw;
-  height: 100%;
   transform: translateX(-80%);
-  color: #f0f0f0;
-  background-color: #101010;
   opacity: 0;
   transition: all 0s;
+  pointer-events: none;
 }
 
 .InfoMenu.shown {
-  pointer-events: auto;
   transform: translateX(0);
   opacity: .96;
   transition: transform 200ms ease 260ms, opacity 320ms ease-in-out 260ms;
-}
-
-.InfoMenu-section--scrollable {
-  overflow: scroll;
+  pointer-events: auto;
 }
 
 .InfoMenu-backdrop {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: transparent;
   pointer-events: none;
 }
 
@@ -52,6 +33,7 @@
     left: auto;
     transform: none;
     opacity: 1;
+    pointer-events: auto;
   }
 
   .InfoMenu-backdrop.shown {

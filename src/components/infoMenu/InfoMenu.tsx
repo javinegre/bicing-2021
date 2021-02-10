@@ -43,13 +43,15 @@ const InfoMenu: React.FunctionComponent = () => {
   return (
     <div className="InfoMenu-wrapper order-1">
       <div
-        className={`InfoMenu-backdrop ${getMenuVisibilityClassName()}`}
+        className={`InfoMenu-backdrop absolute top-0 bottom-0 left-0 right-0 bg-transparent ${getMenuVisibilityClassName()}`}
         onClick={hideMenu}
       />
-      <aside className={`InfoMenu ${getMenuVisibilityClassName()}`}>
+      <aside
+        className={`InfoMenu flex flex-col absolute top-0 bottom-0 left-0 w-full h-full bg-infoMenuBg text-infoMenuColor ${getMenuVisibilityClassName()}`}
+      >
         <InfoMenuDetails />
 
-        <div className="InfoMenu-section--scrollable flex-grow px-4 py-3">
+        <div className="flex-grow px-4 py-3 overflow-scroll">
           <InfoMenuList
             title="Closest Stations"
             stationList={closestStations}
