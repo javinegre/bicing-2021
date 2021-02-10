@@ -16,6 +16,7 @@
     "axios": "^0.21.1",
     "easy-peasy": "^4.0.1",
     "express": "^4.17.1",
+    "express-cors": "^0.0.3",
     "memory-cache": "^0.2.0",
     "node-fetch": "^2.6.1",
     "postcss": "^7",
