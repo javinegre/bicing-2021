@@ -18,20 +18,28 @@ const Toggle: <T>(props: IToggle<T>) => React.ReactElement = (props) => {
     btnSize,
     isFirstOption,
   ) => {
-    let width;
+    let toggle;
+    let button;
+    let leftPosition;
 
     if (btnSize === 'sm') {
-      width = 8;
+      toggle = 'w-16 h-8';
+      button = 'w-8 h-8';
+      leftPosition = 'left-8';
     } else if (btnSize === 'lg') {
-      width = 12;
+      toggle = 'w-24 h-12';
+      button = 'w-12 h-12';
+      leftPosition = 'left-12';
     } else {
-      width = 10;
+      toggle = 'w-20 h-10';
+      button = 'w-10 h-10';
+      leftPosition = 'left-10';
     }
 
     return {
-      toggle: `w-${2 * width} h-${width}`,
-      button: `w-${width} h-${width}`,
-      leftPosition: isFirstOption ? 'left-0' : `left-${width}`,
+      toggle,
+      button,
+      leftPosition: isFirstOption ? 'left-0' : leftPosition,
     };
   };
 
