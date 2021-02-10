@@ -1,9 +1,16 @@
 const express = require('express');
 const path = require('path');
+const cors = require('express-cors');
 
 const Api = require('./api/api.controller');
 
 const app = express();
+
+app.use(
+  cors({
+    allowedOrigins: ['negre.co'],
+  }),
+);
 
 app.use(express.static(path.join(__dirname, '/build')));
 
