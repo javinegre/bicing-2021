@@ -5,6 +5,7 @@ import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
 import storeHooks from '../../store/hooks';
 import useGeoLocation from '../../hooks/useGeoLocation';
+import useLongPress from '../../hooks/useLongPress';
 
 const MapControlsLocations: React.FunctionComponent = () => {
   const {
@@ -54,9 +55,15 @@ const MapControlsLocations: React.FunctionComponent = () => {
 
   useEffect(updateUserLocation, [geoLocation]);
 
-  const onBookmarkClick: (bookmark: 'home' | 'work' | 'favorite') => void = (
-    bookmark,
-  ) => {
+  const onBookmarkLongPress: (
+    bookmark: 'home' | 'work' | 'favorite',
+  ) => () => void = (bookmark) => (): void => {
+    bookmarks[bookmark].setter(mapCenter);
+  };
+
+  const onBookmarkClick: (
+    bookmark: 'home' | 'work' | 'favorite',
+  ) => () => void = (bookmark) => (): void => {
     const bookmarkPosition = bookmarks[bookmark].getter;
 
     if (bookmarkPosition) {
@@ -65,6 +72,21 @@ const MapControlsLocations: React.FunctionComponent = () => {
       bookmarks[bookmark].setter(mapCenter);
     }
   };
+
+  const onHomeLongPress = useLongPress(
+    onBookmarkLongPress('home'),
+    onBookmarkClick('home'),
+  );
+
+  const onWorkLongPress = useLongPress(
+    onBookmarkLongPress('work'),
+    onBookmarkClick('work'),
+  );
+
+  const onFavoriteLongPress = useLongPress(
+    onBookmarkLongPress('favorite'),
+    onBookmarkClick('favorite'),
+  );
 
   return (
     <>
@@ -78,9 +100,7 @@ const MapControlsLocations: React.FunctionComponent = () => {
         color="lightgray"
         size="sm"
         status={homeBookmark ? 'on' : 'off'}
-        onClick={(): void => {
-          onBookmarkClick('home');
-        }}
+        onLongPress={onHomeLongPress}
       >
         <Icon name="home" color="black" size={16} />
       </Button>
@@ -91,9 +111,7 @@ const MapControlsLocations: React.FunctionComponent = () => {
         color="lightgray"
         size="sm"
         status={workBookmark ? 'on' : 'off'}
-        onClick={(): void => {
-          onBookmarkClick('work');
-        }}
+        onLongPress={onWorkLongPress}
       >
         <Icon name="briefcase" color="black" size={16} />
       </Button>
@@ -104,9 +122,7 @@ const MapControlsLocations: React.FunctionComponent = () => {
         color="lightgray"
         size="sm"
         status={favoriteBookmark ? 'on' : 'off'}
-        onClick={(): void => {
-          onBookmarkClick('favorite');
-        }}
+        onLongPress={onFavoriteLongPress}
       >
         <Icon name="star" color="black" size={16} />
       </Button>
