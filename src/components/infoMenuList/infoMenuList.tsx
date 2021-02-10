@@ -17,6 +17,9 @@ const InfoMenuList: React.FunctionComponent<IInfoMenuListProps> = (props) => {
     (actions) => actions.map.selectStation,
   );
 
+  const isOperating: (station: IStationDataExtended) => boolean = (station) =>
+    station?.status === 1;
+
   return (
     <>
       <div className="pb-4 font-light">{title}</div>
@@ -33,9 +36,17 @@ const InfoMenuList: React.FunctionComponent<IInfoMenuListProps> = (props) => {
               <StationStatusBar
                 stationData={station}
                 height={1}
-                className="mb-0.5"
+                className={`mb-0.5 ${
+                  !isOperating(station) ? 'opacity-30' : ''
+                }`}
               />
-              <div className="text-xs font-extralight">{station.name}</div>
+              <div
+                className={`text-xs font-extralight ${
+                  !isOperating(station) ? 'line-through' : ''
+                }`}
+              >
+                {station.name}
+              </div>
             </button>
           </li>
         ))}

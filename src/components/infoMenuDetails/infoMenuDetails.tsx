@@ -13,42 +13,58 @@ const InfoMenuDetails: React.FunctionComponent = () => {
 
   const iconColor = appConfig.infoMenuIconColor;
 
+  const isOperating = stationData?.status === 1;
+
   return (
     <>
       {stationData && (
         <div className="flex-grow-0 px-4 pt-3 pb-5">
-          <div className="flex justify-between">
-            <div className="flex items-center">
-              <div className="flex items-center">
-                <div className="text-3xl font-bold">{stationData.bikes}</div>
-                <Icon name="bike" color={iconColor} />
+          <div className="relative">
+            <div className={!isOperating ? 'opacity-10' : ''}>
+              <div className="flex justify-between">
+                <div className="flex items-center">
+                  <div className="flex items-center">
+                    <div className="text-3xl font-bold">
+                      {stationData.bikes}
+                    </div>
+                    <Icon name="bike" color={iconColor} />
+                  </div>
+
+                  <Spacer x={8} />
+
+                  <div className="flex items-center">
+                    <div>{stationData.mechanical}</div>
+                    <Icon name="gears" color={iconColor} size={12} />
+                  </div>
+
+                  <Spacer x={6} />
+
+                  <div className="flex items-center">
+                    <div>{stationData.electrical}</div>
+                    <Icon name="bolt" color={iconColor} size={12} />
+                  </div>
+                </div>
+
+                <div className="flex items-center">
+                  <Icon name="parking" color={iconColor} />
+                  <div className="text-3xl font-bold">{stationData.docks}</div>
+                </div>
               </div>
 
-              <Spacer x={8} />
-
-              <div className="flex items-center">
-                <div>{stationData.mechanical}</div>
-                <Icon name="gears" color={iconColor} size={12} />
-              </div>
-
-              <Spacer x={6} />
-
-              <div className="flex items-center">
-                <div>{stationData.electrical}</div>
-                <Icon name="bolt" color={iconColor} size={12} />
-              </div>
+              <StationStatusBar
+                stationData={stationData}
+                className="mt-0.5 mb-1.5"
+              />
             </div>
 
-            <div className="flex items-center">
-              <Icon name="parking" color={iconColor} />
-              <div className="text-3xl font-bold">{stationData.docks}</div>
-            </div>
+            {stationData?.status === 0 && (
+              <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                <span className="bg-yellow-200 text-black text-sm font-bold px-2 py-1 rounded">
+                  Station not operating
+                </span>
+              </div>
+            )}
           </div>
-
-          <StationStatusBar
-            stationData={stationData}
-            className="mt-0.5 mb-1.5"
-          />
 
           <div>{stationData.name}</div>
         </div>
