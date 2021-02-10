@@ -3,13 +3,15 @@ import React from 'react';
 import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
 import StationStatusBar from '../stationStatusBar/stationStatusBar';
+import infoMenuDetailsHelpers from './helpers';
 import storeHooks from '../../store/hooks';
 import appConfig from '../../config';
 
 const InfoMenuDetails: React.FunctionComponent = () => {
-  const stationData = storeHooks.useStoreState(
-    (state) => state.map.stationSelectedData,
-  );
+  const { stationData, resourceShown } = storeHooks.useStoreState((state) => ({
+    stationData: state.map.stationSelectedData,
+    resourceShown: state.ui.resourceShown,
+  }));
 
   const iconColor = appConfig.infoMenuIconColor;
 
@@ -18,7 +20,7 @@ const InfoMenuDetails: React.FunctionComponent = () => {
   return (
     <>
       {stationData && (
-        <div className="flex-grow-0 px-4 pt-3 pb-5">
+        <div className="flex-grow-0 flex flex-col px-4 pt-3 pb-5">
           <div className="relative">
             <div className={!isOperating ? 'opacity-10' : ''}>
               <div className="flex justify-between">
@@ -67,6 +69,37 @@ const InfoMenuDetails: React.FunctionComponent = () => {
           </div>
 
           <div>{stationData.name}</div>
+
+          <Spacer y={12} />
+
+          <div className="flex flex-wrap">
+            <a
+              className="flex rounded-full items-center px-1.5 py-1 bg-infoMenuBg-light hover:bg-infoMenuBg-dark text-gray-400 text-sm font-light"
+              href={infoMenuDetailsHelpers.getDirectionsUrl(
+                stationData,
+                resourceShown,
+              )}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Icon name="route" color="#808080" />
+              <Spacer x={2} />
+              <span className="whitespace-nowrap">Get directions</span>
+            </a>
+
+            <Spacer x={6} />
+
+            <a
+              className="flex rounded-full items-center px-1.5 p-1 bg-infoMenuBg-light hover:bg-infoMenuBg-dark text-gray-400 text-sm font-light"
+              href={infoMenuDetailsHelpers.getStreetViewUrl(stationData)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Icon name="street-view" color="#808080" />
+              <Spacer x={2} />
+              <span className="whitespace-nowrap">Street View</span>
+            </a>
+          </div>
         </div>
       )}
     </>

@@ -13,7 +13,9 @@ export type IconNameType =
   | 'info'
   | 'parking'
   | 'refresh'
+  | 'route'
   | 'star'
+  | 'street-view'
   | 'time-refresh'
   | 'user-location';
 
