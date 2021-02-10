@@ -1,12 +1,21 @@
 import React from 'react';
 
-import { IButton } from './interfaces';
+import { IButtonProps } from './interfaces';
 import { ButtonSizeType } from './types';
 
 import './Button.css';
 
-const Button: React.FunctionComponent<IButton> = (props) => {
-  const { onClick, children, className, color, size, status, disabled } = props;
+const Button: React.FunctionComponent<IButtonProps> = (props) => {
+  const {
+    onClick,
+    onLongPress,
+    children,
+    className,
+    color,
+    size,
+    status,
+    disabled,
+  } = props;
 
   const baseClassName: string =
     'inline-flex items-center justify-center transition-colors duration-150 rounded-full focus:outline-none';
@@ -38,6 +47,7 @@ const Button: React.FunctionComponent<IButton> = (props) => {
       )} ${disabledClassName} ${className}`}
       type="button"
       onClick={onClick}
+      {...onLongPress}
     >
       <div className={statusClassName}>{children}</div>
     </button>

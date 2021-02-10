@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { ButtonColorType, ButtonSizeType } from './types';
+import { ILongPressEvents } from '../../../hooks/interfaces';
 
-export interface IButton {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+export interface IButtonProps<T = HTMLButtonElement> {
+  onClick?: React.MouseEventHandler<T>;
+  onLongPress?: ILongPressEvents<T>;
   className?: string;
   color?: ButtonColorType;
   size?: ButtonSizeType;
