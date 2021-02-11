@@ -4,6 +4,7 @@ import InfoMenu from './components/infoMenu/InfoMenu';
 import InfoBox from './components/infoBox/infoBox';
 import Map from './components/map/Map';
 import AboutMenu from './components/aboutMenu/AboutMenu';
+import Notification from './components/ui/notification/Notification';
 import storeHooks from './store/hooks';
 
 import './App.css';
@@ -18,11 +19,14 @@ const App: React.FunctionComponent = () => {
   }, []);
 
   return (
-    <main className="App bg-gray-900">
+    <main className="App bg-gray-900 select-none">
       <div className="App-wrapper bg-gray-800">
-        <section className="flex flex-col flex-grow order-2">
+        <section className="relative flex flex-col flex-grow order-2">
           <InfoBox />
+
           <Map />
+
+          <Notification />
         </section>
 
         <InfoMenu />

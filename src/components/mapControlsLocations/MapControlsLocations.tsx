@@ -26,12 +26,14 @@ const MapControlsLocations: React.FunctionComponent = () => {
     setHomeBookmark,
     setWorkBookmark,
     setFavoriteBookmark,
+    pushNotification,
   } = storeHooks.useStoreActions((actions) => ({
     setMapCenter: actions.map.setMapCenter,
     setUserLocation: actions.map.setUserLocation,
     setHomeBookmark: actions.bookmark.setHome,
     setWorkBookmark: actions.bookmark.setWork,
     setFavoriteBookmark: actions.bookmark.setFavorite,
+    pushNotification: actions.ui.pushNotification,
   }));
 
   const bookmarks = {
@@ -55,10 +57,23 @@ const MapControlsLocations: React.FunctionComponent = () => {
 
   useEffect(updateUserLocation, [geoLocation]);
 
+  const notifyNewBookmark: (bookmark: 'home' | 'work' | 'favorite') => void = (
+    bookmark,
+  ) => {
+    pushNotification({
+      content: (
+        <>
+          <span className="capitalize">{bookmark}</span> location set
+        </>
+      ),
+    });
+  };
+
   const onBookmarkLongPress: (
     bookmark: 'home' | 'work' | 'favorite',
   ) => () => void = (bookmark) => (): void => {
     bookmarks[bookmark].setter(mapCenter);
+    notifyNewBookmark(bookmark);
   };
 
   const onBookmarkClick: (
@@ -70,6 +85,7 @@ const MapControlsLocations: React.FunctionComponent = () => {
       setMapCenter(bookmarkPosition);
     } else {
       bookmarks[bookmark].setter(mapCenter);
+      notifyNewBookmark(bookmark);
     }
   };
 
