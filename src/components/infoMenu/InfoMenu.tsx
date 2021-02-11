@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import InfoMenuDetails from '../infoMenuDetails/infoMenuDetails';
 import InfoMenuList from '../infoMenuList/infoMenuList';
@@ -11,6 +11,8 @@ import appConfig from '../../config';
 import './InfoMenu.css';
 
 const InfoMenu: React.FunctionComponent = () => {
+  const $listWrapper = useRef<HTMLDivElement | null>(null);
+
   const { menuShown, stationData, visibleStations } = storeHooks.useStoreState(
     (state) => ({
       menuShown: state.ui.infoMenuShown,
@@ -25,6 +27,13 @@ const InfoMenu: React.FunctionComponent = () => {
       toggleAboutMenu: actions.ui.toggleAboutMenu,
     }),
   );
+
+  useEffect(() => {
+    if ($listWrapper.current?.scrollTop) {
+      // Reset scroll when data changes
+      $listWrapper.current.scrollTop = 0;
+    }
+  }, [visibleStations, stationData]);
 
   const [
     closestStations,
@@ -51,13 +60,20 @@ const InfoMenu: React.FunctionComponent = () => {
       >
         <InfoMenuDetails />
 
-        <div className="flex-grow px-4 py-3 overflow-scroll">
-          <InfoMenuList
-            title="Closest Stations"
-            stationList={closestStations}
-          />
+        <div ref={$listWrapper} className="flex-grow px-4 py-3 overflow-scroll">
+          {closestStations.length > 0 && (
+            <InfoMenuList
+              title="Closest Stations"
+              stationList={closestStations}
+            />
+          )}
 
-          <InfoMenuList title="Other Stations" stationList={farthestStations} />
+          {farthestStations.length > 0 && (
+            <InfoMenuList
+              title="Other Stations"
+              stationList={farthestStations}
+            />
+          )}
         </div>
 
         <div
