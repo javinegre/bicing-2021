@@ -13,6 +13,12 @@ module.exports = {
           dark: '#080808',
         },
       },
+      keyframes: {
+        progressBar: {
+          '0%': { transform: 'scaleX(1)' },
+          '100%': { transform: 'scaleX(0)' },
+        },
+      },
     },
   },
   variants: {
