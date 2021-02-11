@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 
+import { v4 as uuidv4 } from 'uuid';
 import { action } from 'easy-peasy';
 
 import { IStoreUiModel } from './interfaces';
@@ -13,6 +14,7 @@ const storeUiModel: IStoreUiModel = {
   },
   infoMenuShown: false,
   aboutMenuShown: false,
+  notificationList: [],
   toggleInfoMenu: action((state, payload) => {
     state.infoMenuShown = payload ?? !state.infoMenuShown;
   }),
@@ -42,6 +44,15 @@ const storeUiModel: IStoreUiModel = {
     }
 
     state.bikeTypeFilter = newState;
+  }),
+  pushNotification: action((state, payload) => {
+    payload.id = uuidv4();
+    state.notificationList = [...state.notificationList, payload];
+  }),
+  popNotification: action((state) => {
+    const notificationListNewState = [...state.notificationList];
+    notificationListNewState.shift();
+    state.notificationList = notificationListNewState;
   }),
 };
 

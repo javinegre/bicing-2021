@@ -1,4 +1,4 @@
-import { Action, Thunk } from 'easy-peasy';
+import { Action, Computed, Thunk } from 'easy-peasy';
 
 import {
   IStationData,
@@ -8,6 +8,7 @@ import {
 import { BikeTypeFilterType, StationSelectedType } from './types';
 import { BikeTypeEnum, StationResourceTypeEnum } from '../enums';
 import { IMapsCoordinates } from '../components/map/interfaces';
+import { INotificationItem } from '../components/ui/notification/interfaces';
 
 export interface IStoreStationListModel extends IStationList {
   fetched: Action<IStoreStationListModel, IStationList>;
@@ -35,10 +36,13 @@ export interface IStoreUiModel {
   bikeTypeFilter: BikeTypeFilterType;
   infoMenuShown: boolean;
   aboutMenuShown: boolean;
+  notificationList: INotificationItem[];
   toggleResourceShown: Action<IStoreUiModel>;
   toggleBikeType: Action<IStoreUiModel, BikeTypeEnum>;
   toggleInfoMenu: Action<IStoreUiModel, boolean | undefined>;
   toggleAboutMenu: Action<IStoreUiModel, boolean | undefined>;
+  pushNotification: Action<IStoreUiModel, INotificationItem>;
+  popNotification: Action<IStoreUiModel>;
 }
 
 export interface IStoreBookmarkModel {
