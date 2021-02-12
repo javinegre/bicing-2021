@@ -17,7 +17,8 @@ export type IconNameType =
   | 'star'
   | 'street-view'
   | 'time-refresh'
-  | 'user-location';
+  | 'user-location'
+  | 'warning';
 
 export type IconConfigType = {
   [name in IconNameType]: ReactComponentIconType;

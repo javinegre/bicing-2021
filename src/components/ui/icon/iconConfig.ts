@@ -11,6 +11,7 @@ import { ReactComponent as StarIcon } from '../../../assets/icons/ui/star.svg';
 import { ReactComponent as StreetViewIcon } from '../../../assets/icons/ui/street-view.svg';
 import { ReactComponent as TimeRefreshIcon } from '../../../assets/icons/ui/time-refresh.svg';
 import { ReactComponent as UserLocationIcon } from '../../../assets/icons/ui/user-location.svg';
+import { ReactComponent as WarningIcon } from '../../../assets/icons/ui/warning.svg';
 
 import { IconConfigType } from './types';
 
@@ -28,6 +29,7 @@ const iconConfig: IconConfigType = {
   'street-view': StreetViewIcon,
   'time-refresh': TimeRefreshIcon,
   'user-location': UserLocationIcon,
+  warning: WarningIcon,
 };
 
 export default iconConfig;
