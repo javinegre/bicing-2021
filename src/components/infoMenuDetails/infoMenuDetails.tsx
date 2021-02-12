@@ -19,7 +19,7 @@ const InfoMenuDetails: React.FunctionComponent = () => {
   return (
     <>
       {stationData && (
-        <div className="flex-grow-0 flex-shrink-0 flex flex-col px-4 py-3">
+        <div className="flex-grow-0 flex-shrink-0 flex-col px-4 py-3">
           <div className="relative">
             <div className={!isOperating ? 'opacity-10' : ''}>
               <div className="flex justify-between">
@@ -70,9 +70,7 @@ const InfoMenuDetails: React.FunctionComponent = () => {
             )}
           </div>
 
-          <div>{stationData.name}</div>
-
-          <Spacer y={12} />
+          <div className="mb-3">{stationData.name}</div>
 
           <InfoMenuNavigation />
         </div>
