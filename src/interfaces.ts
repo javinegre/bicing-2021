@@ -18,7 +18,7 @@ export interface IStationDataExtended extends IStationData {
 }
 
 export interface IStationList {
-  updateTime: number;
+  updateTime: number | null;
   stations: IStationData[];
 }
 

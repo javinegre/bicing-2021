@@ -1,4 +1,4 @@
-import { Action, Computed, Thunk } from 'easy-peasy';
+import { Action, Thunk } from 'easy-peasy';
 
 import {
   IStationData,
@@ -11,6 +11,8 @@ import { IMapsCoordinates } from '../components/map/interfaces';
 import { INotificationItem } from '../components/ui/notification/interfaces';
 
 export interface IStoreStationListModel extends IStationList {
+  isDataLoading: boolean;
+  setDataLoading: Action<IStoreStationListModel, boolean>;
   fetched: Action<IStoreStationListModel, IStationList>;
   fetch: Thunk<IStoreStationListModel, undefined>;
 }
