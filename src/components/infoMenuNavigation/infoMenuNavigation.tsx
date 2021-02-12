@@ -28,7 +28,7 @@ const InfoMenuNavigation: React.FunctionComponent = () => {
         target="_blank"
         rel="noreferrer"
       >
-        <Icon name="route" color={iconColor} />
+        <Icon name="route" color={iconColor} size={16} />
 
         <Spacer x={2} />
 
@@ -43,7 +43,7 @@ const InfoMenuNavigation: React.FunctionComponent = () => {
         target="_blank"
         rel="noreferrer"
       >
-        <Icon name="street-view" color={iconColor} />
+        <Icon name="street-view" color={iconColor} size={16} />
 
         <Spacer x={2} />
 

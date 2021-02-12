@@ -60,17 +60,17 @@ const InfoMenu: React.FunctionComponent = () => {
       >
         <InfoMenuDetails />
 
-        <div ref={$listWrapper} className="flex-grow px-4 py-3 overflow-scroll">
+        <div ref={$listWrapper} className="flex-grow py-2 overflow-scroll">
           {closestStations.length > 0 && (
             <InfoMenuList
-              title="Closest Stations"
+              title="Closest stations"
               stationList={closestStations}
             />
           )}
 
           {farthestStations.length > 0 && (
             <InfoMenuList
-              title="Other Stations"
+              title="Other stations"
               stationList={farthestStations}
             />
           )}

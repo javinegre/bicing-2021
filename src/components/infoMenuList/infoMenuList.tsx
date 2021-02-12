@@ -1,14 +1,10 @@
 import React from 'react';
 
-import { IStationDataExtended } from '../../interfaces';
-import storeHooks from '../../store/hooks';
-import infoMenuListHelpers from './helpers';
 import StationStatusBar from '../stationStatusBar/stationStatusBar';
-
-export interface IInfoMenuListProps {
-  title: string;
-  stationList: IStationDataExtended[];
-}
+import infoMenuListHelpers from './helpers';
+import storeHooks from '../../store/hooks';
+import { IStationDataExtended } from '../../interfaces';
+import { IInfoMenuListProps } from './interfaces';
 
 const InfoMenuList: React.FunctionComponent<IInfoMenuListProps> = (props) => {
   const { title, stationList } = props;
@@ -22,8 +18,10 @@ const InfoMenuList: React.FunctionComponent<IInfoMenuListProps> = (props) => {
 
   return (
     <>
-      <div className="pb-4 font-light">{title}</div>
-      <ul>
+      <div className="flex items-center px-4 py-1 mb-4 text-sm font-light bg-infoMenuBg-light text-gray-400">
+        {title}
+      </div>
+      <ul className="px-4">
         {stationList.sort(infoMenuListHelpers.sortByDistance).map((station) => (
           <li key={station.id} className="flex">
             <button

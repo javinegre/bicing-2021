@@ -28,13 +28,15 @@ const InfoMenuDetails: React.FunctionComponent = () => {
                     <div className="text-3xl font-bold">
                       {stationData.bikes}
                     </div>
-                    <Icon name="bike" color={iconColor} />
+                    <Spacer x={4} />
+                    <Icon name="bike" color={iconColor} size={24} />
                   </div>
 
                   <Spacer x={8} />
 
                   <div className="flex items-center">
                     <div>{stationData.mechanical}</div>
+                    <Spacer x={3} />
                     <Icon name="gears" color={iconColor} size={12} />
                   </div>
 
@@ -48,6 +50,7 @@ const InfoMenuDetails: React.FunctionComponent = () => {
 
                 <div className="flex items-center">
                   <Icon name="parking" color={iconColor} />
+                  <Spacer x={1} />
                   <div className="text-3xl font-bold">{stationData.docks}</div>
                 </div>
               </div>
