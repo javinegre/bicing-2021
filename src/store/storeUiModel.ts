@@ -3,12 +3,14 @@
 import { v4 as uuidv4 } from 'uuid';
 import { action } from 'easy-peasy';
 
+import LocalStorageService from '../services/localStorageService';
 import { IStoreUiModel } from './interfaces';
 import { BikeTypeEnum, StationResourceTypeEnum } from '../enums';
 
 const storeUiModel: IStoreUiModel = {
-  resourceShown: StationResourceTypeEnum.bikes,
-  bikeTypeFilter: {
+  resourceShown:
+    LocalStorageService().getResourceShown() ?? StationResourceTypeEnum.bikes,
+  bikeTypeFilter: LocalStorageService().getBikeTypeFilter() ?? {
     [BikeTypeEnum.mechanical]: true,
     [BikeTypeEnum.electrical]: true,
   },
@@ -22,10 +24,12 @@ const storeUiModel: IStoreUiModel = {
     state.aboutMenuShown = payload ?? !state.aboutMenuShown;
   }),
   toggleResourceShown: action((state) => {
-    state.resourceShown =
+    const newState =
       state.resourceShown === StationResourceTypeEnum.bikes
         ? StationResourceTypeEnum.docks
         : StationResourceTypeEnum.bikes;
+    state.resourceShown = newState;
+    LocalStorageService().setResourceShown(newState);
   }),
   toggleBikeType: action((state, payload) => {
     const newState = { ...state.bikeTypeFilter };
@@ -44,6 +48,7 @@ const storeUiModel: IStoreUiModel = {
     }
 
     state.bikeTypeFilter = newState;
+    LocalStorageService().setBikeTypeFilter(newState);
   }),
   pushNotification: action((state, payload) => {
     payload.id = uuidv4();

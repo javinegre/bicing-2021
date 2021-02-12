@@ -1,6 +1,8 @@
 import { IStationList } from '../interfaces';
 import { IMapsCoordinates } from '../components/map/interfaces';
 import { LocalStoragePositionKeyType } from './types';
+import { StationResourceTypeEnum } from '../enums';
+import { BikeTypeFilterType } from '../store/types';
 
 export interface IXHRStationInfo {
   id: number;
@@ -41,4 +43,8 @@ export interface ILocalStorageService {
   setUserLocation: (payload: IMapsCoordinates | null) => void;
   getMapZoom: () => number | null;
   setMapZoom: (payload: number | null) => void;
+  getResourceShown: () => StationResourceTypeEnum | null;
+  setResourceShown: (payload: StationResourceTypeEnum | null) => void;
+  getBikeTypeFilter: () => BikeTypeFilterType | null;
+  setBikeTypeFilter: (payload: BikeTypeFilterType | null) => void;
 }

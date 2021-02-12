@@ -1,15 +1,20 @@
 import { IMapsCoordinates } from '../components/map/interfaces';
 import { ILocalStorageService } from './interfaces';
 import {
+  LocalStorageKeyType,
   LocalStorageNumberKeyType,
   LocalStoragePositionKeyType,
 } from './types';
+import { BikeTypeEnum, StationResourceTypeEnum } from '../enums';
+import { BikeTypeFilterType } from '../store/types';
 
 const LocalStorageService: () => ILocalStorageService = () => {
   const userLocationKey = 'userLocation';
   const userLocationTimestampKey = 'userLocationTimestamp';
   const userLocationTtl = 7200000; // 2h
   const mapZoomKey = 'mapZoom';
+  const resourceShownKey = 'resourceShown';
+  const bikeTypeFilterKey = 'bikeTypeFilter';
 
   const getNumberValue: (key: LocalStorageNumberKeyType) => number | null = (
     key,
@@ -27,8 +32,8 @@ const LocalStorageService: () => ILocalStorageService = () => {
   };
 
   const setValue: (
-    key: LocalStoragePositionKeyType | LocalStorageNumberKeyType,
-    payload: IMapsCoordinates | number | null,
+    key: LocalStorageKeyType,
+    payload: IMapsCoordinates | BikeTypeFilterType | number | null,
   ) => void = (key, payload) =>
     window.localStorage.setItem(key, JSON.stringify(payload));
 
@@ -81,6 +86,53 @@ const LocalStorageService: () => ILocalStorageService = () => {
   const setMapZoom: (payload: number | null) => void = (payload) =>
     setValue(mapZoomKey, payload);
 
+  const getResourceShown: () => StationResourceTypeEnum | null = () => {
+    const resourceShown = window.localStorage.getItem(resourceShownKey);
+    if (!resourceShown) {
+      return null;
+    }
+    try {
+      const parsedResourceShown = JSON.parse(resourceShown);
+      return Object.values(StationResourceTypeEnum).includes(
+        parsedResourceShown,
+      )
+        ? parsedResourceShown
+        : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const setResourceShown: (payload: StationResourceTypeEnum | null) => void = (
+    payload,
+  ) => {
+    setValue(resourceShownKey, payload);
+  };
+
+  const getBikeTypeFilter: () => BikeTypeFilterType | null = () => {
+    const bikeTypeFilter = window.localStorage.getItem(bikeTypeFilterKey);
+    if (!bikeTypeFilter) {
+      return null;
+    }
+    try {
+      const parsedBikeTypeFilter = JSON.parse(bikeTypeFilter);
+      return BikeTypeEnum.mechanical in parsedBikeTypeFilter &&
+        typeof parsedBikeTypeFilter[BikeTypeEnum.mechanical] === 'boolean' &&
+        BikeTypeEnum.electrical in parsedBikeTypeFilter &&
+        typeof parsedBikeTypeFilter[BikeTypeEnum.electrical] === 'boolean'
+        ? parsedBikeTypeFilter
+        : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const setBikeTypeFilter: (payload: BikeTypeFilterType | null) => void = (
+    payload,
+  ) => {
+    setValue(bikeTypeFilterKey, payload);
+  };
+
   return {
     getPosition,
     setPosition,
@@ -88,6 +140,10 @@ const LocalStorageService: () => ILocalStorageService = () => {
     setUserLocation,
     getMapZoom,
     setMapZoom,
+    getResourceShown,
+    setResourceShown,
+    getBikeTypeFilter,
+    setBikeTypeFilter,
   };
 };
 
