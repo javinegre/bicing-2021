@@ -8,39 +8,54 @@ import infoBoxTimeHelpers from './helpers';
 
 const InfoBoxTime: React.FunctionComponent = () => {
   const [timeDiff, setTimeDiff] = useState<number | null>(null);
-  const defaultDelay = 10000; // 10s
+  const defaultIntervalDelay = 10000; // 10s
+  const outdatedThreshold = 300000; // 5min
 
-  const updateTimeState = storeHooks.useStoreState(
-    (state) => state.stationList.updateTime,
+  const { updateTimeState, isDataLoading } = storeHooks.useStoreState(
+    (state) => ({
+      updateTimeState: state.stationList.updateTime,
+      isDataLoading: state.stationList.isDataLoading,
+    }),
   );
 
   const { getLastUpdateTimeString } = infoBoxTimeHelpers;
 
-  useInterval(() => {
+  const updateTimeDiff: () => void = () => {
     const now = +new Date();
-    setTimeDiff(now - updateTimeState);
-  }, defaultDelay);
+    setTimeDiff(updateTimeState ? now - updateTimeState : null);
+  };
 
-  useEffect(() => {
-    const now = +new Date();
-    setTimeDiff(now - updateTimeState);
-  }, [updateTimeState]);
+  useInterval(updateTimeDiff, defaultIntervalDelay);
+
+  useEffect(updateTimeDiff, [isDataLoading, updateTimeState]);
+
+  const isOutdated = timeDiff !== null && timeDiff > outdatedThreshold;
 
   return (
-    <div className="flex items-center">
-      <Icon
-        name="time-refresh"
-        className="flex-shrink-0"
-        size={12}
-        color="#601818"
-      />
-      <Spacer x={4} />
-      {timeDiff && (
-        <span className="text-xs tracking-tighter whitespace-nowrap">
-          {getLastUpdateTimeString(timeDiff)}
-        </span>
+    <>
+      {updateTimeState !== null && (
+        <div
+          className={`flex items-center transition-opacity delay-200 duration-300 ${
+            isDataLoading ? 'opacity-20' : ''
+          }`}
+        >
+          <Icon
+            name={isOutdated ? 'warning' : 'time-refresh'}
+            className="flex-shrink-0"
+            size={isOutdated ? 14 : 12}
+            color={isOutdated ? 'gold' : '#601818'}
+          />
+
+          <Spacer x={4} />
+
+          {timeDiff && (
+            <span className="text-xs tracking-tighter whitespace-nowrap">
+              {getLastUpdateTimeString(timeDiff)}
+            </span>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
