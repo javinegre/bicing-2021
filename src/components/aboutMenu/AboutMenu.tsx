@@ -27,6 +27,10 @@ const AboutMenu: React.FunctionComponent = () => {
       <div
         className={`AboutMenu-backdrop absolute top-0 bottom-0 left-0 right-0 bg-gray-900 ${getMenuVisibilityClassName()}`}
         onClick={hideMenu}
+        onKeyPress={hideMenu}
+        role="button"
+        aria-label="Dismiss"
+        tabIndex={0}
       />
       <aside
         className={`AboutMenu absolute top-0 bottom-0 right-0 px-4 py-4 bg-gray-100 text-gray-700 ${getMenuVisibilityClassName()}`}

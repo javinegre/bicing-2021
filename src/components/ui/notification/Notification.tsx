@@ -55,6 +55,10 @@ const Notification: React.FunctionComponent = () => {
         <div
           className="flex-grow-0 flex items-center text-2xl px-4 cursor-pointer"
           onClick={onClose}
+          onKeyPress={onClose}
+          role="button"
+          aria-label="Dismiss"
+          tabIndex={0}
         >
           &times;
         </div>

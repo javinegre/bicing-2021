@@ -54,6 +54,10 @@ const InfoMenu: React.FunctionComponent = () => {
       <div
         className={`InfoMenu-backdrop absolute top-0 bottom-0 left-0 right-0 bg-transparent ${getMenuVisibilityClassName()}`}
         onClick={hideMenu}
+        onKeyPress={hideMenu}
+        role="button"
+        aria-label="Dismiss"
+        tabIndex={0}
       />
       <aside
         className={`InfoMenu flex flex-col absolute top-0 bottom-0 left-0 w-full h-full bg-infoMenuBg text-infoMenuColor ${getMenuVisibilityClassName()}`}
@@ -79,6 +83,10 @@ const InfoMenu: React.FunctionComponent = () => {
         <div
           className="flex-grow-0 flex-shrink-0 flex items-center h-12 px-4"
           onClick={showAboutMenu}
+          onKeyPress={showAboutMenu}
+          role="button"
+          aria-label="About this App"
+          tabIndex={0}
         >
           <Icon name="info" color={iconColor} size={28} />
           <Spacer x={8} />

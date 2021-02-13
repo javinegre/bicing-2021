@@ -54,7 +54,14 @@ const InfoBoxTotals: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="flex flex-row items-center" onClick={showInfoMenu}>
+    <div
+      className="flex flex-row items-center"
+      onClick={showInfoMenu}
+      onKeyPress={showInfoMenu}
+      role="button"
+      aria-label="Show Station List"
+      tabIndex={0}
+    >
       <div {...getNumberBlockStyle(isBikesNumberHighlighted)}>
         <Icon name="bike" color={iconColor} />
         <Spacer x={4} />
