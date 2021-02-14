@@ -5,13 +5,16 @@ import InfoMenuList from '../infoMenuList/infoMenuList';
 import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
 import storeHooks from '../../store/hooks';
+import useAriaProps from '../../hooks/useAriaProps';
 import infoMenuHelpers from './helpers';
 import appConfig from '../../config';
 import { AppFunctionComponent } from '../../types';
 
 import './InfoMenu.css';
 
-const InfoMenu: AppFunctionComponent = () => {
+const InfoMenu: AppFunctionComponent = (props) => {
+  const ariaProps = useAriaProps(props);
+
   const $listWrapper = useRef<HTMLDivElement | null>(null);
 
   const { menuShown, stationData, visibleStations } = storeHooks.useStoreState(
@@ -51,7 +54,7 @@ const InfoMenu: AppFunctionComponent = () => {
   const iconColor = appConfig.infoMenuIconColor;
 
   return (
-    <div className="InfoMenu-wrapper order-1">
+    <div className="InfoMenu-wrapper order-1" {...ariaProps}>
       <div
         className={`InfoMenu-backdrop absolute top-0 bottom-0 left-0 right-0 bg-transparent ${getMenuVisibilityClassName()}`}
         onClick={hideMenu}

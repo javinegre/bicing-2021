@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MapControls from '../mapControls/MapControls';
 import MapHints from './mapHints';
 import useGoogleMaps from '../../hooks/useGoogleMaps';
+import useAriaProps from '../../hooks/useAriaProps';
 import mapConfig from './config';
 import mapHelpers from './helpers';
 import storeHooks from '../../store/hooks';
@@ -12,7 +13,10 @@ import { AppFunctionComponent } from '../../types';
 
 import './Map.css';
 
-const Map: AppFunctionComponent = () => {
+const Map: AppFunctionComponent = (props) => {
+  // ///////////////////////////////////////////////////////////////////////////  Props  /
+  const ariaProps = useAriaProps(props);
+
   // /////////////////////////////////////////////////////////////////  Component State  /
 
   const $mapWrapper = useRef<HTMLDivElement>(null);
@@ -222,7 +226,10 @@ const Map: AppFunctionComponent = () => {
     );
 
   return (
-    <div className={`Map ${infoMenuShown ? 'Map--blurred' : ''}`}>
+    <div
+      className={`Map ${infoMenuShown ? 'Map--blurred' : ''}`}
+      {...ariaProps}
+    >
       <div ref={$mapWrapper} className="Map-wrapper" />
 
       <MapHints />

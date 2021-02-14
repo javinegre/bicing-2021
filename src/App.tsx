@@ -20,21 +20,25 @@ const App: AppFunctionComponent = () => {
   }, []);
 
   return (
-    <main className="App bg-gray-900 select-none">
+    <div className="App bg-gray-900 select-none" role="region" aria-label="App">
       <div className="App-wrapper bg-gray-800">
-        <section className="relative flex flex-col flex-grow order-2">
-          <InfoBox />
+        <main
+          className="relative flex flex-col flex-grow order-2"
+          role="main"
+          aria-label="Main Tile"
+        >
+          <InfoBox role="banner" aria-label="Info Box" />
 
-          <Map />
+          <Map role="region" aria-label="Map Tile" />
 
-          <Notification />
-        </section>
+          <Notification role="alert" aria-label="Notification" />
+        </main>
 
-        <InfoMenu />
+        <InfoMenu role="menu" aria-label="Info Menu" />
 
-        <AboutMenu />
+        <AboutMenu role="menu" aria-label="About Menu" />
       </div>
-    </main>
+    </div>
   );
 };
 

@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import storeHooks from '../../../store/hooks';
+import useAriaProps from '../../../hooks/useAriaProps';
 import { AppFunctionComponent } from '../../../types';
 
-const Notification: AppFunctionComponent = () => {
+const Notification: AppFunctionComponent = (props) => {
+  const ariaProps = useAriaProps(props);
+
   const [timespan, setTimespan] = useState<number>(0);
   const timeoutTimer = useRef<number | null>();
   const defaultTimespan = 3200;
@@ -46,6 +49,7 @@ const Notification: AppFunctionComponent = () => {
   return (
     <div
       className={`absolute flex justify-between items-center bottom-0 left-0 right-0 pl-4 py-3 bg-gray-100 transform transition-transform ${visibilityClassName}`}
+      {...ariaProps}
     >
       <div className="flex-grow-1">{notificationContent ?? ''}</div>
       <div className="flex-grow-0 flex items-center">

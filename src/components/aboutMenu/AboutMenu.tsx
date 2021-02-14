@@ -1,6 +1,7 @@
 import React from 'react';
 
 import storeHooks from '../../store/hooks';
+import useAriaProps from '../../hooks/useAriaProps';
 import Spacer from '../ui/spacer/spacer';
 import { AppFunctionComponent } from '../../types';
 
@@ -11,7 +12,9 @@ import { ReactComponent as GithubLogo } from '../../assets/icons/misc/github.svg
 
 const { default: bicingAppLogo } = require('../../assets/images/logo192.png');
 
-const AboutMenu: AppFunctionComponent = () => {
+const AboutMenu: AppFunctionComponent = (props) => {
+  const ariaProps = useAriaProps(props);
+
   const menuShown = storeHooks.useStoreState(
     (state) => state.ui.aboutMenuShown,
   );
@@ -25,7 +28,7 @@ const AboutMenu: AppFunctionComponent = () => {
     menuShown ? 'shown' : '';
 
   return (
-    <div className="AboutMenu-wrapper order-3">
+    <div className="AboutMenu-wrapper order-3" {...ariaProps}>
       <div
         className={`AboutMenu-backdrop absolute top-0 bottom-0 left-0 right-0 bg-gray-900 ${getMenuVisibilityClassName()}`}
         onClick={hideMenu}
