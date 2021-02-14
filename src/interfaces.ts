@@ -1,4 +1,13 @@
-import { MarkerColorType } from './types';
+import { AriaAttributes } from 'react';
+
+// Aria related properties to extend function components
+export interface IAccessibleFunctionComponentProps extends AriaAttributes {
+  // Based on HTMLAttributes interface
+
+  // WAI-ARIA
+  role?: string;
+  tabIndex?: number;
+}
 
 export interface IStationData {
   id: number;
@@ -20,17 +29,4 @@ export interface IStationDataExtended extends IStationData {
 export interface IStationList {
   updateTime: number | null;
   stations: IStationData[];
-}
-
-export interface IMarkerStateColor {
-  threshold: number;
-  color: MarkerColorType;
-}
-
-export interface IMarkerColorConfig {
-  inactive: IMarkerStateColor;
-  none: IMarkerStateColor;
-  danger: IMarkerStateColor;
-  warning: IMarkerStateColor;
-  success: IMarkerStateColor;
 }

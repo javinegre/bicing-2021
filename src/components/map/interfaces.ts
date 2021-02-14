@@ -1,4 +1,5 @@
 import { IStationData } from '../../interfaces';
+import { MarkerColorType } from './types';
 
 export interface IMapsCoordinates {
   lat: number;
@@ -16,4 +17,17 @@ export interface INearbyAreaHintConfig {
 export interface INearbyAreaRadius {
   lat: number;
   lng: number;
+}
+
+export interface IMarkerStateColor {
+  threshold: number;
+  color: MarkerColorType;
+}
+
+export interface IMarkerColorConfig {
+  inactive: IMarkerStateColor;
+  none: IMarkerStateColor;
+  danger: IMarkerStateColor;
+  warning: IMarkerStateColor;
+  success: IMarkerStateColor;
 }

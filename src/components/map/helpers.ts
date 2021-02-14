@@ -4,7 +4,7 @@ import userLocationIcon from '../../assets/icons/ui/user-location.svg';
 import { IStationData, IStationDataExtended } from '../../interfaces';
 import { IMapsCoordinates, IMarkerWithData } from './interfaces';
 import { BikeTypeFilterType } from '../../store/types';
-import { MarkerColorType, MarkerSizeType } from '../../types';
+import { MarkerColorType, MarkerSizeType } from './types';
 import {
   BikeTypeEnum,
   StationResourceTypeEnum,

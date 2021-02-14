@@ -1,4 +1,4 @@
-import { IMarkerColorConfig } from './interfaces';
+import { IMarkerColorConfig } from './components/map/interfaces';
 
 const bicingApiUrl: string = 'https://negre.co/bicing/api/v1.0/';
 
