@@ -3,8 +3,9 @@ import React from 'react';
 import storeHooks from '../../store/hooks';
 import mapConfig from './config';
 import { ReactComponent as CrossHairIcon } from '../../assets/icons/hints/crosshair.svg';
+import { AppFunctionComponent } from '../../types';
 
-const MapHints: React.FunctionComponent = () => {
+const MapHints: AppFunctionComponent = () => {
   const mapZoom = storeHooks.useStoreState((state) => state.map.mapZoom);
 
   const nearbyAreaDiameter: number | undefined =

@@ -7,8 +7,9 @@ import storeHooks from '../../store/hooks';
 import { BikeTypeEnum, StationResourceTypeEnum } from '../../enums';
 import Toggle from '../ui/toggle/Toggle';
 import { IToggleOptions } from '../ui/toggle/interfaces';
+import { AppFunctionComponent } from '../../types';
 
-const MapControlsStations: React.FunctionComponent = () => {
+const MapControlsStations: AppFunctionComponent = () => {
   const { resourceShown, bikeTypeFilter } = storeHooks.useStoreState(
     (state) => ({
       resourceShown: state.ui.resourceShown,

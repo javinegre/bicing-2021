@@ -2,8 +2,9 @@ import React from 'react';
 
 import iconConfig from './iconConfig';
 import { IIconProps } from './interfaces';
+import { AppFunctionComponent } from '../../../types';
 
-const Icon: React.FunctionComponent<IIconProps> = (props) => {
+const Icon: AppFunctionComponent<IIconProps> = (props) => {
   const { name, className, color, size } = props;
 
   const IconSVGComponent = iconConfig[name];

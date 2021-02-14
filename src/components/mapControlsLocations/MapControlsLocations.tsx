@@ -6,8 +6,9 @@ import Spacer from '../ui/spacer/spacer';
 import storeHooks from '../../store/hooks';
 import useGeoLocation from '../../hooks/useGeoLocation';
 import useLongPress from '../../hooks/useLongPress';
+import { AppFunctionComponent } from '../../types';
 
-const MapControlsLocations: React.FunctionComponent = () => {
+const MapControlsLocations: AppFunctionComponent = () => {
   const {
     mapCenter,
     homeBookmark,

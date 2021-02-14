@@ -2,8 +2,11 @@ import React from 'react';
 
 import { IToggle } from './interfaces';
 import { ButtonSizeType } from '../button/types';
+import { IAccessibleFunctionComponentProps } from '../../../interfaces';
 
-const Toggle: <T>(props: IToggle<T>) => React.ReactElement = (props) => {
+const Toggle: <T>(
+  props: IToggle<T> & IAccessibleFunctionComponentProps,
+) => React.ReactElement = (props) => {
   const {
     selectedValue,
     options: { 0: firstOption, 1: secondOption },

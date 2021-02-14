@@ -5,8 +5,9 @@ import storeHooks from '../../store/hooks';
 import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
 import infoBoxTimeHelpers from './helpers';
+import { AppFunctionComponent } from '../../types';
 
-const InfoBoxTime: React.FunctionComponent = () => {
+const InfoBoxTime: AppFunctionComponent = () => {
   const [timeDiff, setTimeDiff] = useState<number | null>(null);
   const defaultIntervalDelay = 10000; // 10s
   const outdatedThreshold = 300000; // 5min

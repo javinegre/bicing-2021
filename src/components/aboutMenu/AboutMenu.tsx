@@ -1,15 +1,17 @@
 import React from 'react';
 
 import storeHooks from '../../store/hooks';
-import './AboutMenu.css';
 import Spacer from '../ui/spacer/spacer';
+import { AppFunctionComponent } from '../../types';
+
+import './AboutMenu.css';
 
 import { ReactComponent as JaviNegreCodesLogo } from '../../assets/images/javi-negre-codes.svg';
 import { ReactComponent as GithubLogo } from '../../assets/icons/misc/github.svg';
 
 const { default: bicingAppLogo } = require('../../assets/images/logo192.png');
 
-const AboutMenu: React.FunctionComponent = () => {
+const AboutMenu: AppFunctionComponent = () => {
   const menuShown = storeHooks.useStoreState(
     (state) => state.ui.aboutMenuShown,
   );

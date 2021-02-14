@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import storeHooks from '../../../store/hooks';
+import { AppFunctionComponent } from '../../../types';
 
-const Notification: React.FunctionComponent = () => {
+const Notification: AppFunctionComponent = () => {
   const [timespan, setTimespan] = useState<number>(0);
   const timeoutTimer = useRef<number | null>();
   const defaultTimespan = 3200;

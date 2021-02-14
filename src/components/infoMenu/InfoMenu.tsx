@@ -7,10 +7,11 @@ import Spacer from '../ui/spacer/spacer';
 import storeHooks from '../../store/hooks';
 import infoMenuHelpers from './helpers';
 import appConfig from '../../config';
+import { AppFunctionComponent } from '../../types';
 
 import './InfoMenu.css';
 
-const InfoMenu: React.FunctionComponent = () => {
+const InfoMenu: AppFunctionComponent = () => {
   const $listWrapper = useRef<HTMLDivElement | null>(null);
 
   const { menuShown, stationData, visibleStations } = storeHooks.useStoreState(

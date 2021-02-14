@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { ISpacerProps } from './interfaces';
+import { AppFunctionComponent } from '../../../types';
 
-const Spacer: React.FunctionComponent<ISpacerProps> = (props) => {
+const Spacer: AppFunctionComponent<ISpacerProps> = (props) => {
   const { x, y } = props;
 
   return (

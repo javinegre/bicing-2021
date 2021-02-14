@@ -4,8 +4,9 @@ import storeHooks from '../../store/hooks';
 import Spacer from '../ui/spacer/spacer';
 import Icon from '../ui/icon/icon';
 import infoBoxHelpers from './helpers';
+import { AppFunctionComponent } from '../../types';
 
-const InfoBoxTotals: React.FunctionComponent = () => {
+const InfoBoxTotals: AppFunctionComponent = () => {
   const {
     visibleStations,
     resourceShown,

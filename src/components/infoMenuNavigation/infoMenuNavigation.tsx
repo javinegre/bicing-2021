@@ -4,8 +4,9 @@ import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
 import infoMenuNavigationHelpers from './helpers';
 import storeHooks from '../../store/hooks';
+import { AppFunctionComponent } from '../../types';
 
-const InfoMenuNavigation: React.FunctionComponent = () => {
+const InfoMenuNavigation: AppFunctionComponent = () => {
   const { stationData, resourceShown } = storeHooks.useStoreState((state) => ({
     stationData: state.map.stationSelectedData,
     resourceShown: state.ui.resourceShown,

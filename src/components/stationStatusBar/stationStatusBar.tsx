@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { IStationStatusBarProps } from './interfaces';
 import appConfig from '../../config';
+import { IStationStatusBarProps } from './interfaces';
+import { AppFunctionComponent } from '../../types';
 
-const StationStatusBar: React.FunctionComponent<IStationStatusBarProps> = (
+const StationStatusBar: AppFunctionComponent<IStationStatusBarProps> = (
   props,
 ) => {
   const { stationData, height, className } = props;

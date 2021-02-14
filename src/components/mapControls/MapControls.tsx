@@ -5,10 +5,11 @@ import MapControlsLocations from '../mapControlsLocations/MapControlsLocations';
 import Button from '../ui/button/Button';
 import Icon from '../ui/icon/icon';
 import storeHooks from '../../store/hooks';
+import { AppFunctionComponent } from '../../types';
 
 import './MapControls.css';
 
-const MapControls: React.FunctionComponent = () => {
+const MapControls: AppFunctionComponent = () => {
   const fetchStationList = storeHooks.useStoreActions(
     (actions) => actions.stationList.fetch,
   );

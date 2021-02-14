@@ -2,10 +2,11 @@ import React from 'react';
 
 import { IButtonProps } from './interfaces';
 import { ButtonSizeType } from './types';
+import { AppFunctionComponent } from '../../../types';
 
 import './Button.css';
 
-const Button: React.FunctionComponent<IButtonProps> = (props) => {
+const Button: AppFunctionComponent<IButtonProps> = (props) => {
   const {
     onClick,
     onLongPress,

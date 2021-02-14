@@ -5,8 +5,9 @@ import infoMenuListHelpers from './helpers';
 import storeHooks from '../../store/hooks';
 import { IStationDataExtended } from '../../interfaces';
 import { IInfoMenuListProps } from './interfaces';
+import { AppFunctionComponent } from '../../types';
 
-const InfoMenuList: React.FunctionComponent<IInfoMenuListProps> = (props) => {
+const InfoMenuList: AppFunctionComponent<IInfoMenuListProps> = (props) => {
   const { title, stationList } = props;
 
   const selectStation = storeHooks.useStoreActions(

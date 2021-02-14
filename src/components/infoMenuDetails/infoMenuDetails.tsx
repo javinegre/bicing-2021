@@ -6,8 +6,9 @@ import StationStatusBar from '../stationStatusBar/stationStatusBar';
 import InfoMenuNavigation from '../infoMenuNavigation/infoMenuNavigation';
 import storeHooks from '../../store/hooks';
 import appConfig from '../../config';
+import { AppFunctionComponent } from '../../types';
 
-const InfoMenuDetails: React.FunctionComponent = () => {
+const InfoMenuDetails: AppFunctionComponent = () => {
   const stationData = storeHooks.useStoreState(
     (state) => state.map.stationSelectedData,
   );

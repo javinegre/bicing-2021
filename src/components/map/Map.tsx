@@ -8,10 +8,11 @@ import mapHelpers from './helpers';
 import storeHooks from '../../store/hooks';
 import { IMarkerWithData } from './interfaces';
 import { IStationData } from '../../interfaces';
+import { AppFunctionComponent } from '../../types';
 
 import './Map.css';
 
-const Map: React.FunctionComponent = () => {
+const Map: AppFunctionComponent = () => {
   // /////////////////////////////////////////////////////////////////  Component State  /
 
   const $mapWrapper = useRef<HTMLDivElement>(null);

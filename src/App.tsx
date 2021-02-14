@@ -6,10 +6,11 @@ import Map from './components/map/Map';
 import AboutMenu from './components/aboutMenu/AboutMenu';
 import Notification from './components/ui/notification/Notification';
 import storeHooks from './store/hooks';
+import { AppFunctionComponent } from './types';
 
 import './App.css';
 
-const App: React.FunctionComponent = () => {
+const App: AppFunctionComponent = () => {
   const fetchStationList = storeHooks.useStoreActions(
     (actions) => actions.stationList.fetch,
   );
