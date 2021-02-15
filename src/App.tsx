@@ -34,9 +34,9 @@ const App: AppFunctionComponent = () => {
           <Notification role="alert" aria-label="Notification" />
         </main>
 
-        <InfoMenu role="menu" aria-label="Info Menu" />
+        <InfoMenu role="region" aria-label="Info Menu Wrapper" />
 
-        <AboutMenu role="menu" aria-label="About Menu" />
+        <AboutMenu role="region" aria-label="About Menu Wrapper" />
       </div>
     </div>
   );
