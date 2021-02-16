@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('express-cors');
+const dotenv = require('dotenv');
 
 const Api = require('./api/api.controller');
 
@@ -26,6 +27,19 @@ app.get('/api/v1.1/station-status', async (req, res) => {
 
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(resData, null, 0));
+});
+
+app.get('/api/v1.1/latest-version', (req, res) => {
+  const appEnv = dotenv.config({
+    path: path.join(__dirname, '.env.production'),
+  });
+
+  const resObject = {
+    latestVersion: appEnv?.parsed?.REACT_APP_VERSION ?? null,
+  };
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(resObject), null, 0);
 });
 
 app.get('*', (req, res) => {
