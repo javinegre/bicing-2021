@@ -15,6 +15,7 @@
     "autoprefixer": "^9",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
+    "dotenv": "^8.2.0",
     "easy-peasy": "^4.0.1",
     "express": "^4.17.1",
     "express-cors": "^0.0.3",
