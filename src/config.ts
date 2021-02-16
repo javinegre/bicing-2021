@@ -1,6 +1,6 @@
 import { IMarkerColorConfig } from './components/map/interfaces';
 
-const bicingApiUrl: string = 'https://negre.co/bicing/api/v1.0/';
+const bicingApiUrl: string = 'https://negre.co/bicing/api/v1.1/';
 
 // Ui
 const infoMenuIconColor = '#404040';

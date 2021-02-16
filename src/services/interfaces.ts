@@ -11,11 +11,6 @@ export interface IXHRStationInfo {
   lng: number;
 }
 
-export interface IXHRStationInfoList {
-  last_updated: number;
-  stations: IXHRStationInfo[];
-}
-
 export interface IXHRStationStatus {
   i: number;
   e: number;
@@ -24,9 +19,15 @@ export interface IXHRStationStatus {
   s: 0 | 1;
 }
 
-export interface IXHRStationStatusList {
+export interface IXHRStationList<T> {
+  success: true;
   last_updated: number;
-  stations: IXHRStationStatus[];
+  stations: Array<T>;
+}
+
+export interface IXHRErrorResponse {
+  success: false;
+  errorMessage: string;
 }
 
 export interface IStationService {
