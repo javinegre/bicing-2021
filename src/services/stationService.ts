@@ -10,16 +10,17 @@ import {
 } from './interfaces';
 import { IStationData, IStationList } from '../interfaces';
 
+// stationInfo cache
+let stationInfo:
+  | IXHRStationList<IXHRStationInfo>
+  | IXHRErrorResponse
+  | undefined;
+let stationInfoLastUpdate = -Infinity;
+
 const StationService: () => IStationService = () => {
   const getEndpointUrl: (endpoint: string) => string = (endpoint) =>
     `${appConfig.bicingApiUrl}${endpoint}`;
 
-  // stationInfo cache
-  let stationInfo:
-    | IXHRStationList<IXHRStationInfo>
-    | IXHRErrorResponse
-    | undefined;
-  let stationInfoLastUpdate = -Infinity;
   const stationInfoTtl = 3 * 3600 * 1000; // 2h
   const requestTimeout = 10 * 1000; // 10s
 
