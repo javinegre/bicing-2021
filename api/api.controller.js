@@ -1,69 +1,37 @@
-const fetch = require('node-fetch');
+const axios = require('axios');
 const cache = require('memory-cache');
 
 const config = require('./config');
-const transformers = require('./helpers/data-transformers');
+const dataTransformers = require('./helpers/data-transformers');
+const responseHelpers = require('./helpers/response');
+
+axios.interceptors.response.use(responseHelpers.handleResponseData);
 
 const Api = () => {
+  const { endpoints, cacheConfig } = config;
+
   const getApiUrl = (endpoint) => `${config.bicingApiBaseUrl}${endpoint}`;
 
-  const getStationInfo = async () => {
-    const infoEndpoint = config.endpoints.info;
-    const infoCacheConfig = config.cacheConfig.info;
+  const getCachedData = async (type) => {
+    const { key, ttl } = cacheConfig[type];
 
-    let result = cache.get(infoCacheConfig.key);
+    let result = cache.get(key);
 
-    if (!result) {
-      const info = await fetch(getApiUrl(infoEndpoint))
-        .then((res) => res.json())
-        .then((data) => data)
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.error(err);
-          return null;
-        });
+    if (result === null || !result.success) {
+      result = await axios
+        .get(getApiUrl(endpoints[type]))
+        .then(responseHelpers.handleSuccessfulResponse(dataTransformers[type]))
+        .catch(responseHelpers.handleErrorResponse);
 
-      if (info !== null) {
-        result = {
-          last_updated: info.last_updated,
-          stations: info.data.stations.map(transformers.stationInfoTransform),
-        };
-
-        cache.put(infoCacheConfig.key, result, infoCacheConfig.ttl);
-      }
+      cache.put(key, result, ttl);
     }
 
     return result;
   };
 
-  const getStationStatus = async () => {
-    const statusEndpoint = config.endpoints.status;
-    const statusCacheConfig = config.cacheConfig.status;
+  const getStationInfo = async () => getCachedData('info');
 
-    let result = cache.get(statusCacheConfig.key);
-
-    if (!result) {
-      const info = await fetch(getApiUrl(statusEndpoint))
-        .then((res) => res.json())
-        .then((data) => data)
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.error(err);
-          return null;
-        });
-
-      if (info !== null) {
-        result = {
-          last_updated: info.last_updated,
-          stations: info.data.stations.map(transformers.stationStatusTransform),
-        };
-
-        cache.put(statusCacheConfig.key, result, statusCacheConfig.ttl);
-      }
-    }
-
-    return result;
-  };
+  const getStationStatus = async () => getCachedData('status');
 
   return {
     getStationInfo,

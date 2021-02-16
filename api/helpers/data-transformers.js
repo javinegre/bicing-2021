@@ -14,6 +14,6 @@ const stationStatusTransform = (station) => ({
 });
 
 module.exports = {
-  stationInfoTransform,
-  stationStatusTransform,
+  info: stationInfoTransform,
+  status: stationStatusTransform,
 };
