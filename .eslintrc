@@ -10,10 +10,19 @@
   "overrides": [
     {
       "files": ["*.ts", "*.d.ts", "*.tsx"],
+      "plugins": [
+        "jest",
+        "jest-dom",
+        "testing-library"
+      ],
       "extends": [
         "airbnb-typescript",
+        "react-app/jest",
         "prettier",
-        "prettier/react"
+        "prettier/react",
+        "plugin:testing-library/recommended",
+        "plugin:testing-library/react",
+        "plugin:jest-dom/recommended"
       ],
       "env": {
         "browser": true,
