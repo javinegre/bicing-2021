@@ -14,7 +14,7 @@ app.use(
 
 app.use(express.static(path.join(__dirname, '/build')));
 
-app.use('/api/v1.1', ApiRoutes);
+app.use('/api/v1.2', ApiRoutes);
 
 app.get('*', (req, res) => {
   res.redirect(404, 'http://negre.co');
