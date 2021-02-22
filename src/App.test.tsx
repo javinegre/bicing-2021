@@ -1,37 +1,34 @@
 import React from 'react';
-import { StoreProvider } from 'easy-peasy';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from './test-utils';
 import App from './App';
-import storeModel from './store/storeModel';
 
 describe('App Component', () => {
   test('renders all sub-components', () => {
-    render(
-      <StoreProvider store={storeModel}>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      </StoreProvider>,
-    );
+    render(<App />);
 
     const $app = screen.getByRole('region', { name: 'App' });
+    expect($app).toBeInTheDocument();
+
     const $mainTile = screen.getByRole('main', { name: 'Main Tile' });
+    expect($mainTile).toBeInTheDocument();
+
     const $infoBox = screen.getByRole('banner', { name: 'Info Box' });
+    expect($infoBox).toBeInTheDocument();
+
     const $mapTile = screen.getByRole('region', { name: 'Map Tile' });
+    expect($mapTile).toBeInTheDocument();
+
     const $notification = screen.getByRole('alert', { name: 'Notification' });
+    expect($notification).toBeInTheDocument();
+
     const $infoMenuWrapper = screen.getByRole('region', {
       name: 'Info Menu Wrapper',
     });
+    expect($infoMenuWrapper).toBeInTheDocument();
+
     const $aboutMenuWrapper = screen.getByRole('region', {
       name: 'About Menu Wrapper',
     });
-
-    expect($app).toBeInTheDocument();
-    expect($mainTile).toBeInTheDocument();
-    expect($infoBox).toBeInTheDocument();
-    expect($mapTile).toBeInTheDocument();
-    expect($notification).toBeInTheDocument();
-    expect($infoMenuWrapper).toBeInTheDocument();
     expect($aboutMenuWrapper).toBeInTheDocument();
   });
 });
