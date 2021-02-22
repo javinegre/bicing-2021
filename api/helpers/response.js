@@ -17,7 +17,7 @@ const handleResponseData = (response) =>
 
 const handleSuccessfulResponse = (stationTransformer) => (response) => ({
   success: true,
-  last_updated: response.data.last_updated,
+  lastUpdated: response.data.last_updated,
   stations: response.data.data.stations.map(stationTransformer),
 });
 

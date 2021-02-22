@@ -100,7 +100,7 @@ const StationService: () => IStationService = () => {
     );
 
     return {
-      updateTime: stationStatusResult.last_updated * 1000,
+      updateTime: stationStatusResult.lastUpdated * 1000,
       stations: stationList,
     };
   };

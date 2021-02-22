@@ -21,7 +21,7 @@ export interface IXHRStationStatus {
 
 export interface IXHRStationList<T> {
   success: true;
-  last_updated: number;
+  lastUpdated: number;
   stations: Array<T>;
 }
 

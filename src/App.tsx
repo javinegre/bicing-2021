@@ -17,7 +17,7 @@ const App: AppFunctionComponent = () => {
 
   useEffect(() => {
     fetchStationList();
-  }, []);
+  }, [fetchStationList]);
 
   return (
     <div className="App bg-gray-900 select-none" role="region" aria-label="App">

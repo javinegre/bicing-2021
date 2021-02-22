@@ -34,10 +34,12 @@ const markerColor: IMarkerColorConfig = {
   },
 };
 
-export default {
+const appConfig = {
   bicingApiUrl,
   infoMenuIconColor,
   stationStatusBarColor,
   mapMarkerSizeZoomThreshold,
   markerColor,
 };
+
+export default appConfig;

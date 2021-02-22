@@ -7,6 +7,9 @@
     "browser": false,
     "node": true
   },
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.d.ts", "*.tsx"],
@@ -16,7 +19,7 @@
         "testing-library"
       ],
       "extends": [
-        "airbnb-typescript",
+        "react-app",
         "react-app/jest",
         "prettier",
         "prettier/react",
@@ -28,10 +31,15 @@
         "browser": true,
         "node": false
       },
-      "parserOptions": {
-        "project": "./tsconfig.json"
-      },
       "rules": {
+        "import/extensions": [
+          "error",
+          "ignorePackages",
+          {
+            "ts": "never",
+            "tsx": "never"
+          }
+        ],
         "quotes": [
           2,
           "single",
@@ -45,9 +53,27 @@
         ],
         "react/prop-types": 0,
         "react/jsx-props-no-spreading": 0,
+        "react/jsx-filename-extension": [
+          1,
+          {
+            "extensions": [
+              ".tsx"
+            ]
+          }
+        ],
         "@typescript-eslint/no-use-before-define": 0,
         "@typescript-eslint/explicit-function-return-type": "error",
-        "@typescript-eslint/indent": "off"
+        "@typescript-eslint/indent": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "error",
+        "import/no-anonymous-default-export": "off",
+        "react-hooks/exhaustive-deps": "off"
+      },
+      "settings": {
+        "import/resolver": {
+          "typescript": {}
+        }
       }
-  }]
+    }
+  ]
 }
