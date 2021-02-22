@@ -1,9 +1,8 @@
 const express = require('express');
 const path = require('path');
 const cors = require('express-cors');
-const dotenv = require('dotenv');
 
-const Api = require('./api/api.controller');
+const ApiRoutes = require('./api/api.routes');
 
 const app = express();
 
@@ -15,32 +14,7 @@ app.use(
 
 app.use(express.static(path.join(__dirname, '/build')));
 
-app.get('/api/v1.1/station-info', async (req, res) => {
-  const resData = await Api().getStationInfo();
-
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(resData, null, 0));
-});
-
-app.get('/api/v1.1/station-status', async (req, res) => {
-  const resData = await Api().getStationStatus();
-
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(resData, null, 0));
-});
-
-app.get('/api/v1.1/latest-version', (req, res) => {
-  const appEnv = dotenv.config({
-    path: path.join(__dirname, '.env.production'),
-  });
-
-  const resObject = {
-    latestVersion: appEnv?.parsed?.REACT_APP_VERSION ?? null,
-  };
-
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(resObject), null, 0);
-});
+app.use('/api/v1.1', ApiRoutes);
 
 app.get('*', (req, res) => {
   res.redirect(404, 'http://negre.co');
