@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 import useInterval from '../../hooks/useInterval';
 import storeHooks from '../../store/hooks';
+import useAriaProps from '../../hooks/useAriaProps';
 import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
 import infoBoxTimeHelpers from './helpers';
 import { AppFunctionComponent } from '../../types';
 
-const InfoBoxTime: AppFunctionComponent = () => {
+const InfoBoxTime: AppFunctionComponent = (props) => {
+  const ariaProps = useAriaProps(props);
+
   const [timeDiff, setTimeDiff] = useState<number | null>(null);
   const defaultIntervalDelay = 10000; // 10s
   const outdatedThreshold = 300000; // 5min
@@ -39,6 +42,7 @@ const InfoBoxTime: AppFunctionComponent = () => {
           className={`flex items-center transition-opacity delay-200 duration-300 ${
             isDataLoading ? 'opacity-20' : ''
           }`}
+          {...ariaProps}
         >
           <Icon
             name={isOutdated ? 'warning' : 'time-refresh'}

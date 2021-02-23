@@ -1,12 +1,15 @@
 import React from 'react';
 
 import storeHooks from '../../store/hooks';
+import useAriaProps from '../../hooks/useAriaProps';
 import Spacer from '../ui/spacer/spacer';
 import Icon from '../ui/icon/icon';
 import infoBoxHelpers from './helpers';
 import { AppFunctionComponent } from '../../types';
 
-const InfoBoxTotals: AppFunctionComponent = () => {
+const InfoBoxTotals: AppFunctionComponent = (props) => {
+  const ariaProps = useAriaProps(props);
+
   const {
     visibleStations,
     resourceShown,
@@ -16,10 +19,6 @@ const InfoBoxTotals: AppFunctionComponent = () => {
     resourceShown: state.ui.resourceShown,
     bikeTypeFilter: state.ui.bikeTypeFilter,
   }));
-
-  const toggleInfoMenu = storeHooks.useStoreActions(
-    (actions) => actions.ui.toggleInfoMenu,
-  );
 
   const {
     isInNearbyArea,
@@ -50,19 +49,8 @@ const InfoBoxTotals: AppFunctionComponent = () => {
     },
   });
 
-  const showInfoMenu: () => void = () => {
-    toggleInfoMenu(true);
-  };
-
   return (
-    <div
-      className="flex flex-row items-center"
-      onClick={showInfoMenu}
-      onKeyPress={showInfoMenu}
-      role="button"
-      aria-label="Show Station List"
-      tabIndex={0}
-    >
+    <div className="flex flex-row items-center" {...ariaProps}>
       <div {...getNumberBlockStyle(isBikesNumberHighlighted)}>
         <Icon name="bike" color={iconColor} />
         <Spacer x={4} />

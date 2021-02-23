@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import InfoMenu from './components/infoMenu/InfoMenu';
-import InfoBox from './components/infoBox/infoBox';
+import InfoBox from './components/infoBox/InfoBox';
 import Map from './components/map/Map';
 import AboutMenu from './components/aboutMenu/AboutMenu';
 import Notification from './components/ui/notification/Notification';
@@ -27,7 +27,7 @@ const App: AppFunctionComponent = () => {
           role="main"
           aria-label="Main Tile"
         >
-          <InfoBox role="banner" aria-label="Info Box" />
+          <InfoBox role="rowgroup" aria-label="Info Box" />
 
           <Map role="region" aria-label="Map Tile" />
 

@@ -12,7 +12,7 @@ describe('App Component', () => {
     const $mainTile = screen.getByRole('main', { name: 'Main Tile' });
     expect($mainTile).toBeInTheDocument();
 
-    const $infoBox = screen.getByRole('banner', { name: 'Info Box' });
+    const $infoBox = screen.getByRole('rowgroup', { name: 'Info Box' });
     expect($infoBox).toBeInTheDocument();
 
     const $mapTile = screen.getByRole('region', { name: 'Map Tile' });
