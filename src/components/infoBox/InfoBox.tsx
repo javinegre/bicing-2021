@@ -1,7 +1,7 @@
 import React from 'react';
 
 import InfoBoxTotals from '../infoBoxTotals/infoBoxTotals';
-import InfoBoxTime from '../infoBoxTime/infoBoxTime';
+import InfoBoxTime from '../infoBoxTime/InfoBoxTime';
 import Spacer from '../ui/spacer/spacer';
 import storeHooks from '../../store/hooks';
 import useAriaProps from '../../hooks/useAriaProps';

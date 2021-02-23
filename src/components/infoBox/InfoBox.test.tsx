@@ -1,15 +1,30 @@
 import React from 'react';
-import { render, screen } from '../../test-utils';
+import { render, screen, fireEvent, storeMock } from '../../test-utils';
 import InfoBox from './InfoBox';
 
 describe('InfoBox component', () => {
-  test('renders totals', () => {
+  test('renders sub-components', () => {
     render(<InfoBox />);
 
-    const $totals = screen.getByRole('rowgroup', { name: 'Info Box Totals' });
+    const $button = screen.getByRole('button', { name: 'Show Station List' });
+    expect($button).toBeInTheDocument();
 
+    const $totals = screen.getByRole('rowgroup', { name: 'Info Box Totals' });
     expect($totals).toBeInTheDocument();
+
+    const $time = screen.getByRole('cell', { name: 'Info Box Time' });
+    expect($time).toBeInTheDocument();
   });
 
-  xtest('renders last update time', async () => {});
+  test('button opens InfoMenu', () => {
+    render(<InfoBox />);
+
+    expect(storeMock.getState().ui.infoMenuShown).toBe(false);
+
+    const $button = screen.getByRole('button', { name: 'Show Station List' });
+
+    fireEvent.click($button);
+
+    expect(storeMock.getState().ui.infoMenuShown).toBe(true);
+  });
 });

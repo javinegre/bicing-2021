@@ -36,14 +36,14 @@ const InfoBoxTime: AppFunctionComponent = (props) => {
   const isOutdated = timeDiff !== null && timeDiff > outdatedThreshold;
 
   return (
-    <>
+    <div
+      className={`flex items-center transition-opacity delay-200 duration-300 ${
+        isDataLoading ? 'opacity-20' : ''
+      }`}
+      {...ariaProps}
+    >
       {updateTimeState !== null && (
-        <div
-          className={`flex items-center transition-opacity delay-200 duration-300 ${
-            isDataLoading ? 'opacity-20' : ''
-          }`}
-          {...ariaProps}
-        >
+        <>
           <Icon
             name={isOutdated ? 'warning' : 'time-refresh'}
             className="flex-shrink-0"
@@ -54,13 +54,16 @@ const InfoBoxTime: AppFunctionComponent = (props) => {
           <Spacer x={4} />
 
           {timeDiff && (
-            <span className="text-xs tracking-tighter whitespace-nowrap">
+            <span
+              className="text-xs tracking-tighter whitespace-nowrap"
+              aria-label="Last update time"
+            >
               {getLastUpdateTimeString(timeDiff)}
             </span>
           )}
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 
