@@ -6,12 +6,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import viewportHelpers from './helpers/viewport';
-import storeModel from './store/storeModel';
+import store from './store/store';
 
 viewportHelpers.initViewportHeightUnit();
 
 ReactDOM.render(
-  <StoreProvider store={storeModel}>
+  <StoreProvider store={store}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
