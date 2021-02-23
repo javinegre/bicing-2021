@@ -1,37 +1,47 @@
 /* eslint-disable no-param-reassign */
 
-import { action, Actions, State, thunk } from 'easy-peasy';
+import { action, thunk } from 'easy-peasy';
 
-import LocalStorageService from '../services/localStorageService';
 import mapConfig from '../components/map/config';
-import { IStoreMapModel, IStoreModel } from './interfaces';
+import { IStoreMapModel } from './interfaces';
 
 const storeMapModel: IStoreMapModel = {
-  mapCenter:
-    LocalStorageService().getPosition('mapCenter') ??
-    mapConfig.mapOptions.center,
-  mapZoom: LocalStorageService().getMapZoom() ?? mapConfig.mapOptions.zoom,
-  userLocation: LocalStorageService().getUserLocation(),
+  mapCenter: mapConfig.mapOptions.center,
+  mapZoom: mapConfig.mapOptions.zoom,
+  userLocation: null,
   stationSelectedID: null,
   stationSelectedData: null,
   visibleStations: [],
-  setMapCenter: action((state, payload) => {
+  updateMapCenterState: action((state, payload) => {
     state.mapCenter = payload;
-    LocalStorageService().setPosition('mapCenter', payload);
   }),
-  setMapZoom: action((state, payload) => {
+  setMapCenter: thunk(
+    (actions, payload, { injections: { LocalStorageService } }) => {
+      actions.updateMapCenterState(payload);
+      LocalStorageService().setPosition('mapCenter', payload);
+    },
+  ),
+  updateMapZoomState: action((state, payload) => {
     state.mapZoom = payload;
-    LocalStorageService().setMapZoom(payload);
   }),
-  setUserLocation: action((state, payload) => {
+  setMapZoom: thunk(
+    (actions, payload, { injections: { LocalStorageService } }) => {
+      actions.updateMapZoomState(payload);
+      LocalStorageService().setMapZoom(payload);
+    },
+  ),
+  updateUserLocationState: action((state, payload) => {
     state.userLocation = payload;
-    LocalStorageService().setUserLocation(payload);
   }),
+  setUserLocation: thunk(
+    (actions, payload, { injections: { LocalStorageService } }) => {
+      actions.updateUserLocationState(payload);
+      LocalStorageService().setUserLocation(payload);
+    },
+  ),
   selectStation: thunk((actions, payload, helpers) => {
-    const stationListStoreState = (helpers.getStoreState() as State<IStoreModel>)
-      .stationList;
-    const uiStoreActions = (helpers.getStoreActions() as Actions<IStoreModel>)
-      .ui;
+    const stationListStoreState = helpers.getStoreState().stationList;
+    const uiStoreActions = helpers.getStoreActions().ui;
 
     const stationData = stationListStoreState.stations.find(
       (station) => station.id === payload,

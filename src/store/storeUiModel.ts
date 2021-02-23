@@ -1,16 +1,14 @@
 /* eslint-disable no-param-reassign */
 
 import { v4 as uuidv4 } from 'uuid';
-import { action } from 'easy-peasy';
+import { action, thunk } from 'easy-peasy';
 
-import LocalStorageService from '../services/localStorageService';
 import { IStoreUiModel } from './interfaces';
 import { BikeTypeEnum, StationResourceTypeEnum } from '../enums';
 
 const storeUiModel: IStoreUiModel = {
-  resourceShown:
-    LocalStorageService().getResourceShown() ?? StationResourceTypeEnum.bikes,
-  bikeTypeFilter: LocalStorageService().getBikeTypeFilter() ?? {
+  resourceShown: StationResourceTypeEnum.bikes,
+  bikeTypeFilter: {
     [BikeTypeEnum.mechanical]: true,
     [BikeTypeEnum.electrical]: true,
   },
@@ -23,33 +21,47 @@ const storeUiModel: IStoreUiModel = {
   toggleAboutMenu: action((state, payload) => {
     state.aboutMenuShown = payload ?? !state.aboutMenuShown;
   }),
-  toggleResourceShown: action((state) => {
-    const newState =
-      state.resourceShown === StationResourceTypeEnum.bikes
-        ? StationResourceTypeEnum.docks
-        : StationResourceTypeEnum.bikes;
-    state.resourceShown = newState;
-    LocalStorageService().setResourceShown(newState);
+  setResourceShown: action((state, payload) => {
+    state.resourceShown = payload;
   }),
-  toggleBikeType: action((state, payload) => {
-    const newState = { ...state.bikeTypeFilter };
+  toggleResourceShown: thunk(
+    (actions, payload, { getState, injections: { LocalStorageService } }) => {
+      const newState =
+        getState().resourceShown === StationResourceTypeEnum.bikes
+          ? StationResourceTypeEnum.docks
+          : StationResourceTypeEnum.bikes;
 
-    const bikeType = payload;
-    const oppositeBikeType: BikeTypeEnum =
-      payload === BikeTypeEnum.mechanical
-        ? BikeTypeEnum.electrical
-        : BikeTypeEnum.mechanical;
-
-    newState[bikeType] = !newState[bikeType];
-
-    // Avoid setting to false both types by switching to the opposite bike type.
-    if (newState[bikeType] === false && newState[oppositeBikeType] === false) {
-      newState[oppositeBikeType] = true;
-    }
-
-    state.bikeTypeFilter = newState;
-    LocalStorageService().setBikeTypeFilter(newState);
+      actions.setResourceShown(newState);
+      LocalStorageService().setResourceShown(newState);
+    },
+  ),
+  setBikeType: action((state, payload) => {
+    state.bikeTypeFilter = payload;
   }),
+  toggleBikeType: thunk(
+    (actions, payload, { getState, injections: { LocalStorageService } }) => {
+      const newState = { ...getState().bikeTypeFilter };
+
+      const bikeType = payload;
+      const oppositeBikeType: BikeTypeEnum =
+        payload === BikeTypeEnum.mechanical
+          ? BikeTypeEnum.electrical
+          : BikeTypeEnum.mechanical;
+
+      newState[bikeType] = !newState[bikeType];
+
+      // Avoid setting to false both types by switching to the opposite bike type.
+      if (
+        newState[bikeType] === false &&
+        newState[oppositeBikeType] === false
+      ) {
+        newState[oppositeBikeType] = true;
+      }
+
+      actions.setBikeType(newState);
+      LocalStorageService().setBikeTypeFilter(newState);
+    },
+  ),
   pushNotification: action((state, payload) => {
     payload.id = uuidv4();
     state.notificationList = [...state.notificationList, payload];

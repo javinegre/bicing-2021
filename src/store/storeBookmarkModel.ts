@@ -1,26 +1,40 @@
 /* eslint-disable no-param-reassign */
 
-import { action } from 'easy-peasy';
+import { action, thunk } from 'easy-peasy';
 
-import LocalStorageService from '../services/localStorageService';
 import { IStoreBookmarkModel } from './interfaces';
 
 const storeBookmarkModel: IStoreBookmarkModel = {
-  home: LocalStorageService().getPosition('bookmarkHome'),
-  work: LocalStorageService().getPosition('bookmarkWork'),
-  favorite: LocalStorageService().getPosition('bookmarkFavorite'),
-  setHome: action((state, payload) => {
+  home: null,
+  work: null,
+  favorite: null,
+  updateHomeState: action((state, payload) => {
     state.home = payload;
-    LocalStorageService().setPosition('bookmarkHome', payload);
   }),
-  setWork: action((state, payload) => {
+  setHome: thunk(
+    (actions, payload, { injections: { LocalStorageService } }) => {
+      actions.updateHomeState(payload);
+      LocalStorageService().setPosition('bookmarkHome', payload);
+    },
+  ),
+  updateWorkState: action((state, payload) => {
     state.work = payload;
-    LocalStorageService().setPosition('bookmarkWork', payload);
   }),
-  setFavorite: action((state, payload) => {
+  setWork: thunk(
+    (actions, payload, { injections: { LocalStorageService } }) => {
+      actions.updateWorkState(payload);
+      LocalStorageService().setPosition('bookmarkWork', payload);
+    },
+  ),
+  updateFavoriteState: action((state, payload) => {
     state.favorite = payload;
-    LocalStorageService().setPosition('bookmarkFavorite', payload);
   }),
+  setFavorite: thunk(
+    (actions, payload, { injections: { LocalStorageService } }) => {
+      actions.updateFavoriteState(payload);
+      LocalStorageService().setPosition('bookmarkFavorite', payload);
+    },
+  ),
 };
 
 export default storeBookmarkModel;
