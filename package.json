@@ -36,7 +36,8 @@
     "build": "craco build",
     "build:dev": "sh -ac '. .env; craco build'",
     "test": "craco test",
-    "lint": "npx eslint index.js api/**.js src/**/*.{ts,tsx}"
+    "lint": "npx eslint index.js api/**.js src/**/*.{ts,tsx}",
+    "coverage": "craco test --coverage --watchAll"
   },
   "browserslist": {
     "production": [
