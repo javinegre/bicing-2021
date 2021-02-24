@@ -1,6 +1,6 @@
 import React from 'react';
 
-import InfoBoxTotals from '../infoBoxTotals/infoBoxTotals';
+import InfoBoxTotals from '../infoBoxTotals/InfoBoxTotals';
 import InfoBoxTime from '../infoBoxTime/InfoBoxTime';
 import Spacer from '../ui/spacer/spacer';
 import storeHooks from '../../store/hooks';

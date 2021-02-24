@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, storeMock } from '../../test-utils';
+import { render, screen, fireEvent } from '../../test-utils';
 import InfoBox from './InfoBox';
 
 describe('InfoBox component', () => {
@@ -17,7 +17,7 @@ describe('InfoBox component', () => {
   });
 
   test('button opens InfoMenu', () => {
-    render(<InfoBox />);
+    const { storeMock } = render(<InfoBox />);
 
     expect(storeMock.getState().ui.infoMenuShown).toBe(false);
 
