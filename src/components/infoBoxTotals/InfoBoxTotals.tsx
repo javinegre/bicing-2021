@@ -37,21 +37,21 @@ const InfoBoxTotals: AppFunctionComponent = (props) => {
   } = getNumbersHighlighting(resourceShown, bikeTypeFilter);
 
   const iconColor = '#601818';
-  const highlightedNumberOpacity = 1;
-  const dimmedNumberOpacity = 0.2;
 
-  const getNumberBlockStyle: (
+  const getNumberBlockClassNames: (
     isHighlighted: boolean,
   ) => React.HTMLAttributes<HTMLDivElement> = (isHighlighted) => ({
-    className: 'flex flex-row items-center',
-    style: {
-      opacity: isHighlighted ? highlightedNumberOpacity : dimmedNumberOpacity,
-    },
+    className: `flex flex-row items-center ${
+      isHighlighted ? '' : 'opacity-20'
+    }`,
   });
 
   return (
     <div className="flex flex-row items-center" {...ariaProps}>
-      <div {...getNumberBlockStyle(isBikesNumberHighlighted)}>
+      <div
+        {...getNumberBlockClassNames(isBikesNumberHighlighted)}
+        aria-label="Total bikes within nearby area"
+      >
         <Icon name="bike" color={iconColor} />
         <Spacer x={4} />
         <span className="text-xl font-bold">{totals.bikes}</span>
@@ -59,22 +59,31 @@ const InfoBoxTotals: AppFunctionComponent = (props) => {
 
       <Spacer x={8} />
 
-      <div {...getNumberBlockStyle(isMechanicalBikesNumberHighlighted)}>
+      <div
+        {...getNumberBlockClassNames(isMechanicalBikesNumberHighlighted)}
+        aria-label="Total mechanical bikes within nearby area"
+      >
         <Icon name="gears" color={iconColor} size={12} />
         <Spacer x={4} />
-        {totals.mechanical}
+        <span>{totals.mechanical}</span>
       </div>
 
       <Spacer x={4} />
 
-      <div {...getNumberBlockStyle(isElectricalBikesNumberHighlighted)}>
+      <div
+        {...getNumberBlockClassNames(isElectricalBikesNumberHighlighted)}
+        aria-label="Total electric bikes within nearby area"
+      >
         <Icon name="bolt" color={iconColor} size={12} />
-        {totals.electrical}
+        <span>{totals.electrical}</span>
       </div>
 
       <Spacer x={12} />
 
-      <div {...getNumberBlockStyle(isDocksNumberHighlighted)}>
+      <div
+        {...getNumberBlockClassNames(isDocksNumberHighlighted)}
+        aria-label="Total docks within nearby area"
+      >
         <Icon name="parking" color={iconColor} size={18} />
         <span className="text-xl font-bold">{totals.docks}</span>
       </div>
