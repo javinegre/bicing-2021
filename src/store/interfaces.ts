@@ -11,41 +11,53 @@ import { IMapsCoordinates } from '../components/map/interfaces';
 import { INotificationItem } from '../components/ui/notification/interfaces';
 import LocalStorageService from '../services/localStorageService';
 
-export interface IStoreInitialState {
-  map: {
-    mapCenter: IMapsCoordinates;
-    mapZoom: number;
-    userLocation: IMapsCoordinates | null;
-  };
-  ui: {
-    resourceShown: StationResourceTypeEnum;
-    bikeTypeFilter: BikeTypeFilterType;
-  };
-  bookmark: {
-    home: IMapsCoordinates | null;
-    work: IMapsCoordinates | null;
-    favorite: IMapsCoordinates | null;
-  };
-}
-
-export interface IStoreInjections {
-  LocalStorageService: typeof LocalStorageService;
-}
-
-export interface IStoreStationListModel extends IStationList {
+export interface IStoreStationListInitialState {
+  updateTime: number | null;
+  stations: IStationData[];
   isDataLoading: boolean;
-  setDataLoading: Action<IStoreStationListModel, boolean>;
-  fetched: Action<IStoreStationListModel, IStationList>;
-  fetch: Thunk<IStoreStationListModel>;
 }
 
-export interface IStoreMapModel {
+export interface IStoreMapInitialState {
   mapCenter: IMapsCoordinates;
   mapZoom: number;
   userLocation: IMapsCoordinates | null;
   stationSelectedID: StationSelectedType;
   stationSelectedData: IStationData | null;
   visibleStations: IStationDataExtended[];
+}
+
+export interface IStoreUiInitialState {
+  resourceShown: StationResourceTypeEnum;
+  bikeTypeFilter: BikeTypeFilterType;
+  infoMenuShown: boolean;
+  aboutMenuShown: boolean;
+  notificationList: INotificationItem[];
+}
+
+export interface IStoreBookmarkInitialState {
+  home: IMapsCoordinates | null;
+  work: IMapsCoordinates | null;
+  favorite: IMapsCoordinates | null;
+}
+
+export interface IStoreInitialState {
+  stationList: IStoreStationListInitialState;
+  map: IStoreMapInitialState;
+  ui: IStoreUiInitialState;
+  bookmark: IStoreBookmarkInitialState;
+}
+
+export interface IStoreInjections {
+  LocalStorageService: typeof LocalStorageService;
+}
+
+export interface IStoreStationListModel extends IStoreStationListInitialState {
+  setDataLoading: Action<IStoreStationListModel, boolean>;
+  fetched: Action<IStoreStationListModel, IStationList>;
+  fetch: Thunk<IStoreStationListModel>;
+}
+
+export interface IStoreMapModel extends IStoreMapInitialState {
   updateMapCenterState: Action<IStoreMapModel, IMapsCoordinates>;
   setMapCenter: Thunk<
     IStoreMapModel,
@@ -73,12 +85,7 @@ export interface IStoreMapModel {
   setVisibleStations: Action<IStoreMapModel, IStationDataExtended[]>;
 }
 
-export interface IStoreUiModel {
-  resourceShown: StationResourceTypeEnum;
-  bikeTypeFilter: BikeTypeFilterType;
-  infoMenuShown: boolean;
-  aboutMenuShown: boolean;
-  notificationList: INotificationItem[];
+export interface IStoreUiModel extends IStoreUiInitialState {
   setResourceShown: Action<IStoreUiModel, StationResourceTypeEnum>;
   toggleResourceShown: Thunk<
     IStoreUiModel,
@@ -99,10 +106,7 @@ export interface IStoreUiModel {
   popNotification: Action<IStoreUiModel>;
 }
 
-export interface IStoreBookmarkModel {
-  home: IMapsCoordinates | null;
-  work: IMapsCoordinates | null;
-  favorite: IMapsCoordinates | null;
+export interface IStoreBookmarkModel extends IStoreBookmarkInitialState {
   updateHomeState: Action<IStoreBookmarkModel, IMapsCoordinates | null>;
   setHome: Thunk<
     IStoreBookmarkModel,
