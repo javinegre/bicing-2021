@@ -14,11 +14,11 @@
 }
 
 .InfoMenu-backdrop {
-  pointer-events: none;
+  visibility: hidden;
 }
 
 .InfoMenu-backdrop.shown {
-  pointer-events: auto;
+  visibility: visible;
 }
 
 @screen sm {
@@ -37,7 +37,6 @@
   }
 
   .InfoMenu-backdrop.shown {
-    opacity: 0;
-    pointer-events: none;
+    display: none;
   }
 }

@@ -7,8 +7,11 @@ import InfoMenuNavigation from '../infoMenuNavigation/infoMenuNavigation';
 import storeHooks from '../../store/hooks';
 import appConfig from '../../config';
 import { AppFunctionComponent } from '../../types';
+import useAriaProps from '../../hooks/useAriaProps';
 
-const InfoMenuDetails: AppFunctionComponent = () => {
+const InfoMenuDetails: AppFunctionComponent = (props) => {
+  const ariaProps = useAriaProps(props);
+
   const stationData = storeHooks.useStoreState(
     (state) => state.map.stationSelectedData,
   );
@@ -18,9 +21,9 @@ const InfoMenuDetails: AppFunctionComponent = () => {
   const isOperating = stationData?.status === 1;
 
   return (
-    <>
-      {stationData && (
-        <div className="flex-grow-0 flex-shrink-0 flex-col px-4 py-3">
+    <div className="flex-grow-0 flex-shrink-0" {...ariaProps}>
+      {stationData !== null && (
+        <div className="px-4 py-3">
           <div className="relative">
             <div className={!isOperating ? 'opacity-10' : ''}>
               <div className="flex justify-between">
@@ -76,7 +79,7 @@ const InfoMenuDetails: AppFunctionComponent = () => {
           <InfoMenuNavigation />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

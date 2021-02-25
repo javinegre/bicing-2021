@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import InfoMenuDetails from '../infoMenuDetails/infoMenuDetails';
+import InfoMenuDetails from '../infoMenuDetails/InfoMenuDetails';
 import InfoMenuList from '../infoMenuList/infoMenuList';
 import Icon from '../ui/icon/icon';
 import Spacer from '../ui/spacer/spacer';
@@ -60,19 +60,21 @@ const InfoMenu: AppFunctionComponent = (props) => {
         onClick={hideMenu}
         onKeyPress={hideMenu}
         role="button"
-        aria-label="Dismiss"
+        aria-label="Dismiss info menu"
         tabIndex={0}
       />
       <aside
         className={`InfoMenu flex flex-col absolute top-0 bottom-0 left-0 w-full h-full bg-infoMenuBg text-infoMenuColor ${getMenuVisibilityClassName()}`}
+        aria-label="Info Menu"
       >
-        <InfoMenuDetails />
+        <InfoMenuDetails role="region" aria-label="Station details" />
 
         <div ref={$listWrapper} className="flex-grow py-2 overflow-scroll">
           {closestStations.length > 0 && (
             <InfoMenuList
               title="Closest stations"
               stationList={closestStations}
+              aria-label="Closest station list"
             />
           )}
 
@@ -80,6 +82,7 @@ const InfoMenu: AppFunctionComponent = (props) => {
             <InfoMenuList
               title="Other stations"
               stationList={farthestStations}
+              aria-label="Other station list"
             />
           )}
         </div>
@@ -89,7 +92,7 @@ const InfoMenu: AppFunctionComponent = (props) => {
           onClick={showAboutMenu}
           onKeyPress={showAboutMenu}
           role="button"
-          aria-label="About this App"
+          aria-label="Open about menu"
           tabIndex={0}
         >
           <Icon name="info" color={iconColor} size={28} />

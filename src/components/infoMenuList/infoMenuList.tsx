@@ -6,9 +6,11 @@ import storeHooks from '../../store/hooks';
 import { IStationDataExtended } from '../../interfaces';
 import { IInfoMenuListProps } from './interfaces';
 import { AppFunctionComponent } from '../../types';
+import useAriaProps from '../../hooks/useAriaProps';
 
 const InfoMenuList: AppFunctionComponent<IInfoMenuListProps> = (props) => {
   const { title, stationList } = props;
+  const ariaProps = useAriaProps(props);
 
   const selectStation = storeHooks.useStoreActions(
     (actions) => actions.map.selectStation,
@@ -18,7 +20,7 @@ const InfoMenuList: AppFunctionComponent<IInfoMenuListProps> = (props) => {
     station?.status === 1;
 
   return (
-    <>
+    <div {...ariaProps}>
       <div className="flex items-center px-4 py-1 mb-4 text-sm font-light bg-infoMenuBg-light text-gray-400">
         {title}
       </div>
@@ -50,7 +52,7 @@ const InfoMenuList: AppFunctionComponent<IInfoMenuListProps> = (props) => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
