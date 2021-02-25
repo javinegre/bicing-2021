@@ -20,6 +20,11 @@ module.exports = {
         },
       },
     },
+    screens: {
+      sm: '400px',
+      md: '640px',
+      lg: '1000px',
+    },
   },
   variants: {
     extend: {},

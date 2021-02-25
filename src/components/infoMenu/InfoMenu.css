@@ -21,13 +21,13 @@
   pointer-events: auto;
 }
 
-@media all and (min-width: 400px) {
+@screen sm {
   .InfoMenu {
     width: 360px;
   }
 }
 
-@media all and (min-width: 1000px) {
+@screen lg {
   .InfoMenu {
     position: relative;
     left: auto;
