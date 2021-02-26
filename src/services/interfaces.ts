@@ -1,7 +1,7 @@
 import { IStationList } from '../interfaces';
 import { IMapsCoordinates } from '../components/map/interfaces';
 import { LocalStoragePositionKeyType } from './types';
-import { StationResourceTypeEnum } from '../enums';
+import { StationResourceTypeEnum, StationStatusEnum } from '../enums';
 import { BikeTypeFilterType } from '../store/types';
 
 export interface IXHRStationInfo {
@@ -16,7 +16,7 @@ export interface IXHRStationStatus {
   e: number;
   m: number;
   d: number;
-  s: 0 | 1;
+  s: StationStatusEnum.inactive | StationStatusEnum.active;
 }
 
 export interface IXHRStationList<T> {
