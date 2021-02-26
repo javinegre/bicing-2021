@@ -1,25 +1,11 @@
 import React, { FC, ReactElement } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
-import { createStore, StoreProvider } from 'easy-peasy';
+import { StoreProvider } from 'easy-peasy';
 
-import { IStoreInitialState, IStoreModel } from './store/interfaces';
-import storeModel from './store/storeModel';
 import { getStoreInitialState } from './store/helpers';
-import { ILocalStorageService } from './services/interfaces';
 import { IStore } from './store/types';
-
-const mockLocalStorageService: () => Partial<ILocalStorageService> = () => ({
-  setResourceShown: jest.fn(() => {}),
-  setBikeTypeFilter: jest.fn(() => {}),
-});
-
-const getStoreMock: (initialData: IStoreInitialState) => IStore = (
-  initialData,
-) =>
-  createStore<IStoreModel, IStoreInitialState>(storeModel, {
-    initialState: initialData,
-    injections: { LocalStorageService: mockLocalStorageService },
-  });
+import { IStoreInitialDataMock } from './mocks/interfaces';
+import { getStoreMock } from './mocks/store';
 
 const AllTheProviders: (providers: { storeMock: IStore }) => FC = ({
   storeMock,
@@ -32,12 +18,13 @@ const AllTheProviders: (providers: { storeMock: IStore }) => FC = ({
 const customRender: (
   ui: ReactElement,
   providerData?: {
-    storeMockInitialData?: IStoreInitialState;
+    storeInitialDataMock?: IStoreInitialDataMock;
   },
   options?: Omit<RenderOptions, 'queries'>,
 ) => RenderResult & { storeMock: IStore } = (ui, providerData, options) => {
   const storeMock = getStoreMock(
-    providerData?.storeMockInitialData ?? getStoreInitialState(),
+    getStoreInitialState(),
+    providerData?.storeInitialDataMock,
   );
 
   const renderResult = render(ui, {
