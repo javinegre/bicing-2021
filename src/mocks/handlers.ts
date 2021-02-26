@@ -6,6 +6,8 @@ import {
   IXHRStationList,
   IXHRStationStatus,
 } from '../services/interfaces';
+import stationInfoMock from './stationInfo';
+import stationStatusMock from './stationStatus';
 
 // eslint-disable-next-line import/prefer-default-export
 export const handlers = [
@@ -13,7 +15,7 @@ export const handlers = [
     const mockedData: IXHRStationList<IXHRStationInfo> = {
       success: true,
       lastUpdated: +new Date(),
-      stations: [],
+      stations: stationInfoMock,
     };
     return res(ctxt.json(mockedData));
   }),
@@ -21,7 +23,7 @@ export const handlers = [
     const mockedData: IXHRStationList<IXHRStationStatus> = {
       success: true,
       lastUpdated: +new Date(),
-      stations: [],
+      stations: stationStatusMock,
     };
     return res(ctxt.json(mockedData));
   }),
