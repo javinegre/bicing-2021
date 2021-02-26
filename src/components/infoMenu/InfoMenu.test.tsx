@@ -1,9 +1,11 @@
 import React from 'react';
 import InfoMenu from './InfoMenu';
-import { render, screen } from '../../test-utils';
+import { render, screen, fireEvent, act } from '../../test-utils';
+import mapHelpers from '../map/helpers';
+import mapHandlerMock from '../../mocks/mapHandler';
 
 describe('InfoMenu component', () => {
-  test('renders all sub-components', () => {
+  test('renders initial sub-components', () => {
     render(<InfoMenu />);
 
     const $dismissBtn = screen.getByRole('button', {
@@ -15,6 +17,7 @@ describe('InfoMenu component', () => {
 
     const $infoMenu = screen.getByLabelText('Info Menu');
     expect($infoMenu).toBeInTheDocument();
+    expect($infoMenu).not.toHaveClass('shown');
 
     const $stationDetails = screen.getByRole('region', {
       name: 'Station details',
@@ -32,5 +35,49 @@ describe('InfoMenu component', () => {
       name: 'Open about menu',
     });
     expect($openAboutMenuBtn).toBeInTheDocument();
+  });
+
+  test('dismisses menu on backdrop click', () => {
+    render(<InfoMenu />, {
+      storeInitialDataMock: {
+        ui: { infoMenuShown: true },
+      },
+    });
+
+    const $infoMenu = screen.getByLabelText('Info Menu');
+
+    expect($infoMenu).toBeInTheDocument();
+    expect($infoMenu).toHaveClass('shown');
+
+    const $dismissBtn = screen.getByRole('button', {
+      name: 'Dismiss info menu',
+    });
+
+    fireEvent.click($dismissBtn);
+
+    expect($infoMenu).not.toHaveClass('shown');
+  });
+
+  test('renders components after fetching list', async () => {
+    const { storeMock } = render(<InfoMenu />);
+
+    await act(async () => {
+      await storeMock.getActions().stationList.fetch();
+
+      storeMock
+        .getActions()
+        .map.setVisibleStations(
+          mapHelpers.getVisibleStations(
+            storeMock.getState().stationList.stations,
+            mapHandlerMock,
+          ),
+        );
+    });
+
+    const $closestStationList = screen.queryByLabelText('Closest station list');
+    expect($closestStationList).toBeInTheDocument();
+
+    const $otherStationList = screen.queryByLabelText('Other station list');
+    expect($otherStationList).toBeInTheDocument();
   });
 });
