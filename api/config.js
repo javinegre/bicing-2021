@@ -8,7 +8,7 @@ const endpoints = {
 const cacheConfig = {
   info: {
     key: 'stations-info',
-    ttl: 2 * 3600 * 1000, // 2h
+    ttl: 10 * 60 * 1000, // 10min
   },
   status: {
     key: 'stations-status',

@@ -21,7 +21,7 @@ const StationService: () => IStationService = () => {
   const getEndpointUrl: (endpoint: string) => string = (endpoint) =>
     `${appConfig.bicingApiUrl}${endpoint}`;
 
-  const stationInfoTtl = 3 * 3600 * 1000; // 2h
+  const stationInfoTtl = 10 * 60 * 1000; // 10min
   const requestTimeout = 10 * 1000; // 10s
 
   const handleError: (error: Error) => { data: IXHRErrorResponse } = (
