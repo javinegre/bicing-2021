@@ -36,6 +36,7 @@ const getStoreInitialData: (
     : defaultInitialDataMock;
 
 const mockLocalStorageService: () => Partial<ILocalStorageService> = () => ({
+  setPosition: jest.fn(() => {}),
   setResourceShown: jest.fn(() => {}),
   setBikeTypeFilter: jest.fn(() => {}),
 });
