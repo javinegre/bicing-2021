@@ -18,6 +18,7 @@ const useAriaProps: (
   return {
     role: props.role,
     tabIndex: props.tabIndex,
+    'data-testid': props['data-testid'],
     ...ariaProps,
   };
 };

@@ -7,6 +7,10 @@ export interface IAccessibleFunctionComponentProps extends AriaAttributes {
   // WAI-ARIA
   role?: string;
   tabIndex?: number;
+
+  // Not an aria attribute but used by Testing Library
+  // More info: https://testing-library.com/docs/queries/bytestid
+  'data-testid'?: string;
 }
 
 export interface IStationData {
