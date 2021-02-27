@@ -1,4 +1,4 @@
-import { INearbyAreaHintConfig, INearbyAreaRadius } from './interfaces';
+import { INearbyAreaRadius } from './interfaces';
 
 const mapOptions = {
   center: { lat: 41.38694482, lng: 2.17017464 },
@@ -247,12 +247,6 @@ const mapOptions = {
   },
 };
 
-const nearbyAreaHintConfig: INearbyAreaHintConfig = {
-  14: 95,
-  15: 190,
-  16: 380,
-};
-
 const nearbyAreaRadius: INearbyAreaRadius = {
   lat: 0.0030375,
   lng: 0.00405,
@@ -260,6 +254,5 @@ const nearbyAreaRadius: INearbyAreaRadius = {
 
 export default {
   mapOptions,
-  nearbyAreaHintConfig,
   nearbyAreaRadius,
 };

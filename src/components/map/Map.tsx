@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import MapControls from '../mapControls/MapControls';
-import MapHints from './mapHints';
+import MapHints from '../mapHints/MapHints';
 import useGoogleMaps from '../../hooks/useGoogleMaps';
 import useAriaProps from '../../hooks/useAriaProps';
 import mapConfig from './config';

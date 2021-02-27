@@ -10,6 +10,7 @@ import {
   StationResourceTypeEnum,
   StationStatusEnum,
 } from '../../enums';
+import mapConfig from './config';
 
 const getMapHandlerCenterCoordinates: (
   mapHandler: google.maps.Map | null,
@@ -32,8 +33,8 @@ const isInNearbyArea: (
   //   (pointLat - centerLat)²    (pointLng - centerLng)²
   //  ------------------------ + ------------------------ ≤ 1
   //         radiusLat²                 radiusLng²
-  const radiusLat: number = 0.0030375;
-  const radiusLng: number = 0.00405;
+
+  const { lat: radiusLat, lng: radiusLng } = mapConfig.nearbyAreaRadius;
 
   return (
     (point.lat - center.lat) ** 2 / radiusLat ** 2 +
