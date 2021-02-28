@@ -4,6 +4,7 @@ import { IStore } from '../store/types';
 import storeModel from '../store/storeModel';
 import { ILocalStorageService } from '../services/interfaces';
 import { IStoreInitialDataMock } from './interfaces';
+import { getStoreInitialState } from '../store/helpers';
 
 const overrideInitialState: (
   defaultInitialState: IStoreInitialState,
@@ -42,12 +43,11 @@ const mockLocalStorageService: () => Partial<ILocalStorageService> = () => ({
 });
 
 const getStoreMock: (
-  defaultInitialDataMock: IStoreInitialState,
-  overridingInitialDataMock: IStoreInitialDataMock | undefined,
-) => IStore = (defaultInitialDataMock, overridingInitialDataMock) =>
+  overridingInitialDataMock?: IStoreInitialDataMock | undefined,
+) => IStore = (overridingInitialDataMock) =>
   createStore<IStoreModel, IStoreInitialState>(storeModel, {
     initialState: getStoreInitialData(
-      defaultInitialDataMock,
+      getStoreInitialState(),
       overridingInitialDataMock,
     ),
     injections: { LocalStorageService: mockLocalStorageService },

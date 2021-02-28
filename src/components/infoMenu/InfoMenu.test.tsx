@@ -2,7 +2,7 @@ import React from 'react';
 import InfoMenu from './InfoMenu';
 import { render, screen, fireEvent, act, within } from '../../test-utils';
 import mapHelpers from '../map/helpers';
-import mapHandlerMock from '../../mocks/mapHandler';
+import { getMapHandlerMock } from '../../mocks/mapHandler';
 import stationInfoMock from '../../mocks/stationInfo';
 
 describe('InfoMenu component', () => {
@@ -61,6 +61,7 @@ describe('InfoMenu component', () => {
 
   test('renders components after fetching list', async () => {
     const { storeMock } = render(<InfoMenu />);
+    const mapHandlerMock = getMapHandlerMock();
 
     await act(async () => {
       await storeMock.getActions().stationList.fetch();
@@ -84,6 +85,7 @@ describe('InfoMenu component', () => {
 
   test('filters selected station from lists (closest & other)', async () => {
     const { storeMock } = render(<InfoMenu />);
+    const mapHandlerMock = getMapHandlerMock();
     const stationSelected = stationInfoMock[1];
 
     await act(async () => {

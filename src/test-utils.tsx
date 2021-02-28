@@ -2,7 +2,6 @@ import React, { FC, ReactElement } from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { StoreProvider } from 'easy-peasy';
 
-import { getStoreInitialState } from './store/helpers';
 import { IStore } from './store/types';
 import { IStoreInitialDataMock } from './mocks/interfaces';
 import { getStoreMock } from './mocks/store';
@@ -22,10 +21,7 @@ const customRender: (
   },
   options?: Omit<RenderOptions, 'queries'>,
 ) => RenderResult & { storeMock: IStore } = (ui, providerData, options) => {
-  const storeMock = getStoreMock(
-    getStoreInitialState(),
-    providerData?.storeInitialDataMock,
-  );
+  const storeMock = getStoreMock(providerData?.storeInitialDataMock);
 
   const renderResult = render(ui, {
     wrapper: AllTheProviders({ storeMock }),
