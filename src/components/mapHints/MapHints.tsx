@@ -4,15 +4,18 @@ import storeHooks from '../../store/hooks';
 import mapConfig from './config';
 import { ReactComponent as CrossHairIcon } from '../../assets/icons/hints/crosshair.svg';
 import { AppFunctionComponent } from '../../types';
+import useAriaProps from '../../hooks/useAriaProps';
 
-const MapHints: AppFunctionComponent = () => {
+const MapHints: AppFunctionComponent = (props) => {
+  const ariaProps = useAriaProps(props);
+
   const mapZoom = storeHooks.useStoreState((state) => state.map.mapZoom);
 
   const nearbyAreaDiameter: number | undefined =
     mapConfig.nearbyAreaHintConfig[mapZoom];
 
   return (
-    <div className="Map-hints">
+    <div className="Map-hints" {...ariaProps}>
       <CrossHairIcon className="Map-hints-item" />
       {nearbyAreaDiameter && (
         <svg

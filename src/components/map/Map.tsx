@@ -230,11 +230,16 @@ const Map: AppFunctionComponent = (props) => {
       className={`Map ${infoMenuShown ? 'Map--blurred' : ''}`}
       {...ariaProps}
     >
-      <div ref={$mapWrapper} className="Map-wrapper" />
+      <div
+        ref={$mapWrapper}
+        className="Map-wrapper"
+        role="application"
+        aria-label="Interactive map"
+      />
 
-      <MapHints />
+      <MapHints data-testid="map-location-hints" />
 
-      <MapControls />
+      <MapControls role="group" aria-label="Map controls" />
     </div>
   );
 };
