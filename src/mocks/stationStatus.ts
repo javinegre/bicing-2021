@@ -33,8 +33,8 @@ const stationStatusMock: IXHRStationStatus[] = [
   {
     i: 5,
     e: 0,
-    m: 2,
-    d: 16,
+    m: 3,
+    d: 17,
     s: StationStatusEnum.active,
   },
   {
