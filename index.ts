@@ -1,10 +1,12 @@
+import { Express } from 'express';
+
 const express = require('express');
 const path = require('path');
 const cors = require('express-cors');
 
 const ApiRoutes = require('./api/api.routes');
 
-const app = express();
+const app: Express = express();
 
 app.use(
   cors({
