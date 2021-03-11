@@ -1,3 +1,10 @@
+import {
+  IXHRErrorResponse,
+  IXHRStationInfo,
+  IXHRStationList,
+  IXHRStationStatus,
+} from './interfaces';
+
 export type LocalStoragePositionKeyType =
   | 'mapCenter'
   | 'userLocation'
@@ -12,3 +19,11 @@ export type LocalStorageKeyType =
   | LocalStorageNumberKeyType
   | 'resourceShown'
   | 'bikeTypeFilter';
+
+export type XHRApiResponseType<T> =
+  | IXHRStationList<T>
+  | IXHRErrorResponse
+  | null;
+
+export type XHRApiStationInfoResponseType = XHRApiResponseType<IXHRStationInfo>;
+export type XHRApiStationStatusResponseType = XHRApiResponseType<IXHRStationStatus>;

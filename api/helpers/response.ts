@@ -1,12 +1,17 @@
+import { AxiosResponse } from 'axios';
+import { IOfficialApiResult, IResponseHelpers } from '../interfaces';
+
 const chalk = require('chalk');
 
-const isResponseDataValid = (response) =>
+const isResponseDataValid = <T>(
+  response: AxiosResponse<IOfficialApiResult<T>>,
+): boolean =>
   response.data &&
   typeof response.data.last_updated === 'number' &&
   response.data.data &&
   Array.isArray(response.data.data.stations);
 
-const handleResponseData = (response) =>
+const handleResponseData: IResponseHelpers['handleResponseData'] = (response) =>
   isResponseDataValid(response)
     ? response
     : Promise.reject(
@@ -15,13 +20,16 @@ const handleResponseData = (response) =>
         ),
       );
 
-const handleSuccessfulResponse = (stationTransformer) => (response) => ({
+const handleSuccessfulResponse: IResponseHelpers['handleSuccessfulResponse'] = (
+  stationTransformer,
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+) => (response) => ({
   success: true,
   lastUpdated: response.data.last_updated,
   stations: response.data.data.stations.map(stationTransformer),
 });
 
-const handleErrorResponse = (err) => {
+const handleErrorResponse: IResponseHelpers['handleErrorResponse'] = (err) => {
   const resourceUrl = err.config && err.config.url ? err.config.url : '';
 
   // eslint-disable-next-line no-console
@@ -37,7 +45,7 @@ const handleErrorResponse = (err) => {
   };
 };
 
-module.exports = {
+export default {
   handleResponseData,
   handleSuccessfulResponse,
   handleErrorResponse,

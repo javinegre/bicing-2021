@@ -1,12 +1,22 @@
+import { Express, Response } from 'express';
+
+import Api from './api.controller';
+
+import { XHRApiResponseType } from '../src/services/types';
+import { IXHRStationInfo, IXHRStationStatus } from '../src/services/interfaces';
+
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 
-const Api = require('./api.controller');
+const apiRoutes: Express = express();
 
-const apiRoutes = express();
-
-const sendJson = (res, data) => {
+const sendJson: (
+  res: Response<any, any>,
+  data:
+    | XHRApiResponseType<IXHRStationInfo | IXHRStationStatus>
+    | { latestVersion: string | null },
+) => void = (res, data) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(data, null, 0));
 };
@@ -33,4 +43,4 @@ apiRoutes.get('/latest-version', (req, res) => {
   sendJson(res, resObject);
 });
 
-module.exports = apiRoutes;
+export default apiRoutes;
